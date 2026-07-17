@@ -132,7 +132,7 @@ export default function CommentCaMarche() {
         <SectionHeading title="Enregistrement de l'Agent (le distributeur)" center />
         <StepList steps={AGENT_STEPS} />
         <div className="mt-6 text-center">
-          <Link href="/inscription-agent" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">
+          <Link href="/inscription-agent" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-green-400 hover:text-green-400">
             Devenir Agent Africo
           </Link>
         </div>
@@ -142,7 +142,7 @@ export default function CommentCaMarche() {
         <SectionHeading title="Configuration du guichet (interface banque)" subtitle="Plus besoin de profils nominatifs pour les employés de banque : le système identifie directement le guichet de l'institution partenaire." center />
         <StepList steps={GUICHET_STEPS} />
         <div className="mt-6 text-center">
-          <Link href="/guichet" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">
+          <Link href="/guichet" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-green-400 hover:text-green-400">
             Accéder à l&apos;espace Guichet
           </Link>
         </div>

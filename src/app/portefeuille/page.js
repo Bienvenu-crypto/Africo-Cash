@@ -69,7 +69,7 @@ function LoginCard({ onLogin }) {
           </PrimaryButton>
           <p className="text-center text-sm text-white/50">
             Pas encore de compte ?{" "}
-            <Link href="/inscription" className="font-semibold text-gold-400 hover:underline">
+            <Link href="/inscription" className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
               Ouvrez-en un
             </Link>
           </p>
@@ -155,7 +155,7 @@ export default function Portefeuille() {
       <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-navy-800 to-navy-900 p-6 shadow-2xl">
         <div className="mb-4 flex items-center justify-between">
           <Image src="/images/logo.jpg" alt="Africo Cash" width={140} height={40} className="h-9 w-auto rounded-sm object-contain mix-blend-lighten" />
-          <button onClick={() => setClient(null)} className="text-xs text-white/50 hover:text-white">Déconnexion ⏻</button>
+          <button onClick={() => setClient(null)} className="text-xs text-white/50 hover:text-green-400">Déconnexion ⏻</button>
         </div>
 
         <h2 className="text-center text-lg font-semibold text-white/80">Portefeuille Africo Cash</h2>
@@ -218,7 +218,7 @@ export default function Portefeuille() {
         </p>
         <div className="mt-5 flex flex-col gap-3">
           <Link href="/mobile-money" className="btn-gold rounded-full px-5 py-3 text-center text-sm font-bold">Recharger via Mobile Money</Link>
-          <Link href="/banques" className="rounded-full border border-white/25 px-5 py-3 text-center text-sm font-semibold hover:border-gold-400 hover:text-gold-400">Recharger via ma banque</Link>
+          <Link href="/banques" className="rounded-full border border-white/25 px-5 py-3 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400">Recharger via ma banque</Link>
         </div>
       </Modal>
     </div>

@@ -42,9 +42,6 @@ body {
   font-family: var(--font-inter), sans-serif;
 }
 
-* {
-  color: inherit;
-}
 
 ::selection {
   background: var(--color-gold-500);
@@ -71,6 +68,7 @@ body {
 }
 
 .btn-gold:hover {
+  background: #4ade80;
   filter: brightness(1.12);
 }
 
@@ -107,4 +105,18 @@ textarea::placeholder {
 
 .animate-fade-up {
   animation: fade-up 0.6s ease both;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: #4ade80 !important;
+}
+
+.nav-link.active,
+.nav-link.active:hover {
+  color: #ffffff !important;
 }

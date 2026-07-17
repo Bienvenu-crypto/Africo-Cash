@@ -33,22 +33,24 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
-          {LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`text-sm font-medium transition-colors hover:text-gold-400 ${pathname === l.href ? "text-gold-400" : "text-white/85"
-                }`}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {LINKS.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`nav-link text-sm font-medium ${active ? "active" : ""}`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/portefeuille"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-gold-400 hover:text-gold-400"
+            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-green-400 hover:text-green-400"
           >
             Mon Portefeuille
           </Link>
@@ -62,7 +64,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 lg:hidden hover:border-green-400 hover:text-green-400 transition-colors"
           aria-label="Menu"
         >
           <span className="text-xl">{open ? "✕" : "☰"}</span>
@@ -77,7 +79,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-white/85 hover:text-gold-400"
+                className={`nav-link block py-2 text-sm font-medium ${pathname === l.href ? "active" : ""}`}
               >
                 {l.label}
               </Link>
@@ -85,7 +87,7 @@ export default function Navbar() {
             <Link
               href="/portefeuille"
               onClick={() => setOpen(false)}
-              className="rounded-full border border-white/20 px-4 py-2 text-center text-sm font-semibold"
+              className="rounded-full border border-white/20 px-4 py-2 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400 transition-colors"
             >
               Mon Portefeuille
             </Link>

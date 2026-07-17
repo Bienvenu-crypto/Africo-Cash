@@ -117,7 +117,7 @@ export default function GuichetPage() {
             </PrimaryButton>
             <p className="text-center text-sm text-white/50">
               Nouveau guichet ?{" "}
-              <button type="button" onClick={() => { setMode("register"); setError(""); }} className="font-semibold text-gold-400 hover:underline">
+              <button type="button" onClick={() => { setMode("register"); setError(""); }} className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
                 Le configurer ici
               </button>
             </p>
@@ -146,7 +146,7 @@ export default function GuichetPage() {
             </PrimaryButton>
             <p className="text-center text-sm text-white/50">
               Guichet déjà configuré ?{" "}
-              <button type="button" onClick={() => { setMode("login"); setError(""); }} className="font-semibold text-gold-400 hover:underline">
+              <button type="button" onClick={() => { setMode("login"); setError(""); }} className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
                 Se connecter
               </button>
             </p>

@@ -7,8 +7,8 @@ import { Field, inputClass, PrimaryButton, Alert, Card, Modal, SectionHeading } 
 const BANKS = ["Rawbank", "Equity BCDC", "Trust Merchant Bank", "Ecobank", "FBNBank DRC"];
 
 const ACTIONS = [
-  { key: "retirer-cash", label: "Retirer le cash", color: "bg-slate-600/90 hover:bg-slate-600" },
-  { key: "banque-vers-africo", label: "Banque vers Africo", color: "bg-blue-600/90 hover:bg-blue-600" },
+  { key: "retirer-cash", label: "Retirer le cash", color: "bg-slate-600/90 hover:bg-green-500" },
+  { key: "banque-vers-africo", label: "Banque vers Africo", color: "bg-blue-600/90 hover:bg-green-500" },
   { key: "africo-vers-banque", label: "Africo vers banque", color: "bg-emerald-600/90 hover:bg-emerald-600" },
 ];
 

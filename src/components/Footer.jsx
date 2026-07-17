@@ -25,11 +25,11 @@ export default function Footer() {
             Liens utiles
           </h4>
           <ul className="space-y-2 text-sm text-white/70">
-            <li><Link href="/a-propos" className="hover:text-white">À propos</Link></li>
-            <li><Link href="/services" className="hover:text-white">Nos services</Link></li>
-            <li><Link href="/comment-ca-marche" className="hover:text-white">Comment ça marche</Link></li>
-            <li><Link href="/agents" className="hover:text-white">Devenir Agent Africo</Link></li>
-            <li><Link href="/guichet" className="hover:text-white">Espace Guichet Bancaire</Link></li>
+            <li><Link href="/a-propos" className="hover:text-green-400">À propos</Link></li>
+            <li><Link href="/services" className="hover:text-green-400">Nos services</Link></li>
+            <li><Link href="/comment-ca-marche" className="hover:text-green-400">Comment ça marche</Link></li>
+            <li><Link href="/agents" className="hover:text-green-400">Devenir Agent Africo</Link></li>
+            <li><Link href="/guichet" className="hover:text-green-400">Espace Guichet Bancaire</Link></li>
           </ul>
         </div>
 
@@ -38,10 +38,10 @@ export default function Footer() {
             Services
           </h4>
           <ul className="space-y-2 text-sm text-white/70">
-            <li><Link href="/portefeuille" className="hover:text-white">Portefeuille Africo Cash</Link></li>
-            <li><Link href="/mobile-money" className="hover:text-white">Mobile Money</Link></li>
-            <li><Link href="/banques" className="hover:text-white">Banques partenaires</Link></li>
-            <li><Link href="/paiements" className="hover:text-white">Paiement de factures</Link></li>
+            <li><Link href="/portefeuille" className="hover:text-green-400">Portefeuille Africo Cash</Link></li>
+            <li><Link href="/mobile-money" className="hover:text-green-400">Mobile Money</Link></li>
+            <li><Link href="/banques" className="hover:text-green-400">Banques partenaires</Link></li>
+            <li><Link href="/paiements" className="hover:text-green-400">Paiement de factures</Link></li>
           </ul>
         </div>
 

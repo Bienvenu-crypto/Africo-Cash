@@ -212,7 +212,7 @@ export default function Inscription() {
                   <button
                     type="button"
                     onClick={() => setOtpVerified(otpInput === otpSent)}
-                    className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-gold-400 hover:text-gold-400"
+                    className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-green-400 hover:text-green-400"
                   >
                     Valider le code
                   </button>

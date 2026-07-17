@@ -12,7 +12,7 @@ export function SectionHeading({ eyebrow, title, subtitle, center = false }) {
   return (
     <div className={`mb-12 max-w-2xl ${center ? "mx-auto text-center" : ""}`}>
       {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h2 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl">{title}</h2>
+      <h2 className="mt-4 text-3xl font-bold leading-tight sm:text-4xl hover:text-green-400 transition-colors">{title}</h2>
       {subtitle && <p className="mt-4 text-base leading-relaxed text-white/65">{subtitle}</p>}
     </div>
   );
@@ -49,7 +49,7 @@ export function PrimaryButton({ children, className = "", ...props }) {
 export function GhostButton({ children, className = "", ...props }) {
   return (
     <button
-      className={`rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white/90 transition hover:border-gold-400 hover:text-gold-400 disabled:opacity-50 ${className}`}
+      className={`rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white/90 transition hover:border-green-400 hover:text-green-400 disabled:opacity-50 ${className}`}
       {...props}
     >
       {children}
@@ -78,7 +78,7 @@ export function Modal({ open, onClose, title, children }) {
           <h3 className="text-lg font-bold">{title}</h3>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/70 hover:text-white"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-white/70 hover:text-green-400"
           >
             ✕
           </button>

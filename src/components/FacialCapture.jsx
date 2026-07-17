@@ -53,7 +53,7 @@ export default function FacialCapture({ onChange }) {
         <div className="flex flex-col items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={photo} alt="Photo capturée" className="h-40 w-40 rounded-lg object-cover" />
-          <button type="button" onClick={retake} className="text-xs font-semibold text-gold-400 hover:underline">
+          <button type="button" onClick={retake} className="text-xs font-semibold text-gold-400 hover:text-green-400 hover:underline">
             Reprendre la photo
           </button>
         </div>
@@ -71,7 +71,7 @@ export default function FacialCapture({ onChange }) {
           )}
           <div className="flex gap-3">
             {status !== "streaming" && (
-              <button type="button" onClick={startCamera} className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-gold-400 hover:text-gold-400">
+              <button type="button" onClick={startCamera} className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-green-400 hover:text-green-400">
                 Activer la caméra
               </button>
             )}
@@ -88,7 +88,7 @@ export default function FacialCapture({ onChange }) {
                   setStatus("captured");
                   onChange?.(true);
                 }}
-                className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-gold-400 hover:text-gold-400"
+                className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-green-400 hover:text-green-400"
               >
                 Simuler la capture
               </button>

@@ -62,7 +62,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
           <div className="animate-fade-up">
 
-            <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl">
+            <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl hover:text-green-400 transition-colors">
               Votre argent, <span className="gold-text">partout</span>, à
               tout moment.
             </h1>
@@ -76,7 +76,7 @@ export default function Home() {
               <Link href="/inscription" className="btn-gold rounded-full px-7 py-3.5 text-sm font-bold shadow-lg shadow-gold-400/30">
                 Ouvrir un compte gratuitement
               </Link>
-              <Link href="/comment-ca-marche" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white/90 hover:border-gold-400 hover:text-gold-400">
+              <Link href="/comment-ca-marche" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white/90 hover:border-green-400 hover:text-green-400">
                 Comment ça marche
               </Link>
             </div>
@@ -120,11 +120,11 @@ export default function Home() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s) => (
             <Link key={s.href} href={s.href} className="group">
-              <Card className="h-full transition hover:border-gold-400/50 hover:bg-white/10">
+              <Card className="h-full transition hover:border-green-400/50 hover:bg-white/10 hover:border-green-400">
                 <div className="text-3xl">{s.icon}</div>
                 <h3 className="mt-4 text-lg font-bold">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">{s.desc}</p>
-                <span className="mt-4 inline-block text-sm font-semibold text-gold-400 group-hover:underline">
+                <span className="mt-4 inline-block text-sm font-semibold text-gold-400 group-hover:text-green-400 group-hover:underline">
                   Découvrir →
                 </span>
               </Card>
@@ -138,7 +138,7 @@ export default function Home() {
         <div className="grid items-center gap-12 rounded-3xl border border-white/10 bg-white/5 p-8 lg:grid-cols-2 lg:p-14">
           <div>
 
-            <h2 className="mt-4 text-3xl font-bold leading-tight text-center">
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-center hover:text-green-400 transition-colors">
               Le bras financier numérique du Groupe Africo
             </h2>
             <p className="mt-4 leading-relaxed text-white/65">
@@ -148,7 +148,7 @@ export default function Home() {
               Mobile Money et banques partenaires dans un seul écosystème
               sécurisé.
             </p>
-            <Link href="/a-propos" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">
+            <Link href="/a-propos" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-green-400 hover:text-green-400">
               En savoir plus sur nous
             </Link>
           </div>
@@ -182,7 +182,7 @@ export default function Home() {
             <h3 className="text-2xl font-bold">Prêt à ouvrir votre compte Africo Cash ?</h3>
             <p className="mt-2 text-navy-900/80">Cinq étapes, un numéro unique à 8 chiffres, et votre argent est à portée de main.</p>
           </div>
-          <Link href="/inscription" className="whitespace-nowrap rounded-full bg-navy-950 px-7 py-3.5 text-sm font-bold text-white hover:bg-navy-800">
+          <Link href="/inscription" className="whitespace-nowrap rounded-full bg-navy-950 px-7 py-3.5 text-sm font-bold text-white hover:bg-green-500">
             Commencer maintenant
           </Link>
         </div>

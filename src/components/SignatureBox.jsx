@@ -48,7 +48,7 @@ export default function SignatureBox({ onChange }) {
             setHasSignature(false);
             onChange?.(null);
           }}
-          className="text-xs font-semibold text-gold-400 hover:underline"
+          className="text-xs font-semibold text-gold-400 hover:text-green-400 hover:underline"
         >
           Effacer
         </button>

@@ -39,7 +39,7 @@ export default function FAQ() {
             <div key={item.q} className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
               <button
                 onClick={() => setOpenIdx(isOpen ? -1 : idx)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-semibold sm:text-base"
+                className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-semibold sm:text-base hover:text-green-400 transition"
               >
                 {item.q}
                 <span className={`ml-4 text-gold-400 transition-transform ${isOpen ? "rotate-45" : ""}`}>＋</span>

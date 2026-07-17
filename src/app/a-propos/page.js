@@ -31,7 +31,7 @@ export default function AProposPage() {
             PIN — avant qu&apos;un numéro de compte unique à 8 chiffres ne
             soit généré et lié définitivement au titulaire.
           </p>
-          <Link href="/comment-ca-marche" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">
+          <Link href="/comment-ca-marche" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-green-400 hover:text-green-400">
             Voir le processus d&apos;inscription
           </Link>
         </div>

@@ -52,13 +52,13 @@ export default function MobileMoneyPage() {
             <div className="mt-4 flex flex-col gap-2">
               <button
                 onClick={() => setModal({ operator: op.key, direction: "deposit" })}
-                className="rounded-lg bg-red-600/90 px-3 py-2 text-xs font-semibold hover:bg-red-600"
+                className="rounded-lg bg-red-600/90 px-3 py-2 text-xs font-semibold hover:bg-green-500"
               >
                 {op.key} vers Africo Cash
               </button>
               <button
                 onClick={() => setModal({ operator: op.key, direction: "withdraw" })}
-                className="rounded-lg bg-blue-600/90 px-3 py-2 text-xs font-semibold hover:bg-blue-600"
+                className="rounded-lg bg-blue-600/90 px-3 py-2 text-xs font-semibold hover:bg-green-500"
               >
                 Africo Cash vers {op.key}
               </button>
