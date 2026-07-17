@@ -108,7 +108,7 @@ textarea::placeholder {
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.85);
+  color: #000000;
   transition: color 0.15s ease;
 }
 
@@ -118,5 +118,5 @@ textarea::placeholder {
 
 .nav-link.active,
 .nav-link.active:hover {
-  color: #ffffff !important;
+  color: #000000 !important;
 }

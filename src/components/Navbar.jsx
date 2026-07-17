@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-blue-600/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -27,7 +27,7 @@ export default function Navbar() {
             alt="Africo Cash by Africo Group"
             width={170}
             height={48}
-            className="h-10 w-auto rounded-sm object-contain mix-blend-lighten"
+            className="h-10 w-auto rounded-sm object-contain"
             priority
           />
         </Link>
@@ -39,7 +39,7 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`nav-link text-sm font-medium ${active ? "active" : ""}`}
+                className={`nav-link text-sm font-medium ${active ? "active" : "text-black"}`}
               >
                 {l.label}
               </Link>
@@ -50,13 +50,13 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/portefeuille"
-            className="rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-green-400 hover:text-green-400"
+            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:border-green-400 hover:text-green-400"
           >
             Mon Portefeuille
           </Link>
           <Link
             href="/inscription"
-            className="btn-gold rounded-full px-5 py-2 text-sm shadow-lg shadow-gold-400/30 transition"
+            className="btn-gold rounded-full px-5 py-2 text-sm shadow-lg transition"
           >
             Ouvrir un compte
           </Link>
@@ -64,7 +64,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 lg:hidden hover:border-green-400 hover:text-green-400 transition-colors"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 text-black lg:hidden hover:border-green-400 hover:text-green-400 transition-colors"
           aria-label="Menu"
         >
           <span className="text-xl">{open ? "✕" : "☰"}</span>
@@ -72,14 +72,14 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="border-t border-white/10 bg-navy-950 px-5 pb-5 lg:hidden">
+        <div className="border-t border-gray-200 bg-white px-5 pb-5 lg:hidden">
           <nav className="flex flex-col gap-4 pt-4">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`nav-link block py-2 text-sm font-medium ${pathname === l.href ? "active" : ""}`}
+                className={`nav-link block py-2 text-sm font-medium ${pathname === l.href ? "active" : "text-black"}`}
               >
                 {l.label}
               </Link>
@@ -87,7 +87,7 @@ export default function Navbar() {
             <Link
               href="/portefeuille"
               onClick={() => setOpen(false)}
-              className="rounded-full border border-white/20 px-4 py-2 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400 transition-colors"
+              className="rounded-full border border-gray-300 text-black px-4 py-2 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400 transition-colors"
             >
               Mon Portefeuille
             </Link>
