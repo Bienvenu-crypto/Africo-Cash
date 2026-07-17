@@ -73,7 +73,7 @@ export default function Home() {
               votre téléphone.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link href="/inscription" className="btn-gold rounded-full px-7 py-3.5 text-sm font-bold shadow-lg shadow-gold-500/20">
+              <Link href="/inscription" className="btn-gold rounded-full px-7 py-3.5 text-sm font-bold shadow-lg shadow-gold-400/30">
                 Ouvrir un compte gratuitement
               </Link>
               <Link href="/comment-ca-marche" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white/90 hover:border-gold-400 hover:text-gold-400">
@@ -113,7 +113,7 @@ export default function Home() {
       {/* SERVICES */}
       <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
         <SectionHeading
-          eyebrow="Nos services"
+          center
           title="Tout ce dont vous avez besoin dans un seul portefeuille"
           subtitle="Quatre modules connectés pour gérer votre argent au quotidien, sans jamais quitter Africo Cash."
         />
@@ -137,8 +137,8 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
         <div className="grid items-center gap-12 rounded-3xl border border-white/10 bg-white/5 p-8 lg:grid-cols-2 lg:p-14">
           <div>
-            <Eyebrow>À propos d&apos;Africo Cash</Eyebrow>
-            <h2 className="mt-4 text-3xl font-bold leading-tight">
+
+            <h2 className="mt-4 text-3xl font-bold leading-tight text-center">
               Le bras financier numérique du Groupe Africo
             </h2>
             <p className="mt-4 leading-relaxed text-white/65">

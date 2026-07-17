@@ -20,7 +20,7 @@ export default function ContactPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
-      <SectionHeading eyebrow="Contact" title="Parlons de votre projet avec Africo Cash" center />
+      <SectionHeading title="Parlons de votre projet avec Africo Cash" center />
 
       <div className="grid gap-10 lg:grid-cols-2">
         <Card>

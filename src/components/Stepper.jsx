@@ -11,13 +11,12 @@ export default function Stepper({ steps, current }) {
           <div key={label} className="flex flex-1 items-center last:flex-none">
             <div className="flex flex-col items-center gap-2">
               <div
-                className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold ${
-                  done
-                    ? "bg-gold-500 text-navy-950"
-                    : active
+                className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold ${done
+                  ? "bg-gold-500 text-navy-950"
+                  : active
                     ? "border-2 border-gold-400 text-gold-300"
                     : "border border-white/20 text-white/40"
-                }`}
+                  }`}
               >
                 {done ? "✓" : idx}
               </div>

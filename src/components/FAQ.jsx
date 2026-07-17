@@ -31,7 +31,7 @@ export default function FAQ() {
 
   return (
     <section className="mx-auto max-w-4xl px-5 py-20 lg:px-8">
-      <SectionHeading eyebrow="FAQ" title="Questions fréquentes" center />
+      <SectionHeading title="Questions fréquentes" center />
       <div className="space-y-3">
         {ITEMS.map((item, idx) => {
           const isOpen = openIdx === idx;

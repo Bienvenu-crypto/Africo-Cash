@@ -76,7 +76,7 @@ const GUICHET_STEPS = [
   {
     n: "3",
     title: "Fin du processus",
-    items: ["Enregistrement dans la table Guichet_Bancaire", "Statut : Opérationnel — connexion via Code Guichet + mot de passe"],
+    items: ["Enregistrement dans la table Guichet_Bancaire", "Statut : Opérationnel; connexion via Code Guichet + mot de passe"],
   },
 ];
 
@@ -109,7 +109,7 @@ export default function CommentCaMarche() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-16 lg:px-8">
       <div className="text-center">
-        <Eyebrow>Processus chronologique</Eyebrow>
+
         <h1 className="mt-4 text-4xl font-bold">Comment ça marche</h1>
         <p className="mx-auto mt-4 max-w-2xl text-white/65">
           L&apos;inscription sur Africo Cash suit un ordre strict, étape par
@@ -119,7 +119,7 @@ export default function CommentCaMarche() {
       </div>
 
       <section className="mt-16">
-        <SectionHeading eyebrow="Client" title="Enregistrement du compte utilisateur" />
+        <SectionHeading title="Enregistrement du compte utilisateur" center />
         <StepList steps={CLIENT_STEPS} />
         <div className="mt-6 text-center">
           <Link href="/inscription" className="btn-gold inline-block rounded-full px-7 py-3.5 text-sm font-bold">
@@ -129,7 +129,7 @@ export default function CommentCaMarche() {
       </section>
 
       <section className="mt-20">
-        <SectionHeading eyebrow="Agent Africo" title="Enregistrement de l'Agent (le distributeur)" />
+        <SectionHeading title="Enregistrement de l'Agent (le distributeur)" center />
         <StepList steps={AGENT_STEPS} />
         <div className="mt-6 text-center">
           <Link href="/inscription-agent" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">
@@ -139,7 +139,7 @@ export default function CommentCaMarche() {
       </section>
 
       <section className="mt-20">
-        <SectionHeading eyebrow="Guichet bancaire" title="Configuration du guichet (interface banque)" subtitle="Plus besoin de profils nominatifs pour les employés de banque : le système identifie directement le guichet de l'institution partenaire." />
+        <SectionHeading title="Configuration du guichet (interface banque)" subtitle="Plus besoin de profils nominatifs pour les employés de banque : le système identifie directement le guichet de l'institution partenaire." center />
         <StepList steps={GUICHET_STEPS} />
         <div className="mt-6 text-center">
           <Link href="/guichet" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-gold-400 hover:text-gold-400">

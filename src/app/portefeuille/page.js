@@ -34,7 +34,7 @@ function LoginCard({ onLogin }) {
   return (
     <div className="mx-auto grid max-w-5xl items-center gap-12 px-5 py-16 lg:grid-cols-2 lg:px-8">
       <div>
-        <Eyebrow>Espace Client</Eyebrow>
+
         <h1 className="mt-4 text-3xl font-bold">Accédez à votre portefeuille</h1>
         <p className="mt-3 text-white/60">
           Connectez-vous avec votre numéro Africo Cash à 8 chiffres et votre code PIN pour gérer votre solde.

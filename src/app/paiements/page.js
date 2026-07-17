@@ -21,7 +21,7 @@ export default function PaiementsPage() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-16 lg:px-8">
       <SectionHeading
-        eyebrow="Paiements & factures"
+        center
         title="Payez vos factures depuis votre solde Africo Cash"
         subtitle="Eau, électricité, internet, télévision et achats marchands, réglés en un instant."
       />

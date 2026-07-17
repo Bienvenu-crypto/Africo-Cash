@@ -14,8 +14,8 @@ export default function AProposPage() {
     <div>
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8">
         <div>
-          <Eyebrow>À propos d&apos;Africo Cash</Eyebrow>
-          <h1 className="mt-4 text-4xl font-bold leading-tight">
+
+          <h1 className="mt-4 text-4xl font-bold leading-tight text-center">
             Le bras financier numérique du Groupe Africo
           </h1>
           <p className="mt-5 leading-relaxed text-white/65">
@@ -55,8 +55,8 @@ export default function AProposPage() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-10 text-center">
           <h2 className="text-2xl font-bold">Notre mission</h2>
           <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-white/65">
-            Rendre chaque transaction — retrait, envoi, conversion ou paiement
-            de facture — aussi simple qu&apos;un message texte, tout en
+            Rendre chaque transaction: retrait, envoi, conversion ou paiement
+            de facture; aussi simple qu&apos;un message texte, tout en
             garantissant la sécurité et la traçabilité exigées par les
             institutions bancaires partenaires.
           </p>

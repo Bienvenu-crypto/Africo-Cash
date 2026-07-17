@@ -20,7 +20,7 @@ export default function BanquesPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
       <SectionHeading
-        eyebrow="Banques partenaires"
+        center
         title="Interopérabilité directe avec vos comptes bancaires"
         subtitle="Rawbank, Equity BCDC, Trust Merchant Bank, Ecobank et FBNBank DRC connectées à votre portefeuille Africo Cash."
       />

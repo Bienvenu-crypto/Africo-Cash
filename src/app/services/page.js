@@ -53,7 +53,7 @@ export default function ServicesPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
       <SectionHeading
-        eyebrow="Nos services"
+
         title="Un écosystème financier complet"
         subtitle="Quatre modules connectés à votre portefeuille Africo Cash, disponibles où que vous soyez en RDC."
         center
@@ -63,7 +63,7 @@ export default function ServicesPage() {
         {SERVICES.map((s, i) => (
           <div key={s.href} className={`grid items-center gap-10 lg:grid-cols-2 ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
             <Card>
-              <Eyebrow>Service {i + 1}</Eyebrow>
+
               <h2 className="mt-3 text-2xl font-bold">{s.title}</h2>
               <p className="mt-2 text-white/60">{s.desc}</p>
               <ul className="mt-4 space-y-2 text-sm text-white/65">

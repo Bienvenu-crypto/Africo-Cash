@@ -93,7 +93,7 @@ export default function GuichetPage() {
   return (
     <div className="mx-auto max-w-lg px-5 py-16 lg:px-8">
       <SectionHeading
-        eyebrow="Interface Banque"
+
         title={mode === "login" ? "Connexion Guichet Bancaire" : "Configuration d'un nouveau guichet"}
         subtitle={
           mode === "login"

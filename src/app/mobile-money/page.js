@@ -19,7 +19,7 @@ export default function MobileMoneyPage() {
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
       <SectionHeading
-        eyebrow="Passerelles Mobile Money"
+        center
         title="Rechargez ou videz votre solde Africo Cash"
         subtitle="Interopérabilité directe avec Airtel Money, Vodacom M-Pesa, Orange Money et Africell Money."
       />

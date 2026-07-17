@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-navy-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-blue-600/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -37,9 +37,8 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className={`text-sm font-medium transition-colors hover:text-gold-400 ${
-                pathname === l.href ? "text-gold-400" : "text-white/85"
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-gold-400 ${pathname === l.href ? "text-gold-400" : "text-white/85"
+                }`}
             >
               {l.label}
             </Link>
@@ -55,7 +54,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/inscription"
-            className="btn-gold rounded-full px-5 py-2 text-sm shadow-lg shadow-gold-500/20 transition"
+            className="btn-gold rounded-full px-5 py-2 text-sm shadow-lg shadow-gold-400/30 transition"
           >
             Ouvrir un compte
           </Link>

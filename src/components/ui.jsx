@@ -38,7 +38,7 @@ export function Alert({ type = "info", children }) {
 export function PrimaryButton({ children, className = "", ...props }) {
   return (
     <button
-      className={`btn-gold rounded-full px-6 py-3 text-sm font-bold shadow-lg shadow-gold-500/20 transition disabled:opacity-50 ${className}`}
+      className={`btn-gold rounded-full px-6 py-3 text-sm font-bold shadow-lg shadow-gold-400/30 transition disabled:opacity-50 ${className}`}
       {...props}
     >
       {children}
@@ -67,7 +67,7 @@ export function Field({ label, children }) {
 }
 
 export const inputClass =
-  "w-full rounded-lg border border-white/15 bg-white px-3.5 py-2.5 text-sm outline-none ring-gold-400 focus:ring-2";
+  "w-full rounded-lg border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm outline-none ring-gold-400 focus:ring-2 focus:border-gold-400 focus:bg-white/20 transition";
 
 export function Modal({ open, onClose, title, children }) {
   if (!open) return null;

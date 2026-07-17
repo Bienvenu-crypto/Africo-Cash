@@ -7,10 +7,10 @@
   --color-navy-700: #142a63;
   --color-blue-600: #1a3fa0;
   --color-blue-500: #2354c9;
-  --color-gold-300: #f4d888;
-  --color-gold-400: #eec258;
-  --color-gold-500: #d8a326;
-  --color-gold-600: #b8811a;
+  --color-gold-300: #93bbfd;
+  --color-gold-400: #1668f5;
+  --color-gold-500: #1558d6;
+  --color-gold-600: #1047b9;
   --background: var(--color-navy-950);
   --foreground: #ffffff;
 }
@@ -48,11 +48,11 @@ body {
 
 ::selection {
   background: var(--color-gold-500);
-  color: #0a1330;
+  color: #ffffff;
 }
 
 .gold-text {
-  background: linear-gradient(90deg, #f4d888 0%, #d8a326 60%, #b8811a 100%);
+  background: linear-gradient(90deg, #93bbfd 0%, #1668f5 60%, #1047b9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -65,19 +65,19 @@ body {
 }
 
 .btn-gold {
-  background: linear-gradient(90deg, #f4d888 0%, #d8a326 60%, #b8811a 100%);
-  color: #0a1330;
+  background: linear-gradient(90deg, #1668f5 0%, #1558d6 60%, #1047b9 100%);
+  color: #ffffff;
   font-weight: 700;
 }
 
 .btn-gold:hover {
-  filter: brightness(1.08);
+  filter: brightness(1.12);
 }
 
 input,
 select,
 textarea {
-  color: #0a1330;
+  color: #ffffff;
 }
 
 ::placeholder {
@@ -86,7 +86,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(10, 19, 48, 0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .no-scrollbar::-webkit-scrollbar {
