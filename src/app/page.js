@@ -168,10 +168,36 @@ export default function Home() {
         <p className="mb-6 text-center text-sm uppercase tracking-widest text-white/50">
           Interopérable avec les principales institutions de la RDC
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-white/70">
-          {["Rawbank", "Equity BCDC", "TMB", "Ecobank", "FBNBank DRC", "Airtel Money", "Vodacom M-Pesa", "Orange Money", "Africell Money"].map((n) => (
-            <span key={n} className="text-sm font-semibold">{n}</span>
-          ))}
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+          {/* Banques */}
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/banks/rawbank.jpg" alt="Rawbank" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/banks/equity.jpg" alt="Equity BCDC" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/banks/tmb.jpg" alt="Trust Merchant Bank" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/banks/ecobank.jpg" alt="Ecobank" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/banks/fbn.jpg" alt="FBNBank DRC" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          {/* Mobile Money */}
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/operators/airtel.jpg" alt="Airtel Money" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/operators/vodacom.jpg" alt="Vodacom M-Pesa" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/operators/orange.jpg" alt="Orange Money" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
+          <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden">
+            <Image src="/images/operators/africell.jpg" alt="Africell Money" width={80} height={80} className="max-h-full w-auto object-contain" />
+          </div>
         </div>
       </section>
 

@@ -51,8 +51,14 @@ export default function FacialCapture({ onChange }) {
       <canvas ref={canvasRef} className="hidden" />
       {status === "captured" && photo ? (
         <div className="flex flex-col items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo} alt="Photo capturée" className="h-40 w-40 rounded-lg object-cover" />
+          {photo === "simulated" ? (
+            <div className="flex h-40 w-40 items-center justify-center rounded-lg bg-navy-900 text-4xl">
+              👤
+            </div>
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={photo} alt="Photo capturée" className="h-40 w-40 rounded-lg object-cover bg-navy-900" />
+          )}
           <button type="button" onClick={retake} className="text-xs font-semibold text-gold-400 hover:text-green-400 hover:underline">
             Reprendre la photo
           </button>

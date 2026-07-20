@@ -26,12 +26,12 @@ export default function AProposPage() {
             numérique sécurisé.
           </p>
           <p className="mt-4 leading-relaxed text-white/65">
-            Chaque compte est protégé par un processus KYC rigoureux — pièce
+            Chaque compte est protégé par un processus KYC rigoureux: pièce
             d&apos;identité, scan facial, signature électronique et code
-            PIN — avant qu&apos;un numéro de compte unique à 8 chiffres ne
+            PIN; avant qu&apos;un numéro de compte unique à 8 chiffres ne
             soit généré et lié définitivement au titulaire.
           </p>
-          <Link href="/comment-ca-marche" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-green-400 hover:text-green-400">
+          <Link href="/comment-ca-marche" className="mt-6 inline-block rounded-full border border-green/25 px-6 py-3 text-sm font-semibold hover:border-green-400 hover:text-green-400">
             Voir le processus d&apos;inscription
           </Link>
         </div>
@@ -39,7 +39,7 @@ export default function AProposPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-20 lg:px-8">
-        <SectionHeading eyebrow="Pourquoi choisir Africo Cash" title="L'avantage Africo" center />
+        <SectionHeading title="L'avantage Africo" center />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {ADVANTAGES.map((a) => (
             <Card key={a.n}>

@@ -4,7 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { Field, inputClass, PrimaryButton, Alert, Card, Modal, SectionHeading } from "@/components/ui";
 
-const BANKS = ["Rawbank", "Equity BCDC", "Trust Merchant Bank", "Ecobank", "FBNBank DRC"];
+const BANKS = [
+  { name: "Rawbank", logo: "/images/banks/rawbank.jpg" },
+  { name: "Equity BCDC", logo: "/images/banks/equity.jpg" },
+  { name: "Trust Merchant Bank", logo: "/images/banks/tmb.jpg" },
+  { name: "Ecobank", logo: "/images/banks/ecobank.jpg" },
+  { name: "FBNBank DRC", logo: "/images/banks/fbn.jpg" }
+];
 
 const ACTIONS = [
   { key: "retirer-cash", label: "Retirer le cash", color: "bg-slate-600/90 hover:bg-green-500" },
@@ -46,13 +52,16 @@ export default function BanquesPage() {
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
         {BANKS.map((bank) => (
-          <Card key={bank}>
-            <h3 className="font-bold">{bank}</h3>
+          <Card key={bank.name}>
+            <div className="mb-4 flex h-16 items-center justify-center rounded bg-white p-2">
+              <Image src={bank.logo} alt={bank.name} width={120} height={48} className="max-h-full w-auto object-contain" />
+            </div>
+            <h3 className="font-bold">{bank.name}</h3>
             <div className="mt-4 flex flex-col gap-2">
               {ACTIONS.map((a) => (
                 <button
                   key={a.key}
-                  onClick={() => setModal({ bank, action: a.key })}
+                  onClick={() => setModal({ bank: bank.name, action: a.key })}
                   className={`rounded-lg px-3 py-2 text-xs font-semibold text-white ${a.color}`}
                 >
                   {a.label}
