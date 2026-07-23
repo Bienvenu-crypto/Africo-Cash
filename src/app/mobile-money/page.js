@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Field, inputClass, PrimaryButton, Alert, Card, Modal, SectionHeading } from "@/components/ui";
 
@@ -11,17 +11,53 @@ const OPERATORS = [
   { key: "Africell Money", color: "border-fuchsia-400/40", image: "/images/operators/africell.jpg", btnDeposit: "bg-[#8b0e8b]", btnWithdraw: "bg-[#0047a0]", name: "Africell" },
 ];
 
-const MOCK_HISTORY = [
-  { id: 1, date: "07/07/2026", operator: "Airtel Money", operatorColor: "text-red-600", type: "Dépôt vers Africo Cash", amount: "+50 USD", amountColor: "text-green-600", status: "Réussi", statusIcon: "✅", statusColor: "text-green-600" },
-  { id: 2, date: "06/07/2026", operator: "Vodacom M-Pesa", operatorColor: "text-blue-900", type: "Africo Cash → Vodacom", amount: "-20 USD", amountColor: "text-red-600", status: "En attente", statusIcon: "⏳", statusColor: "text-orange-500" },
-  { id: 3, date: "05/07/2026", operator: "Orange Money", operatorColor: "text-blue-900", type: "Retrait mobile", amount: "-10 USD", amountColor: "text-red-600", status: "Réussi", statusIcon: "✅", statusColor: "text-green-600" },
-];
-
 export default function MobileMoneyPage() {
   const [modal, setModal] = useState(null); // { operator, direction }
   const [accountNumber, setAccountNumber] = useState("");
   const [notice, setNotice] = useState("");
   const [showHistory, setShowHistory] = useState(false);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    async function fetchHistory() {
+      if (!accountNumber) {
+        setTransactions([]);
+        return;
+      }
+      try {
+        const res = await fetch(`/api/wallet/${accountNumber}`);
+        if (res.ok) {
+          const data = await res.json();
+          const mobileMoneyTxs = (data.transactions || []).filter(
+            (tx) => tx.type === "Depot Mobile Money" || tx.type === "Retrait Mobile Money"
+          );
+          setTransactions(mobileMoneyTxs);
+        } else {
+          setTransactions([]);
+        }
+      } catch (e) {
+        setTransactions([]);
+      }
+    }
+
+    if (showHistory) {
+      fetchHistory();
+    }
+  }, [showHistory, accountNumber]);
+
+  const getOperatorColor = (operator) => {
+    if (operator?.includes("Airtel")) return "text-red-600";
+    if (operator?.includes("Vodacom")) return "text-red-600";
+    if (operator?.includes("Orange")) return "text-orange-600";
+    if (operator?.includes("Africell")) return "text-purple-600";
+    return "text-blue-900";
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("fr-FR");
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
@@ -62,13 +98,13 @@ export default function MobileMoneyPage() {
                 onClick={() => setModal({ operator: op.key, direction: "deposit" })}
                 className={`w-full rounded-md ${op.btnDeposit} px-2 py-2 text-sm font-semibold text-white hover:opacity-90 leading-tight`}
               >
-                {op.name} vers<br/>Africo Cash
+                {op.name} vers<br />Africo Cash
               </button>
               <button
                 onClick={() => setModal({ operator: op.key, direction: "withdraw" })}
                 className={`w-full rounded-md ${op.btnWithdraw} px-2 py-2 text-sm font-semibold text-white hover:opacity-90 leading-tight`}
               >
-                Africo Cash<br/>vers {op.name}
+                Africo Cash<br />vers {op.name}
               </button>
             </div>
           </Card>
@@ -76,16 +112,17 @@ export default function MobileMoneyPage() {
       </div>
 
       <div className="mt-12">
-        <button
-          onClick={() => setShowHistory(!showHistory)}
-          className="flex items-center text-xl font-bold text-blue-900 bg-white px-4 py-2 rounded-t-lg border-b-2 border-blue-100 w-full md:w-auto"
-        >
-          Historique des Transactions
-          <span className="ml-2 border-t-2 border-blue-900 w-full flex-1 md:w-48 hidden md:block"></span>
-        </button>
+        <div className="flex justify-center mb-4">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="text-xl font-bold text-blue-900 hover:text-blue-700 transition-colors bg-white px-6 py-2 rounded-lg shadow-sm"
+          >
+            Historique des Transactions {showHistory ? "▾" : "▸"}
+          </button>
+        </div>
 
         {showHistory && (
-          <div className="bg-white rounded-b-lg rounded-tr-lg shadow-sm overflow-hidden p-4">
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-center">
                 <thead>
@@ -98,19 +135,31 @@ export default function MobileMoneyPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {MOCK_HISTORY.map((row) => (
-                    <tr key={row.id} className="border-b border-gray-100 last:border-0 font-medium">
-                      <td className="py-3 text-blue-900">{row.date}</td>
-                      <td className={`py-3 font-bold ${row.operatorColor}`}>{row.operator}</td>
-                      <td className="py-3 text-blue-900">{row.type}</td>
-                      <td className={`py-3 font-bold ${row.amountColor}`}>{row.amount}</td>
-                      <td className={`py-3 ${row.statusColor}`}>
-                        <span className="flex items-center justify-center gap-1">
-                          {row.statusIcon} {row.status}
-                        </span>
+                  {transactions.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" className="py-6 text-gray-500">
+                        {!accountNumber ? "Veuillez entrer votre numéro Africo Cash pour voir l'historique." : "Aucune transaction trouvée."}
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    transactions.map((tx) => (
+                      <tr key={tx.id} className="border-b border-gray-100 last:border-0 font-medium">
+                        <td className="py-3 text-blue-900">{formatDate(tx.created_at)}</td>
+                        <td className={`py-3 font-bold ${getOperatorColor(tx.counterparty)}`}>{tx.counterparty}</td>
+                        <td className="py-3 text-blue-900">
+                          {tx.type === "Depot Mobile Money" ? "Dépôt vers Africo Cash" : `Africo Cash → ${tx.counterparty}`}
+                        </td>
+                        <td className={`py-3 font-bold ${tx.amount > 0 ? "text-green-600" : "text-red-600"}`}>
+                          {tx.amount > 0 ? "+" : ""}{tx.amount} {tx.currency}
+                        </td>
+                        <td className={`py-3 ${tx.status === "Reussi" ? "text-green-600" : "text-orange-500"}`}>
+                          <span className="flex items-center justify-center gap-1">
+                            {tx.status === "Reussi" ? "✅" : "⏳"} {tx.status === "Reussi" ? "Réussi" : tx.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -130,6 +179,11 @@ export default function MobileMoneyPage() {
         onDone={(msg) => {
           setNotice(msg);
           setModal(null);
+          // Rafraichir l'historique apres transaction
+          if (showHistory) {
+            setShowHistory(false);
+            setTimeout(() => setShowHistory(true), 100);
+          }
           setTimeout(() => setNotice(""), 6000);
         }}
       />
