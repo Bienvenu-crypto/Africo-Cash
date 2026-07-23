@@ -58,8 +58,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 px-5 py-6 text-center text-xs text-white/50 lg:px-8">
-        © {new Date().getFullYear()} Africo Cash — Une marque d&apos;Africo Group. Tous droits réservés.
+      <div className="border-t border-white/10 px-5 py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/50 lg:px-8">
+        <p>© {new Date().getFullYear()} Africo Cash — Une marque d&apos;Africo Group. Tous droits réservés.</p>
+        <Link href="/admin/tarifs" className="mt-4 sm:mt-0 text-white/30 hover:text-white/80 transition-colors">Configuration Tarifs (Admin)</Link>
       </div>
     </footer>
   );
