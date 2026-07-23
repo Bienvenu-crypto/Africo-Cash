@@ -67,20 +67,6 @@ export default function MobileMoneyPage() {
         subtitle="Interopérabilité directe avec Airtel Money, Vodacom M-Pesa, Orange Money et Africell Money."
       />
 
-      <Card className="mb-8 max-w-md">
-        <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input
-            className={inputClass}
-            inputMode="numeric"
-            maxLength={8}
-            placeholder="48291054"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
-          />
-        </Field>
-        <p className="mt-2 text-xs text-white/50">Requis pour effectuer une opération ci-dessous.</p>
-      </Card>
-
       {notice && (
         <div className="mb-8 max-w-md">
           <Alert type="success">{notice}</Alert>
@@ -123,6 +109,18 @@ export default function MobileMoneyPage() {
 
         {showHistory && (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
+            <div className="mb-6 max-w-sm mx-auto">
+              <Field label="Votre numéro Africo Cash (8 chiffres)">
+                <input
+                  className={`${inputClass} !text-black`}
+                  inputMode="numeric"
+                  maxLength={8}
+                  placeholder="48291054"
+                  value={accountNumber}
+                  onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
+                />
+              </Field>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-center">
                 <thead>
@@ -138,7 +136,7 @@ export default function MobileMoneyPage() {
                   {transactions.length === 0 ? (
                     <tr>
                       <td colSpan="5" className="py-6 text-gray-500">
-                        {!accountNumber ? "Veuillez entrer votre numéro Africo Cash pour voir l'historique." : "Aucune transaction trouvée."}
+                        {accountNumber.length < 8 ? "Veuillez entrer votre numéro Africo Cash (8 chiffres) pour voir l'historique." : "Aucune transaction trouvée."}
                       </td>
                     </tr>
                   ) : (
@@ -175,6 +173,7 @@ export default function MobileMoneyPage() {
       <OperationModal
         modal={modal}
         accountNumber={accountNumber}
+        setAccountNumber={setAccountNumber}
         onClose={() => setModal(null)}
         onDone={(msg) => {
           setNotice(msg);
@@ -191,7 +190,7 @@ export default function MobileMoneyPage() {
   );
 }
 
-function OperationModal({ modal, accountNumber, onClose, onDone }) {
+function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDone }) {
   const [mobileNumber, setMobileNumber] = useState("");
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("");
@@ -206,7 +205,7 @@ function OperationModal({ modal, accountNumber, onClose, onDone }) {
     e.preventDefault();
     setError("");
     if (!accountNumber) {
-      setError("Renseignez d'abord votre numéro Africo Cash ci-dessus.");
+      setError("Renseignez votre numéro Africo Cash.");
       return;
     }
     setLoading(true);
@@ -238,6 +237,16 @@ function OperationModal({ modal, accountNumber, onClose, onDone }) {
   return (
     <Modal open={!!modal} onClose={onClose} title={isDeposit ? `${modal.operator} vers Africo Cash` : `Africo Cash vers ${modal.operator}`}>
       <form onSubmit={submit} className="space-y-4">
+        <Field label="Votre numéro Africo Cash (8 chiffres)">
+          <input 
+            className={inputClass} 
+            inputMode="numeric" 
+            maxLength={8} 
+            placeholder="48291054" 
+            value={accountNumber} 
+            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))} 
+          />
+        </Field>
         <Field label={isDeposit ? "Numéro Mobile Money à débiter" : "Numéro bénéficiaire"}>
           <input className={inputClass} value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} placeholder="+243 8XX XXX XXX" />
         </Field>
