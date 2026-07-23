@@ -110,16 +110,20 @@ export default function MobileMoneyPage() {
         {showHistory && (
           <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
             <div className="mb-6 max-w-sm mx-auto">
-              <Field label="Votre numéro Africo Cash (8 chiffres)">
+              <label className="block">
+                <span className="mb-1.5 block text-sm font-bold text-blue-900">
+                  Votre numéro Africo Cash (8 chiffres)
+                </span>
                 <input
-                  className={`${inputClass} !text-black`}
+                  className="w-full rounded-lg border border-blue-200 bg-gray-50 px-3.5 py-2.5 outline-none ring-blue-500 focus:ring-2 focus:border-blue-500 font-bold text-lg transition"
+                  style={{ color: "#2563eb" }}
                   inputMode="numeric"
                   maxLength={8}
                   placeholder="48291054"
                   value={accountNumber}
                   onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
                 />
-              </Field>
+              </label>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm text-center">
@@ -239,7 +243,8 @@ function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDon
       <form onSubmit={submit} className="space-y-4">
         <Field label="Votre numéro Africo Cash (8 chiffres)">
           <input 
-            className={inputClass} 
+            className={`${inputClass} !font-bold !text-lg tracking-wider`} 
+            style={{ color: "#60a5fa" }}
             inputMode="numeric" 
             maxLength={8} 
             placeholder="48291054" 
