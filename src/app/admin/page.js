@@ -5,12 +5,12 @@ import { format, parseISO } from "date-fns";
 import { fr } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { 
+import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer,
   PieChart, Pie, Cell, BarChart, Bar, Legend
 } from "recharts";
-import { 
-  Search, Bell, Settings, User, Download, Home, Users, Settings as ConfigIcon, 
+import {
+  Search, Bell, Settings, User, Download, Home, Users, Settings as ConfigIcon,
   PieChart as PieIcon, BarChart2, TrendingUp, Map, HelpCircle, Calendar as CalendarIcon
 } from "lucide-react";
 
@@ -107,14 +107,14 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex h-screen w-full bg-[#141b2d] text-gray-100 font-sans overflow-hidden">
-      
+
       {/* SIDEBAR */}
       <aside className="w-64 bg-[#1f2a40] h-full flex flex-col flex-shrink-0 overflow-y-auto custom-scrollbar">
         <div className="flex items-center justify-between p-4">
-          <h1 className="text-xl font-bold tracking-widest text-white">ADMINIS</h1>
-          <button className="text-gray-400 hover:text-white">☰</button>
+          <h1 className="text-xl font-bold tracking-widest text-white">PANNEAU ADMIN</h1>
+
         </div>
-        
+
         <div className="flex flex-col items-center py-6">
           <div className="h-20 w-20 overflow-hidden rounded-full border-2 border-indigo-500 mb-3">
             {/* Minimal SVG Avatar for placeholder */}
@@ -127,11 +127,11 @@ export default function AdminDashboard() {
         </div>
 
         <nav className="flex-1 px-4 pb-4 space-y-2 text-sm font-medium">
-          <SidebarItem icon={<Home size={18} />} text="Dashboard" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
+          <SidebarItem icon={<Home size={18} />} text="Tableau de Bord" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
           <SidebarItem icon={<Users size={18} />} text="Utilisateurs" active={activeTab === 'users'} onClick={() => setActiveTab('users')} />
           <SidebarItem icon={<ConfigIcon size={18} />} text="Configuration" active={activeTab === 'config'} onClick={() => setActiveTab('config')} />
         </nav>
-        
+
         <div className="p-4">
           <button onClick={handleLogout} className="w-full bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-300 transition py-2 rounded-lg font-bold">
             Déconnexion
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
 
       {/* MAIN CONTENT */}
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-        
+
         {/* TOPBAR */}
         <header className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
           <div className="flex items-center bg-[#1f2a40] rounded-md px-3 py-1.5 w-64">
@@ -162,8 +162,9 @@ export default function AdminDashboard() {
           {activeTab === "config" && <ConfigView />}
         </div>
       </main>
-      
-      <style dangerouslySetInnerHTML={{__html: `
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #141b2d; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #2d3748; border-radius: 4px; }
@@ -226,7 +227,7 @@ function TransactionsDashboardView() {
   transactions.forEach(tx => {
     const dateStr = format(parseISO(tx.created_at.replace(" ", "T")), "MMM dd");
     if (!lineDataObj[dateStr]) lineDataObj[dateStr] = { name: dateStr, Depot: 0, Retrait: 0, Paiement: 0 };
-    
+
     if (tx.type.toLowerCase().includes('depot')) lineDataObj[dateStr].Depot += Math.abs(tx.amount);
     else if (tx.type.toLowerCase().includes('retrait')) lineDataObj[dateStr].Retrait += Math.abs(tx.amount);
     else lineDataObj[dateStr].Paiement += Math.abs(tx.amount);
@@ -255,7 +256,7 @@ function TransactionsDashboardView() {
     <>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-3xl font-bold text-white mb-1">DASHBOARD</h2>
+          <h2 className="text-3xl font-bold text-white mb-1">TABLEAU DE BORD</h2>
           <p className="text-sm text-indigo-400 font-semibold">Bienvenue sur votre tableau de bord interactif</p>
         </div>
         <div className="flex space-x-3 relative">
@@ -263,10 +264,10 @@ function TransactionsDashboardView() {
             <CalendarIcon size={16} className="mr-2" />
             {dateRange.from ? format(dateRange.from, "dd/MM/yyyy") : "Filtrer"} - {dateRange.to ? format(dateRange.to, "dd/MM/yyyy") : ""}
           </button>
-          
+
           {showCalendar && (
             <div className="absolute top-12 right-0 z-50 bg-[#1f2a40] rounded-xl border border-gray-700 shadow-2xl p-4">
-              <DayPicker mode="range" selected={dateRange} onSelect={(r) => { if(r) setDateRange(r) }} locale={fr} />
+              <DayPicker mode="range" selected={dateRange} onSelect={(r) => { if (r) setDateRange(r) }} locale={fr} />
               <button onClick={() => setShowCalendar(false)} className="w-full mt-2 bg-indigo-600 py-1 rounded text-sm text-white font-bold">Fermer</button>
             </div>
           )}
@@ -288,7 +289,7 @@ function TransactionsDashboardView() {
 
       {/* MIDDLE ROW (LINE CHART & TRANSACTIONS) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        
+
         {/* LINE CHART */}
         <div className="bg-[#1f2a40] p-6 rounded-lg lg:col-span-2 shadow-lg">
           <div className="flex justify-between items-start mb-4">
@@ -348,7 +349,7 @@ function TransactionsDashboardView() {
 
       {/* BOTTOM ROW (PIE, BAR, GEO) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* PIE CHART */}
         <div className="bg-[#1f2a40] p-6 rounded-lg shadow-lg flex flex-col items-center">
           <h3 className="text-sm font-semibold text-white w-full text-left mb-2">Répartition (Volume)</h3>
@@ -385,7 +386,7 @@ function TransactionsDashboardView() {
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-               <div className="h-full flex items-center justify-center text-gray-500">Vide</div>
+              <div className="h-full flex items-center justify-center text-gray-500">Vide</div>
             )}
           </div>
         </div>
@@ -394,13 +395,13 @@ function TransactionsDashboardView() {
         <div className="bg-[#1f2a40] p-6 rounded-lg shadow-lg flex flex-col">
           <h3 className="text-sm font-semibold text-white mb-4">Trafic Géographique RDC</h3>
           <div className="flex-1 flex items-center justify-center opacity-70 relative">
-             <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-gray-600">
-                <path d="M150 100 Q 200 50 300 80 T 450 150 T 600 120 T 750 180" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
-                <circle cx="300" cy="180" r="10" fill="#4ade80" />
-                <circle cx="550" cy="100" r="8" fill="#38bdf8" />
-                <text x="300" y="210" fill="#4ade80" textAnchor="middle" fontSize="16" className="font-bold">Kinshasa</text>
-                <text x="550" y="130" fill="#38bdf8" textAnchor="middle" fontSize="16" className="font-bold">Goma</text>
-             </svg>
+            <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-gray-600">
+              <path d="M150 100 Q 200 50 300 80 T 450 150 T 600 120 T 750 180" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
+              <circle cx="300" cy="180" r="10" fill="#4ade80" />
+              <circle cx="550" cy="100" r="8" fill="#38bdf8" />
+              <text x="300" y="210" fill="#4ade80" textAnchor="middle" fontSize="16" className="font-bold">Kinshasa</text>
+              <text x="550" y="130" fill="#38bdf8" textAnchor="middle" fontSize="16" className="font-bold">Goma</text>
+            </svg>
           </div>
         </div>
 
@@ -536,10 +537,10 @@ function ConfigView() {
           <div className="mt-8 border-t border-gray-700 pt-6">
             {notice && <div className="mb-4 rounded-md bg-green-500/10 border border-green-500/20 p-4 text-green-400">{notice}</div>}
             {error && <div className="mb-4 rounded-md bg-red-500/10 border border-red-500/20 p-4 text-red-400">{error}</div>}
-            
-            <button 
-              type="submit" 
-              disabled={saving} 
+
+            <button
+              type="submit"
+              disabled={saving}
               className="rounded-lg bg-indigo-600 px-6 py-2 font-bold text-white transition hover:bg-indigo-700 disabled:opacity-50"
             >
               {saving ? "Enregistrement..." : "Enregistrer les modifications"}
