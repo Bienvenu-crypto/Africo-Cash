@@ -218,30 +218,26 @@ function TransactionsDashboardView() {
     fetchTransactions(dateRange);
   }, [dateRange]);
 
-  // Aggregate Data for Charts
-  const totalVolume = transactions.reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
+  // Aggregate Data for Charts — split by currency
+  const totalVolumeUSD = transactions.filter(tx => tx.currency === 'USD').reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
+  const totalVolumeCDF = transactions.filter(tx => tx.currency === 'CDF').reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
   const totalFees = transactions.reduce((acc, tx) => acc + tx.fee, 0);
 
-  // Line Chart Data: Group by date and type
+  // Line Chart Data: Group by date — USD and CDF volumes separately
   const lineDataObj = {};
   transactions.forEach(tx => {
     const dateStr = format(parseISO(tx.created_at.replace(" ", "T")), "MMM dd");
-    if (!lineDataObj[dateStr]) lineDataObj[dateStr] = { name: dateStr, Depot: 0, Retrait: 0, Paiement: 0 };
-
-    if (tx.type.toLowerCase().includes('depot')) lineDataObj[dateStr].Depot += Math.abs(tx.amount);
-    else if (tx.type.toLowerCase().includes('retrait')) lineDataObj[dateStr].Retrait += Math.abs(tx.amount);
-    else lineDataObj[dateStr].Paiement += Math.abs(tx.amount);
+    if (!lineDataObj[dateStr]) lineDataObj[dateStr] = { name: dateStr, USD: 0, CDF: 0 };
+    if (tx.currency === 'USD') lineDataObj[dateStr].USD += Math.abs(tx.amount);
+    else if (tx.currency === 'CDF') lineDataObj[dateStr].CDF += Math.abs(tx.amount);
   });
   const lineData = Object.values(lineDataObj).reverse();
 
-  // Pie Chart Data: Group by transaction type
-  const pieDataObj = {};
-  transactions.forEach(tx => {
-    const type = tx.type;
-    if (!pieDataObj[type]) pieDataObj[type] = 0;
-    pieDataObj[type] += Math.abs(tx.amount);
-  });
-  const pieData = Object.keys(pieDataObj).map(key => ({ name: key, value: pieDataObj[key] }));
+  // Pie Chart Data: Group by currency
+  const pieData = [
+    { name: 'USD', value: totalVolumeUSD },
+    { name: 'CDF (÷1000)', value: totalVolumeCDF / 1000 },
+  ].filter(d => d.value > 0);
 
   // Bar Chart Data: Simple count by day
   const barDataObj = {};
@@ -280,22 +276,26 @@ function TransactionsDashboardView() {
       </div>
 
       {/* STAT CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
         <StatCard title="Transactions" value={transactions.length} progress={100} color="#38bdf8" />
-        <StatCard title="Volume Obtenu ($)" value={totalVolume.toFixed(2)} progress={75} color="#4ade80" />
-        <StatCard title="Frais Générés ($)" value={totalFees.toFixed(2)} progress={60} color="#fbbf24" />
+        <StatCard title="Volume USD ($)" value={`$${totalVolumeUSD.toFixed(2)}`} progress={75} color="#4ade80" />
+        <StatCard title="Volume CDF (FC)" value={`${totalVolumeCDF.toLocaleString('fr-FR')} FC`} progress={65} color="#f59e0b" />
+        <StatCard title="Frais Générés" value={`$${totalFees.toFixed(2)}`} progress={60} color="#fbbf24" />
         <StatCard title="Comptes Utilisés" value={new Set(transactions.map(t => t.client_account)).size} progress={80} color="#c084fc" />
       </div>
 
       {/* MIDDLE ROW (LINE CHART & TRANSACTIONS) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
 
-        {/* LINE CHART */}
+        {/* LINE CHART — Volume USD vs CDF */}
         <div className="bg-[#1f2a40] p-6 rounded-lg lg:col-span-2 shadow-lg">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h3 className="text-sm font-semibold text-gray-300">Volume Généré (Dans le temps)</h3>
-              <p className="text-2xl font-bold text-green-400">${totalVolume.toFixed(2)}</p>
+              <h3 className="text-sm font-semibold text-gray-300">Volume Généré (USD vs CDF dans le temps)</h3>
+              <div className="flex gap-4 mt-1">
+                <p className="text-lg font-bold text-green-400">${totalVolumeUSD.toFixed(2)} USD</p>
+                <p className="text-lg font-bold text-amber-400">{totalVolumeCDF.toLocaleString('fr-FR')} FC</p>
+              </div>
             </div>
           </div>
           <div className="h-64 w-full">
@@ -305,11 +305,10 @@ function TransactionsDashboardView() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#2d3748" vertical={false} />
                   <XAxis dataKey="name" stroke="#718096" fontSize={12} tickLine={false} axisLine={false} />
                   <YAxis stroke="#718096" fontSize={12} tickLine={false} axisLine={false} />
-                  <RechartsTooltip contentStyle={{ backgroundColor: '#1a202c', borderColor: '#2d3748' }} />
+                  <RechartsTooltip contentStyle={{ backgroundColor: '#1a202c', borderColor: '#2d3748' }} formatter={(val, name) => [name === 'USD' ? `$${val.toFixed(2)}` : `${val.toFixed(0)} FC`, name]} />
                   <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px', right: 0 }} />
-                  <Line type="monotone" dataKey="Depot" stroke="#fbbf24" strokeWidth={3} dot={{ r: 4 }} />
-                  <Line type="monotone" dataKey="Retrait" stroke="#c084fc" strokeWidth={3} dot={{ r: 4 }} />
-                  <Line type="monotone" dataKey="Paiement" stroke="#4ade80" strokeWidth={3} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="USD" stroke="#4ade80" strokeWidth={3} dot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="CDF" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             ) : (
@@ -337,7 +336,7 @@ function TransactionsDashboardView() {
                   </div>
                   <div className="text-xs text-gray-400">{format(parseISO(tx.created_at.replace(" ", "T")), "MMM dd, yyyy")}</div>
                   <div className={`${tx.amount > 0 ? "bg-green-500" : "bg-red-500"} text-white text-xs font-bold px-2 py-1 rounded`}>
-                    ${Math.abs(tx.amount).toFixed(2)}
+                    {tx.currency === 'USD' ? `$${Math.abs(tx.amount).toFixed(2)}` : `${Math.abs(tx.amount).toLocaleString('fr-FR')} FC`}
                   </div>
                 </div>
               ))
@@ -369,7 +368,10 @@ function TransactionsDashboardView() {
               <div className="h-full flex items-center justify-center text-gray-500">Vide</div>
             )}
           </div>
-          <p className="text-green-400 text-lg font-bold mt-2">${totalVolume.toFixed(2)} Volume total</p>
+          <div className="flex flex-col items-center gap-1 mt-2">
+            <p className="text-green-400 text-base font-bold">${totalVolumeUSD.toFixed(2)} USD</p>
+            <p className="text-amber-400 text-base font-bold">{totalVolumeCDF.toLocaleString('fr-FR')} FC</p>
+          </div>
         </div>
 
         {/* BAR CHART */}
@@ -434,7 +436,8 @@ function UsersView() {
                 <th className="p-3 font-medium rounded-tl-lg">Compte</th>
                 <th className="p-3 font-medium">Nom Complet</th>
                 <th className="p-3 font-medium">Téléphone</th>
-                <th className="p-3 font-medium">Solde USD</th>
+                <th className="p-3 font-medium text-green-400">Solde USD 🇺🇸</th>
+                <th className="p-3 font-medium text-amber-400">Solde CDF 🇨🇩</th>
                 <th className="p-3 font-medium rounded-tr-lg">Date d'inscription</th>
               </tr>
             </thead>
@@ -447,7 +450,8 @@ function UsersView() {
                     <td className="p-3 font-bold text-indigo-400">{u.account_number}</td>
                     <td className="p-3 text-white">{u.prenom} {u.nom}</td>
                     <td className="p-3 text-gray-400">{u.telephone}</td>
-                    <td className="p-3 font-medium text-green-400">{u.balance_usd} $</td>
+                    <td className="p-3 font-medium text-green-400">${Number(u.balance_usd).toFixed(2)}</td>
+                    <td className="p-3 font-medium text-amber-400">{Number(u.balance_cdf).toLocaleString('fr-FR')} FC</td>
                     <td className="p-3 text-gray-500">{format(new Date(u.created_at.replace(" ", "T")), "dd/MM/yyyy")}</td>
                   </tr>
                 ))

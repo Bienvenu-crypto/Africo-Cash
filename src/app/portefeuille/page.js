@@ -161,11 +161,25 @@ export default function Portefeuille() {
         <h2 className="text-center text-lg font-semibold text-white/80">Portefeuille Africo Cash</h2>
         <p className="text-center text-white/60">{client.prenom} {client.nom}</p>
 
-        <div className="mt-4 rounded-2xl bg-white p-5 text-navy-950">
-          <p className="text-center text-sm font-semibold text-slate-600">Solde Principal</p>
-          <p className="mt-3 text-center text-3xl font-bold">🇨🇩 {money(client.balance_usd, "USD")}</p>
-          <div className="my-2 border-t border-slate-200" />
-          <p className="text-center text-2xl font-bold">🇺🇸 {money(client.balance_cdf, "CDF")}</p>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          {/* USD Balance Card */}
+          <div className="rounded-2xl bg-gradient-to-br from-emerald-50 to-green-100 p-4 text-navy-950 border-2 border-green-200 shadow">
+            <div className="flex items-center gap-1 mb-1">
+              <span className="text-lg">🇺🇸</span>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Dollar</p>
+            </div>
+            <p className="text-2xl font-extrabold text-green-700 leading-tight">{money(client.balance_usd, "USD")}</p>
+            <p className="text-[10px] text-slate-400 mt-1 font-medium">Solde USD</p>
+          </div>
+          {/* CDF Balance Card */}
+          <div className="rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-100 p-4 text-navy-950 border-2 border-amber-300 shadow">
+            <div className="flex items-center gap-1 mb-1">
+              <span className="text-lg">🇨🇩</span>
+              <p className="text-xs font-bold text-slate-500 uppercase tracking-wide">Franc CDF</p>
+            </div>
+            <p className="text-2xl font-extrabold text-amber-700 leading-tight">{money(client.balance_cdf, "CDF")}</p>
+            <p className="text-[10px] text-slate-400 mt-1 font-medium">Solde CDF</p>
+          </div>
         </div>
 
         {notice && (
@@ -184,6 +198,23 @@ export default function Portefeuille() {
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <div className="rounded-2xl bg-white p-4 text-navy-950">
             <p className="mb-2 text-sm font-bold text-slate-800">Historique des Transactions</p>
+            {/* Mini volume summary */}
+            {transactions.length > 0 && (
+              <div className="mb-3 flex gap-2">
+                <div className="flex-1 rounded-lg bg-green-50 border border-green-200 px-2 py-1 text-center">
+                  <p className="text-[9px] font-bold text-green-600 uppercase">Volume USD</p>
+                  <p className="text-xs font-extrabold text-green-700">
+                    {money(transactions.filter(t => t.currency === 'USD').reduce((s, t) => s + Math.abs(t.amount), 0), 'USD')}
+                  </p>
+                </div>
+                <div className="flex-1 rounded-lg bg-amber-50 border border-amber-200 px-2 py-1 text-center">
+                  <p className="text-[9px] font-bold text-amber-600 uppercase">Volume CDF</p>
+                  <p className="text-xs font-extrabold text-amber-700">
+                    {money(transactions.filter(t => t.currency === 'CDF').reduce((s, t) => s + Math.abs(t.amount), 0), 'CDF')}
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="max-h-56 space-y-2 overflow-y-auto no-scrollbar">
               {transactions.length === 0 && <p className="text-xs text-slate-500">Aucune transaction pour le moment.</p>}
               {transactions.map((t) => {
@@ -192,7 +223,12 @@ export default function Portefeuille() {
                   <div key={t.id} className="flex items-center justify-between border-b border-slate-200 pb-1.5 text-xs">
                     <div>
                       <p className="font-semibold">{meta.icon} {t.type}</p>
-                      <p className="text-slate-500">{new Date(t.created_at).toLocaleString("fr-FR")}</p>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <span className={`rounded px-1 py-0.5 text-[9px] font-bold ${
+                          t.currency === 'USD' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                        }`}>{t.currency}</span>
+                        <p className="text-slate-500">{new Date(t.created_at).toLocaleString("fr-FR")}</p>
+                      </div>
                     </div>
                     <p className={`font-bold ${t.amount < 0 ? "text-red-600" : "text-emerald-600"}`}>
                       {t.amount < 0 ? "" : "+"}{money(t.amount, t.currency)}
