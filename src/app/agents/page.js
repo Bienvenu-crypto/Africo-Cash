@@ -2,10 +2,10 @@ import Link from "next/link";
 import { SectionHeading, Card, Eyebrow } from "@/components/ui";
 
 const BENEFITS = [
-  { icon: "💰", title: "Revenus complémentaires", desc: "Percevez une commission sur chaque retrait cash effectué par vos clients." },
-  { icon: "📍", title: "Liaison bancaire automatique", desc: "Vos coordonnées GPS déterminent automatiquement la banque partenaire la plus proche pour le cantonnement." },
-  { icon: "🔒", title: "Sécurité biométrique", desc: "Scan facial et signature électronique protègent votre compte agent contre les usurpations." },
-  { icon: "📊", title: "Historique complet", desc: "Suivez toutes vos opérations Africo Cash directement depuis votre espace agent." },
+  { icon: "", title: "Revenus complémentaires", desc: "Percevez une commission sur chaque retrait cash effectué par vos clients." },
+  { icon: "", title: "Liaison bancaire automatique", desc: "Vos coordonnées GPS déterminent automatiquement la banque partenaire la plus proche pour le cantonnement." },
+  { icon: "", title: "Sécurité biométrique", desc: "Scan facial et signature électronique protègent votre compte agent contre les usurpations." },
+  { icon: "", title: "Historique complet", desc: "Suivez toutes vos opérations Africo Cash directement depuis votre espace agent." },
 ];
 
 export default function AgentsPage() {

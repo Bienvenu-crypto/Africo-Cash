@@ -61,7 +61,7 @@ export default function GuichetPage() {
     return (
       <div className="mx-auto max-w-4xl px-5 py-16 lg:px-8">
         <Eyebrow>Guichet {guichet.code}</Eyebrow>
-        <h1 className="mt-4 text-3xl font-bold">{guichet.bank_name} — {guichet.agence}</h1>
+        <h1 className="mt-4 text-3xl font-bold">{guichet.bank_name} - {guichet.agence}</h1>
         <p className="mt-2 text-white/60">Statut : <span className="font-semibold text-emerald-300">{guichet.status}</span></p>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">

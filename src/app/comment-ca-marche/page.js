@@ -24,7 +24,7 @@ const CLIENT_STEPS = [
   },
   {
     n: "5",
-    title: "Génération finale 🚀",
+    title: "Génération finale ",
     items: [
       "Numéro Africo Cash unique à 8 chiffres généré automatiquement",
       "Statut du compte : Actif",
@@ -52,7 +52,7 @@ const AGENT_STEPS = [
   },
   {
     n: "4",
-    title: "Algorithme de proximité et liaison automatique 🚀",
+    title: "Algorithme de proximité et liaison automatique ",
     items: [
       "Génération du code agent unique (ex : AFR-AG-2045)",
       "Calcul de la banque partenaire la plus proche via GPS",

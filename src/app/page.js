@@ -6,25 +6,25 @@ import FAQ from "@/components/FAQ";
 const SERVICES = [
   {
     href: "/portefeuille",
-    icon: "💳",
+    icon: "",
     title: "Portefeuille Africo Cash",
     desc: "Retirez, envoyez et convertissez votre solde USD / CDF instantanément depuis votre téléphone.",
   },
   {
     href: "/mobile-money",
-    icon: "📱",
+    icon: "",
     title: "Mobile Money",
     desc: "Rechargez ou videz votre solde vers Airtel Money, Vodacom M-Pesa, Orange Money et Africell Money.",
   },
   {
     href: "/banques",
-    icon: "🏦",
+    icon: "",
     title: "Banques partenaires",
     desc: "Retirez du cash au guichet, ou transférez entre votre compte bancaire et Africo Cash.",
   },
   {
     href: "/paiements",
-    icon: "🧾",
+    icon: "",
     title: "Paiement de factures",
     desc: "Payez REGIDESO, SOCODEE, SNEL Virunga, Internet, CANAL+ et vos achats Africo Market.",
   },
@@ -76,7 +76,7 @@ export default function Home() {
               <Link href="/inscription" className="btn-gold rounded-full px-7 py-3.5 text-sm font-bold shadow-lg shadow-gold-400/30">
                 Ouvrir un compte gratuitement
               </Link>
-              <Link href="/comment-ca-marche" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white/90 hover:border-green-400 hover:text-green-400">
+              <Link href="/comment-ca-marche" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold text-white/90 hover:border-white-400 hover:text-blue-400">
                 Comment ça marche
               </Link>
             </div>

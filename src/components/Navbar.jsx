@@ -50,7 +50,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/portefeuille"
-            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:border-green-400 hover:text-green-400"
+            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:border-blue-400 hover:text-blue-400"
           >
             Mon Portefeuille
           </Link>

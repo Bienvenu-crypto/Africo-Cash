@@ -73,7 +73,7 @@ export default function BanquesPage() {
       </div>
 
       <div className="mt-16 flex justify-center">
-        <Image src="/images/banks.jpg" alt="Maquette Banques partenaires Africo Cash" width={420} height={620} className="max-w-xs rounded-2xl border border-white/10 shadow-2xl" />
+
       </div>
 
       <BankModal

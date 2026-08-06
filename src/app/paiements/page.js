@@ -5,12 +5,12 @@ import Image from "next/image";
 import { Field, inputClass, PrimaryButton, Alert, Card, Modal, SectionHeading } from "@/components/ui";
 
 const PARTNERS = [
-  { key: "REGIDESO", icon: "💧", desc: "Eau — rechargement prépayé ou facture postpayée" },
-  { key: "SOCODEE", icon: "🏠", desc: "Électricité" },
-  { key: "SNEL VIRUNGA", icon: "⚡", desc: "Électricité — SNEL Virunga" },
-  { key: "Internet", icon: "📶", desc: "Forfait internet — réactivation instantanée" },
-  { key: "CANAL+", icon: "📺", desc: "Abonnement télévision" },
-  { key: "Africo Market", icon: "🛒", desc: "Achats marchands / commande Africo Market" },
+  { key: "REGIDESO", icon: "", desc: "Eau — rechargement prépayé ou facture postpayée" },
+  { key: "SOCODEE", icon: "", desc: "Électricité" },
+  { key: "SNEL VIRUNGA", icon: "", desc: "Électricité — SNEL Virunga" },
+  { key: "Internet", icon: "", desc: "Forfait internet — réactivation instantanée" },
+  { key: "CANAL+", icon: "", desc: "Abonnement télévision" },
+  { key: "Africo Market", icon: "", desc: "Achats marchands / commande Africo Market" },
 ];
 
 export default function PaiementsPage() {
@@ -63,7 +63,7 @@ export default function PaiementsPage() {
       </div>
 
       <div className="mt-16 flex justify-center">
-        <Image src="/images/payments.jpg" alt="Maquette Page paiements Africo Cash" width={420} height={620} className="max-w-xs rounded-2xl border border-white/10 shadow-2xl" />
+
       </div>
 
       <PayModal

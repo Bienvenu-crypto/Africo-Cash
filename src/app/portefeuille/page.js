@@ -109,16 +109,16 @@ function ScoreGauge({ score = 720 }) {
 }
 
 const TX_LABELS = {
-  Retrait: { icon: "🔴" },
-  "Retrait Banque": { icon: "🏦" },
-  "Retrait Mobile Money": { icon: "📱" },
-  Envoi: { icon: "➡️" },
-  Reception: { icon: "⬅️" },
-  Conversion: { icon: "🔄" },
-  "Depot Mobile Money": { icon: "📲" },
-  "Banque vers Africo": { icon: "🏦" },
-  "Africo vers Banque": { icon: "🏦" },
-  "Paiement Facture": { icon: "🧾" },
+  Retrait: { icon: "" },
+  "Retrait Banque": { icon: "" },
+  "Retrait Mobile Money": { icon: "" },
+  Envoi: { icon: "" },
+  Reception: { icon: "⬅" },
+  Conversion: { icon: "" },
+  "Depot Mobile Money": { icon: "" },
+  "Banque vers Africo": { icon: "" },
+  "Africo vers Banque": { icon: "" },
+  "Paiement Facture": { icon: "" },
 };
 
 export default function Portefeuille() {
@@ -224,9 +224,8 @@ export default function Portefeuille() {
                     <div>
                       <p className="font-semibold">{meta.icon} {t.type}</p>
                       <div className="flex items-center gap-1 mt-0.5">
-                        <span className={`rounded px-1 py-0.5 text-[9px] font-bold ${
-                          t.currency === 'USD' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
-                        }`}>{t.currency}</span>
+                        <span className={`rounded px-1 py-0.5 text-[9px] font-bold ${t.currency === 'USD' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                          }`}>{t.currency}</span>
                         <p className="text-slate-500">{new Date(t.created_at).toLocaleString("fr-FR")}</p>
                       </div>
                     </div>
