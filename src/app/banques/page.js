@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Field, inputClass, PrimaryButton, Alert, Card, Modal, SectionHeading } from "@/components/ui";
 
@@ -22,6 +22,48 @@ export default function BanquesPage() {
   const [modal, setModal] = useState(null); // { bank, action }
   const [accountNumber, setAccountNumber] = useState("");
   const [notice, setNotice] = useState("");
+  const [transactions, setTransactions] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(5);
+  const [refreshCounter, setRefreshCounter] = useState(0);
+
+  useEffect(() => {
+    async function fetchHistory() {
+      if (!accountNumber || accountNumber.length < 8) {
+        setTransactions([]);
+        return;
+      }
+      try {
+        const res = await fetch(`/api/wallet/${accountNumber}`);
+        if (res.ok) {
+          const data = await res.json();
+          const bankTxs = (data.transactions || []).filter(
+            (tx) => tx.type === "Retrait Banque" || tx.type === "Africo vers Banque" || tx.type === "Banque vers Africo"
+          );
+          setTransactions(bankTxs);
+        } else {
+          setTransactions([]);
+        }
+      } catch (e) {
+        setTransactions([]);
+      }
+    }
+    fetchHistory();
+  }, [accountNumber, refreshCounter]);
+
+  const getBankColor = (bank) => {
+    if (bank?.includes("Rawbank")) return "text-blue-900";
+    if (bank?.includes("Equity")) return "text-red-700";
+    if (bank?.includes("TMB") || bank?.includes("Trust")) return "text-blue-800";
+    if (bank?.includes("Ecobank")) return "text-blue-900";
+    if (bank?.includes("FBNBank")) return "text-blue-900";
+    return "text-blue-900";
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("fr-FR");
+  };
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
@@ -72,8 +114,67 @@ export default function BanquesPage() {
         ))}
       </div>
 
-      <div className="mt-16 flex justify-center">
-
+      <div className="mt-12">
+        <h2 className="mb-4 text-xl font-bold text-blue-900 border-b border-gray-200 pb-2">Historique des Transactions</h2>
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-center">
+              <thead>
+                <tr className="border-b border-gray-200 text-blue-900 font-bold">
+                  <th className="pb-3 pt-2">Date</th>
+                  <th className="pb-3 pt-2">Banque</th>
+                  <th className="pb-3 pt-2">Type</th>
+                  <th className="pb-3 pt-2">Montant</th>
+                  <th className="pb-3 pt-2">Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="py-6 text-gray-500">
+                      {accountNumber.length < 8 ? "Veuillez entrer votre numéro Africo Cash (8 chiffres) pour voir l'historique." : "Aucune transaction trouvée."}
+                    </td>
+                  </tr>
+                ) : (
+                  transactions.slice(0, visibleCount).map((tx) => {
+                    let typeLabel = tx.type;
+                    if (tx.type === "Banque vers Africo") typeLabel = "Dépôt vers Africo Cash";
+                    if (tx.type === "Retrait Banque") typeLabel = "Retrait cash";
+                    if (tx.type === "Africo vers Banque") typeLabel = "Africo Cash → Banque";
+                    
+                    const isPositive = tx.amount > 0;
+                    
+                    return (
+                    <tr key={tx.id} className="border-b border-gray-100 last:border-0 font-medium">
+                      <td className="py-3 text-blue-900">{formatDate(tx.created_at)}</td>
+                      <td className={`py-3 font-bold ${getBankColor(tx.counterparty)}`}>{tx.counterparty.split(" - ")[0]}</td>
+                      <td className="py-3 text-blue-900">{typeLabel}</td>
+                      <td className={`py-3 font-bold ${isPositive ? "text-green-600" : "text-red-600"}`}>
+                        {isPositive ? "+" : ""}{tx.amount} {tx.currency}
+                      </td>
+                      <td className={`py-3 ${tx.status === "Reussi" ? "text-green-600" : "text-orange-500"}`}>
+                        <span className="flex items-center justify-center gap-1">
+                          {tx.status === "Reussi" ? "✅" : "⏳"} {tx.status === "Reussi" ? "Réussi" : tx.status}
+                        </span>
+                      </td>
+                    </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+          {transactions.length > 0 && (
+            <div className="mt-4 flex justify-center">
+              <button 
+                onClick={() => setVisibleCount(c => c + 5)}
+                className="bg-white border border-blue-200 text-blue-900 font-bold rounded-full px-6 py-1 hover:bg-gray-50 shadow-sm"
+              >
+                Voir Plus ▾
+              </button>
+            </div>
+          )}
+        </div>
       </div>
 
       <BankModal
@@ -83,6 +184,7 @@ export default function BanquesPage() {
         onDone={(msg) => {
           setNotice(msg);
           setModal(null);
+          setRefreshCounter(c => c + 1);
           setTimeout(() => setNotice(""), 6000);
         }}
       />

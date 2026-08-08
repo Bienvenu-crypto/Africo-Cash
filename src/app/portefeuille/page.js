@@ -126,6 +126,7 @@ export default function Portefeuille() {
   const [transactions, setTransactions] = useState([]);
   const [activeModal, setActiveModal] = useState(null);
   const [notice, setNotice] = useState("");
+  const [visibleCount, setVisibleCount] = useState(5);
 
   async function refresh(account) {
     const res = await fetch(`/api/wallet/${account}`);
@@ -217,16 +218,19 @@ export default function Portefeuille() {
             )}
             <div className="max-h-56 space-y-2 overflow-y-auto no-scrollbar">
               {transactions.length === 0 && <p className="text-xs text-slate-500">Aucune transaction pour le moment.</p>}
-              {transactions.map((t) => {
+              {transactions.slice(0, visibleCount).map((t) => {
                 const meta = TX_LABELS[t.type] || { icon: "•" };
                 return (
                   <div key={t.id} className="flex items-center justify-between border-b border-slate-200 pb-1.5 text-xs">
                     <div>
-                      <p className="font-semibold">{meta.icon} {t.type}</p>
+                      <p className="font-semibold">{meta.icon} {t.type} {t.counterparty && <span className="text-blue-600 font-bold ml-1">({t.counterparty.split(' - ')[0]})</span>}</p>
                       <div className="flex items-center gap-1 mt-0.5">
                         <span className={`rounded px-1 py-0.5 text-[9px] font-bold ${t.currency === 'USD' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
                           }`}>{t.currency}</span>
-                        <p className="text-slate-500">{new Date(t.created_at).toLocaleString("fr-FR")}</p>
+                        <div className="text-slate-500 text-[10px] leading-tight ml-1">
+                          <p>{new Date(t.created_at).toLocaleDateString("fr-FR", { timeZone: "Africa/Kinshasa" })}</p>
+                          <p>{new Date(t.created_at).toLocaleTimeString("fr-FR", { timeZone: "Africa/Kinshasa" })}</p>
+                        </div>
                       </div>
                     </div>
                     <p className={`font-bold ${t.amount < 0 ? "text-red-600" : "text-emerald-600"}`}>
@@ -235,6 +239,16 @@ export default function Portefeuille() {
                   </div>
                 );
               })}
+              {transactions.length > 0 && (
+                <div className="mt-2 flex justify-center pb-2">
+                  <button 
+                    onClick={() => setVisibleCount(c => c + 5)}
+                    className="bg-white border border-slate-200 text-navy-900 text-[10px] font-bold rounded-full px-4 py-1 hover:bg-slate-50 shadow-sm"
+                  >
+                    Voir Plus ▾
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           <div className="rounded-2xl bg-white p-4 text-navy-950">
