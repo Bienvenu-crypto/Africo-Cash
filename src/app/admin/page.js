@@ -415,6 +415,7 @@ function TransactionsDashboardView() {
 function UsersView() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   useEffect(() => {
     fetch("/api/admin/users")
@@ -436,23 +437,34 @@ function UsersView() {
                 <th className="p-3 font-medium rounded-tl-lg">Compte</th>
                 <th className="p-3 font-medium">Nom Complet</th>
                 <th className="p-3 font-medium">Téléphone</th>
+                <th className="p-3 font-medium">Profession</th>
                 <th className="p-3 font-medium text-green-400">Solde USD 🇺🇸</th>
                 <th className="p-3 font-medium text-amber-400">Solde CDF 🇨🇩</th>
-                <th className="p-3 font-medium rounded-tr-lg">Date d'inscription</th>
+                <th className="p-3 font-medium">Date d'inscription</th>
+                <th className="p-3 font-medium rounded-tr-lg text-center">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800">
               {loading ? (
-                <tr><td colSpan="5" className="p-6 text-center text-gray-500">Chargement...</td></tr>
+                <tr><td colSpan="8" className="p-6 text-center text-gray-500">Chargement...</td></tr>
               ) : (
                 users.map(u => (
                   <tr key={u.id} className="hover:bg-[#2d3748] transition">
                     <td className="p-3 font-bold text-indigo-400">{u.account_number}</td>
-                    <td className="p-3 text-white">{u.prenom} {u.nom}</td>
+                    <td className="p-3 text-white">{u.prenom} {u.postnom || ""} {u.nom}</td>
                     <td className="p-3 text-gray-400">{u.telephone}</td>
+                    <td className="p-3 text-gray-400">{u.profession || "N/A"}</td>
                     <td className="p-3 font-medium text-green-400">${Number(u.balance_usd).toFixed(2)}</td>
                     <td className="p-3 font-medium text-amber-400">{Number(u.balance_cdf).toLocaleString('fr-FR')} FC</td>
                     <td className="p-3 text-gray-500">{format(new Date(u.created_at.replace(" ", "T")), "dd/MM/yyyy")}</td>
+                    <td className="p-3 text-center">
+                      <button
+                        onClick={() => setSelectedUser(u)}
+                        className="rounded bg-indigo-600 px-3 py-1 text-xs font-bold text-white transition hover:bg-indigo-700"
+                      >
+                        Détails KYC
+                      </button>
+                    </td>
                   </tr>
                 ))
               )}
@@ -460,6 +472,113 @@ function UsersView() {
           </table>
         </div>
       </div>
+
+      {/* KYC Details Modal */}
+      {selectedUser && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 px-4 backdrop-blur-sm">
+          <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-gray-800 bg-[#1f2a40] p-6 shadow-2xl text-gray-200">
+            <div className="mb-6 flex items-center justify-between border-b border-gray-700 pb-3">
+              <h3 className="text-xl font-bold text-white">Détails de l'utilisateur : {selectedUser.account_number}</h3>
+              <button
+                onClick={() => setSelectedUser(null)}
+                className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs text-gray-400 block">Prénom</label>
+                  <p className="text-sm font-semibold text-white">{selectedUser.prenom}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-400 block">Nom & Postnom</label>
+                  <p className="text-sm font-semibold text-white">{selectedUser.nom} {selectedUser.postnom || ""}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs text-gray-400 block">Téléphone</label>
+                  <p className="text-sm font-semibold text-white">{selectedUser.telephone}</p>
+                </div>
+                <div>
+                  <label className="text-xs text-gray-400 block">Profession</label>
+                  <p className="text-sm font-semibold text-white">{selectedUser.profession || "N/A"}</p>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-700 pt-3">
+                <h4 className="text-sm font-bold text-indigo-400 mb-2">Adresse & Résidence</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-gray-400 block">Province / Ville</label>
+                    <p className="text-sm font-semibold text-white">{selectedUser.province} / {selectedUser.ville}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block">Commune / Quartier</label>
+                    <p className="text-sm font-semibold text-white">{selectedUser.commune || "N/A"} / {selectedUser.quartier || "N/A"}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block">Avenue & N°</label>
+                    <p className="text-sm font-semibold text-white">Av. {selectedUser.avenue || "N/A"}, N° {selectedUser.numero_residence || "N/A"}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block">Statut du compte</label>
+                    <p className={`text-sm font-bold ${selectedUser.status === 'Actif' ? 'text-green-400' : 'text-red-400'}`}>{selectedUser.status}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-700 pt-3">
+                <h4 className="text-sm font-bold text-indigo-400 mb-2">Pièce d'identité</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-gray-400 block">Type de pièce</label>
+                    <p className="text-sm font-semibold text-white">{selectedUser.piece_type}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block">Numéro de pièce</label>
+                    <p className="text-sm font-semibold text-white">{selectedUser.piece_numero}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-700 pt-3">
+                <h4 className="text-sm font-bold text-indigo-400 mb-2">Soldes du Compte</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-gray-400 block">Solde USD</label>
+                    <p className="text-sm font-semibold text-green-400">${Number(selectedUser.balance_usd).toFixed(2)}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block">Solde CDF</label>
+                    <p className="text-sm font-semibold text-amber-400">{Number(selectedUser.balance_cdf).toLocaleString('fr-FR')} FC</p>
+                  </div>
+                </div>
+              </div>
+
+              {selectedUser.agent_inscripteur && (
+                <div className="border-t border-gray-700 pt-3">
+                  <label className="text-xs text-gray-400 block">Inscrit par l'agent</label>
+                  <p className="text-sm font-semibold text-white">{selectedUser.agent_inscripteur}</p>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setSelectedUser(null)}
+                className="rounded-lg bg-gray-700 px-5 py-2 text-sm font-bold text-white transition hover:bg-gray-600"
+              >
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
