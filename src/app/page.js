@@ -62,7 +62,7 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
           <div className="animate-fade-up">
 
-            <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl hover:text-green-400 transition-colors">
+            <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl hover:text-white-400 transition-colors">
               Votre argent, <span className="gold-text">partout</span>, à
               tout moment.
             </h1>
@@ -148,7 +148,7 @@ export default function Home() {
               Mobile Money et banques partenaires dans un seul écosystème
               sécurisé.
             </p>
-            <Link href="/a-propos" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-green-400 hover:text-green-400">
+            <Link href="/a-propos" className="mt-6 inline-block rounded-full border border-white/25 px-6 py-3 text-sm font-semibold hover:border-blue-400 hover:text-white-400">
               En savoir plus sur nous
             </Link>
           </div>
