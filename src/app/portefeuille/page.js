@@ -241,7 +241,7 @@ export default function Portefeuille() {
               })}
               {transactions.length > 0 && (
                 <div className="mt-2 flex justify-center pb-2">
-                  <button 
+                  <button
                     onClick={() => setVisibleCount(c => c + 5)}
                     className="bg-white border border-slate-200 text-navy-900 text-[10px] font-bold rounded-full px-4 py-1 hover:bg-slate-50 shadow-sm"
                   >

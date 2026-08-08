@@ -141,23 +141,23 @@ export default function BanquesPage() {
                     if (tx.type === "Banque vers Africo") typeLabel = "Dépôt vers Africo Cash";
                     if (tx.type === "Retrait Banque") typeLabel = "Retrait cash";
                     if (tx.type === "Africo vers Banque") typeLabel = "Africo Cash → Banque";
-                    
+
                     const isPositive = tx.amount > 0;
-                    
+
                     return (
-                    <tr key={tx.id} className="border-b border-gray-100 last:border-0 font-medium">
-                      <td className="py-3 text-blue-900">{formatDate(tx.created_at)}</td>
-                      <td className={`py-3 font-bold ${getBankColor(tx.counterparty)}`}>{tx.counterparty.split(" - ")[0]}</td>
-                      <td className="py-3 text-blue-900">{typeLabel}</td>
-                      <td className={`py-3 font-bold ${isPositive ? "text-green-600" : "text-red-600"}`}>
-                        {isPositive ? "+" : ""}{tx.amount} {tx.currency}
-                      </td>
-                      <td className={`py-3 ${tx.status === "Reussi" ? "text-green-600" : "text-orange-500"}`}>
-                        <span className="flex items-center justify-center gap-1">
-                          {tx.status === "Reussi" ? "✅" : "⏳"} {tx.status === "Reussi" ? "Réussi" : tx.status}
-                        </span>
-                      </td>
-                    </tr>
+                      <tr key={tx.id} className="border-b border-gray-100 last:border-0 font-medium">
+                        <td className="py-3 text-blue-900">{formatDate(tx.created_at)}</td>
+                        <td className={`py-3 font-bold ${getBankColor(tx.counterparty)}`}>{tx.counterparty.split(" - ")[0]}</td>
+                        <td className="py-3 text-blue-900">{typeLabel}</td>
+                        <td className={`py-3 font-bold ${isPositive ? "text-green-600" : "text-red-600"}`}>
+                          {isPositive ? "+" : ""}{tx.amount} {tx.currency}
+                        </td>
+                        <td className={`py-3 ${tx.status === "Reussi" ? "text-green-600" : "text-orange-500"}`}>
+                          <span className="flex items-center justify-center gap-1">
+                            {tx.status === "Reussi" ? "✅" : "⏳"} {tx.status === "Reussi" ? "Réussi" : tx.status}
+                          </span>
+                        </td>
+                      </tr>
                     );
                   })
                 )}
@@ -166,7 +166,7 @@ export default function BanquesPage() {
           </div>
           {transactions.length > 0 && (
             <div className="mt-4 flex justify-center">
-              <button 
+              <button
                 onClick={() => setVisibleCount(c => c + 5)}
                 className="bg-white border border-blue-200 text-blue-900 font-bold rounded-full px-6 py-1 hover:bg-gray-50 shadow-sm"
               >

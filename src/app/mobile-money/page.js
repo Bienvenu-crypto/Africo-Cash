@@ -242,14 +242,14 @@ function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDon
     <Modal open={!!modal} onClose={onClose} title={isDeposit ? `${modal.operator} vers Africo Cash` : `Africo Cash vers ${modal.operator}`}>
       <form onSubmit={submit} className="space-y-4">
         <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input 
-            className={`${inputClass} !font-bold !text-lg tracking-wider`} 
+          <input
+            className={`${inputClass} !font-bold !text-lg tracking-wider`}
             style={{ color: "#60a5fa" }}
-            inputMode="numeric" 
-            maxLength={8} 
-            placeholder="48291054" 
-            value={accountNumber} 
-            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))} 
+            inputMode="numeric"
+            maxLength={8}
+            placeholder="48291054"
+            value={accountNumber}
+            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
           />
         </Field>
         <Field label={isDeposit ? "Numéro Mobile Money à débiter" : "Numéro bénéficiaire"}>
