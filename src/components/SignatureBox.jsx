@@ -34,11 +34,11 @@ export default function SignatureBox({ onChange }) {
 
   return (
     <div>
-      <div className="overflow-hidden rounded-lg border border-white/15 bg-white">
+      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
         <canvas ref={canvasRef} className="h-40 w-full touch-none" />
       </div>
       <div className="mt-2 flex items-center justify-between">
-        <span className="text-xs text-white/50">
+        <span className="text-xs text-gray-500">
           {hasSignature ? "✓ Signature enregistrée" : "Signez avec le doigt ou la souris dans le cadre ci-dessus"}
         </span>
         <button
@@ -48,7 +48,7 @@ export default function SignatureBox({ onChange }) {
             setHasSignature(false);
             onChange?.(null);
           }}
-          className="text-xs font-semibold text-gold-400 hover:text-green-400 hover:underline"
+          className="text-xs font-semibold text-blue-600 hover:text-blue-600 hover:underline"
         >
           Effacer
         </button>

@@ -65,11 +65,11 @@ export default function ServicesPage() {
             <Card>
 
               <h2 className="mt-3 text-2xl font-bold">{s.title}</h2>
-              <p className="mt-2 text-white/60">{s.desc}</p>
-              <ul className="mt-4 space-y-2 text-sm text-white/65">
+              <p className="mt-2 text-gray-600">{s.desc}</p>
+              <ul className="mt-4 space-y-2 text-sm text-gray-600">
                 {s.points.map((p) => (
                   <li key={p} className="flex gap-2">
-                    <span className="text-gold-400">•</span>
+                    <span className="text-blue-600">•</span>
                     <span>{p}</span>
                   </li>
                 ))}
@@ -78,7 +78,7 @@ export default function ServicesPage() {
                 Accéder à ce service
               </Link>
             </Card>
-            <Image src={s.img} alt={s.title} width={420} height={620} className="mx-auto max-w-[240px] rounded-2xl border border-white/10 shadow-2xl" />
+            <Image src={s.img} alt={s.title} width={420} height={620} className="mx-auto max-w-[240px] rounded-2xl border border-gray-200 shadow-2xl" />
           </div>
         ))}
       </div>

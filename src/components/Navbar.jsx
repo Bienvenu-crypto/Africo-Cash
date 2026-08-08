@@ -39,7 +39,7 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`nav-link text-sm font-medium ${active ? "active" : "text-black"}`}
+                className={`nav-link text-sm font-medium ${active ? "active" : ""}`}
               >
                 {l.label}
               </Link>
@@ -50,7 +50,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/portefeuille"
-            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-black transition hover:border-blue-400 hover:text-blue-400"
+            className="rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:border-blue-500 hover:text-blue-600"
           >
             Mon Portefeuille
           </Link>
@@ -64,7 +64,7 @@ export default function Navbar() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 text-black lg:hidden hover:border-green-400 hover:text-green-400 transition-colors"
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 text-gray-700 lg:hidden hover:border-blue-400 hover:text-blue-600 transition-colors"
           aria-label="Menu"
         >
           <span className="text-xl">{open ? "✕" : "☰"}</span>
@@ -79,7 +79,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`nav-link block py-2 text-sm font-medium ${pathname === l.href ? "active" : "text-black"}`}
+                className={`nav-link block py-2 text-sm font-medium ${pathname === l.href ? "active" : ""}`}
               >
                 {l.label}
               </Link>
@@ -87,7 +87,7 @@ export default function Navbar() {
             <Link
               href="/portefeuille"
               onClick={() => setOpen(false)}
-              className="rounded-full border border-gray-300 text-black px-4 py-2 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400 transition-colors"
+              className="rounded-full border border-gray-300 text-gray-700 px-4 py-2 text-center text-sm font-semibold hover:border-blue-400 hover:text-blue-600 transition-colors"
             >
               Mon Portefeuille
             </Link>

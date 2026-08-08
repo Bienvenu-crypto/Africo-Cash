@@ -11,8 +11,8 @@
   --color-gold-400: #1668f5;
   --color-gold-500: #1558d6;
   --color-gold-600: #1047b9;
-  --background: var(--color-navy-950);
-  --foreground: #ffffff;
+  --background: #f8fafc;
+  --foreground: #0a1330;
 }
 
 @theme inline {
@@ -29,7 +29,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-inter: var(--font-inter);
-
 }
 
 html {
@@ -37,15 +36,21 @@ html {
 }
 
 body {
-  background: linear-gradient(180deg, #050b1f 0%, #0a1633 40%, #0e1c47 100%);
-  background-attachment: fixed;
-  color: var(--foreground);
+  background: #f8fafc;
+  color: #0a1330;
   font-family: var(--font-inter), sans-serif;
 }
 
-
 ::selection {
   background: var(--color-gold-500);
+  color: #ffffff;
+}
+
+/* =====================================================================
+   HERO SECTION — always stays dark (navy gradient)
+   ===================================================================== */
+.hero-dark {
+  background: linear-gradient(160deg, #050b1f 0%, #0a1633 55%, #0e1c47 100%);
   color: #ffffff;
 }
 
@@ -56,12 +61,18 @@ body {
   color: transparent;
 }
 
+/* =====================================================================
+   CARD — light surface
+   ===================================================================== */
 .card-surface {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
 
+/* =====================================================================
+   BUTTONS
+   ===================================================================== */
 .btn-gold {
   background: linear-gradient(90deg, #1668f5 0%, #1558d6 60%, #1047b9 100%);
   color: #ffffff;
@@ -73,31 +84,59 @@ body {
   filter: brightness(1.12);
 }
 
+/* =====================================================================
+   INPUTS — light style
+   ===================================================================== */
 input,
 select,
 textarea {
-  color: #ffffff;
+  color: #111827;
+  background: #ffffff;
+  border-color: #d1d5db;
 }
 
 ::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(107, 114, 128, 0.7);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(107, 114, 128, 0.7);
 }
 
+/* =====================================================================
+   NAV LINKS
+   ===================================================================== */
+.nav-link {
+  color: #0a1330;
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: #1668f5 !important;
+}
+
+.nav-link.active,
+.nav-link.active:hover {
+  color: #0a1330 !important;
+  font-weight: 700;
+}
+
+/* =====================================================================
+   SCROLLBAR HIDE
+   ===================================================================== */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
+/* =====================================================================
+   ANIMATIONS
+   ===================================================================== */
 @keyframes fade-up {
   from {
     opacity: 0;
     transform: translateY(16px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -109,29 +148,21 @@ textarea::placeholder {
 }
 
 @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .animate-marquee {
   animation: marquee 25s linear infinite;
 }
 
-.nav-link {
-  color: #000000;
-  transition: color 0.15s ease;
+/* =====================================================================
+   MARQUEE FADE EDGES — adapts to bg color
+   ===================================================================== */
+.fade-edge-l {
+  background: linear-gradient(to right, #f8fafc, transparent);
 }
 
-.nav-link:hover {
-  color: blue !important;
-}
-
-.nav-link.active,
-.nav-link.active:hover {
-  color: #000000 !important;
+.fade-edge-r {
+  background: linear-gradient(to left, #f8fafc, transparent);
 }

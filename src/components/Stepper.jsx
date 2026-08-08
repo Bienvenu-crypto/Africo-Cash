@@ -14,13 +14,13 @@ export default function Stepper({ steps, current }) {
                 className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold ${done
                   ? "bg-gold-500 text-navy-950"
                   : active
-                    ? "border-2 border-gold-400 text-gold-300"
+                    ? "border-2 border-gold-400 text-blue-600"
                     : "border border-white/20 text-white/40"
                   }`}
               >
                 {done ? "✓" : idx}
               </div>
-              <span className={`hidden text-[11px] font-medium sm:block ${active ? "text-gold-300" : "text-white/40"}`}>
+              <span className={`hidden text-[11px] font-medium sm:block ${active ? "text-blue-600" : "text-white/40"}`}>
                 {label}
               </span>
             </div>

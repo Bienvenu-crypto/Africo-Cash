@@ -18,14 +18,14 @@ export default function AProposPage() {
           <h1 className="mt-4 text-4xl font-bold leading-tight text-center">
             Le bras financier numérique du Groupe Africo
           </h1>
-          <p className="mt-5 leading-relaxed text-white/65">
+          <p className="mt-5 leading-relaxed text-gray-600">
             Africo Cash est né de la volonté d&apos;Africo Group de rapprocher
             les services financiers des Congolais, où qu&apos;ils se trouvent.
             Notre plateforme relie clients, agents de proximité, opérateurs
             Mobile Money et banques partenaires dans un seul écosystème
             numérique sécurisé.
           </p>
-          <p className="mt-4 leading-relaxed text-white/65">
+          <p className="mt-4 leading-relaxed text-gray-600">
             Chaque compte est protégé par un processus KYC rigoureux: pièce
             d&apos;identité, scan facial, signature électronique et code
             PIN; avant qu&apos;un numéro de compte unique à 8 chiffres ne
@@ -35,7 +35,7 @@ export default function AProposPage() {
             Voir le processus d&apos;inscription
           </Link>
         </div>
-        <Image src="/images/banks.jpg" alt="Banques partenaires Africo Cash" width={420} height={620} className="mx-auto max-w-xs rounded-2xl border border-white/10 shadow-2xl" />
+        <Image src="/images/banks.jpg" alt="Banques partenaires Africo Cash" width={420} height={620} className="mx-auto max-w-xs rounded-2xl border border-gray-200 shadow-2xl" />
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-20 lg:px-8">
@@ -43,18 +43,18 @@ export default function AProposPage() {
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {ADVANTAGES.map((a) => (
             <Card key={a.n}>
-              <p className="text-3xl font-bold text-gold-400">{a.n}</p>
+              <p className="text-3xl font-bold text-blue-600">{a.n}</p>
               <h3 className="mt-3 font-bold">{a.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{a.desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{a.desc}</p>
             </Card>
           ))}
         </div>
       </section>
 
       <section className="mx-auto max-w-5xl px-5 pb-24 lg:px-8">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-10 text-center">
+        <div className="rounded-3xl border border-gray-200 bg-gray-50 p-10 text-center">
           <h2 className="text-2xl font-bold">Notre mission</h2>
-          <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-white/65">
+          <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-gray-600">
             Rendre chaque transaction: retrait, envoi, conversion ou paiement
             de facture; aussi simple qu&apos;un message texte, tout en
             garantissant la sécurité et la traçabilité exigées par les

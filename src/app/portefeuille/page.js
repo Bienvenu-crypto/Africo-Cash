@@ -36,10 +36,10 @@ function LoginCard({ onLogin }) {
       <div>
 
         <h1 className="mt-4 text-3xl font-bold">Accédez à votre portefeuille</h1>
-        <p className="mt-3 text-white/60">
+        <p className="mt-3 text-gray-600">
           Connectez-vous avec votre numéro Africo Cash à 8 chiffres et votre code PIN pour gérer votre solde.
         </p>
-        <Image src="/images/wallet.jpg" alt="Portefeuille Africo Cash" width={420} height={620} className="mt-8 hidden max-w-[220px] rounded-2xl border border-white/10 shadow-2xl sm:block" />
+        <Image src="/images/wallet.jpg" alt="Portefeuille Africo Cash" width={420} height={620} className="mt-8 hidden max-w-[220px] rounded-2xl border border-gray-200 shadow-2xl sm:block" />
       </div>
 
       <Card>
@@ -67,9 +67,9 @@ function LoginCard({ onLogin }) {
           <PrimaryButton type="submit" className="w-full" disabled={loading}>
             {loading ? "Connexion…" : "Se connecter"}
           </PrimaryButton>
-          <p className="text-center text-sm text-white/50">
+          <p className="text-center text-sm text-gray-500">
             Pas encore de compte ?{" "}
-            <Link href="/inscription" className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
+            <Link href="/inscription" className="font-semibold text-blue-600 hover:text-blue-800 hover:underline">
               Ouvrez-en un
             </Link>
           </p>
@@ -85,7 +85,7 @@ function ScoreGauge({ score = 720 }) {
   return (
     <div className="flex flex-col items-center">
       <svg viewBox="0 0 200 110" className="w-48">
-        <path d="M10 100 A90 90 0 0 1 190 100" fill="none" stroke="#3b1f14" strokeWidth="14" strokeLinecap="round" />
+        <path d="M10 100 A90 90 0 0 1 190 100" fill="none" stroke="#e2e8f0" strokeWidth="14" strokeLinecap="round" />
         <path d="M10 100 A90 90 0 0 1 190 100" fill="none" stroke="url(#grad)" strokeWidth="14" strokeLinecap="round"
           strokeDasharray={`${pct * 251} 251`} />
         <defs>
@@ -95,14 +95,14 @@ function ScoreGauge({ score = 720 }) {
             <stop offset="100%" stopColor="#22c55e" />
           </linearGradient>
         </defs>
-        <line x1="100" y1="100" x2={100 + 65 * Math.cos((angle * Math.PI) / 180)} y2={100 + 65 * Math.sin((angle * Math.PI) / 180)} stroke="white" strokeWidth="3" />
-        <circle cx="100" cy="100" r="5" fill="white" />
+        <line x1="100" y1="100" x2={100 + 65 * Math.cos((angle * Math.PI) / 180)} y2={100 + 65 * Math.sin((angle * Math.PI) / 180)} stroke="#334155" strokeWidth="3" />
+        <circle cx="100" cy="100" r="5" fill="#334155" />
       </svg>
-      <div className="-mt-4 flex w-48 justify-between text-xs text-white/50">
+      <div className="-mt-4 flex w-48 justify-between text-xs text-gray-500">
         <span>Faible</span>
         <span>Bon</span>
       </div>
-      <p className="mt-2 text-3xl font-bold text-gold-300">{score}</p>
+      <p className="mt-2 text-3xl font-bold text-blue-600">{score}</p>
       <p className="text-sm">{"★".repeat(5)}</p>
     </div>
   );
@@ -153,14 +153,14 @@ export default function Portefeuille() {
 
   return (
     <div className="mx-auto max-w-xl px-5 py-10 lg:px-8">
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-navy-800 to-navy-900 p-6 shadow-2xl">
+      <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-2xl">
         <div className="mb-4 flex items-center justify-between">
-          <Image src="/images/logo.jpg" alt="Africo Cash" width={140} height={40} className="h-9 w-auto rounded-sm object-contain mix-blend-lighten" />
-          <button onClick={() => setClient(null)} className="text-xs text-white/50 hover:text-green-400">Déconnexion ⏻</button>
+          <Image src="/images/logo.jpg" alt="Africo Cash" width={140} height={40} className="h-9 w-auto rounded-sm object-contain" />
+          <button onClick={() => setClient(null)} className="text-xs text-gray-500 hover:text-red-500">Déconnexion ⏻</button>
         </div>
 
-        <h2 className="text-center text-lg font-semibold text-white/80">Portefeuille Africo Cash</h2>
-        <p className="text-center text-white/60">{client.prenom} {client.nom}</p>
+        <h2 className="text-center text-lg font-semibold text-gray-800">Portefeuille Africo Cash</h2>
+        <p className="text-center text-gray-600">{client.prenom} {client.nom}</p>
 
         <div className="mt-4 grid grid-cols-2 gap-3">
           {/* USD Balance Card */}
@@ -262,12 +262,12 @@ export default function Portefeuille() {
       <EnvoyerModal open={activeModal === "envoyer"} client={client} onClose={() => setActiveModal(null)} onDone={afterOp} />
       <ConvertirModal open={activeModal === "convertir"} client={client} onClose={() => setActiveModal(null)} onDone={afterOp} />
       <Modal open={activeModal === "deposer"} onClose={() => setActiveModal(null)} title="Déposer sur mon compte">
-        <p className="text-sm text-white/70">
+        <p className="text-sm text-gray-600">
           Rechargez votre solde Africo Cash depuis un opérateur Mobile Money ou votre compte bancaire.
         </p>
         <div className="mt-5 flex flex-col gap-3">
           <Link href="/mobile-money" className="btn-gold rounded-full px-5 py-3 text-center text-sm font-bold">Recharger via Mobile Money</Link>
-          <Link href="/banques" className="rounded-full border border-white/25 px-5 py-3 text-center text-sm font-semibold hover:border-green-400 hover:text-green-400">Recharger via ma banque</Link>
+          <Link href="/banques" className="rounded-full border border-gray-300 text-gray-700 px-5 py-3 text-center text-sm font-semibold hover:border-blue-500 hover:text-blue-600">Recharger via ma banque</Link>
         </div>
       </Modal>
     </div>
@@ -278,7 +278,7 @@ function ActionButton({ color, icon, label, onClick }) {
   return (
     <button onClick={onClick} className="flex flex-col items-center gap-1.5">
       <span className={`flex h-12 w-12 items-center justify-center rounded-xl text-lg text-white ${color}`}>{icon}</span>
-      <span className="text-[11px] font-semibold text-white">{label}</span>
+      <span className="text-[11px] font-semibold text-gray-700">{label}</span>
     </button>
   );
 }

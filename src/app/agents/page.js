@@ -14,7 +14,7 @@ export default function AgentsPage() {
       <section className="mx-auto max-w-5xl px-5 py-20 text-center lg:px-8">
 
         <h1 className="mt-4 text-4xl font-bold text-center">Devenez Agent Africo Cash</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-white/65">
+        <p className="mx-auto mt-4 max-w-2xl text-gray-600">
           Rejoignez le réseau d&apos;agents de proximité Africo Group : gérez les retraits cash de vos clients,
           touchez une commission sur chaque opération, et bénéficiez d&apos;une liaison automatique
           avec la banque partenaire la plus proche.
@@ -31,7 +31,7 @@ export default function AgentsPage() {
             <Card key={b.title}>
               <div className="text-3xl">{b.icon}</div>
               <h3 className="mt-4 font-bold">{b.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/60">{b.desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">{b.desc}</p>
             </Card>
           ))}
         </div>

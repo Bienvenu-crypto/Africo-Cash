@@ -55,13 +55,13 @@ export default function ContactPage() {
           {OFFICES.map((o) => (
             <Card key={o.city}>
               <p className="font-bold">{o.city}</p>
-              <p className="mt-1 text-sm text-white/60">{o.phone}</p>
+              <p className="mt-1 text-sm text-gray-600">{o.phone}</p>
             </Card>
           ))}
           <Card>
             <p className="font-bold">Support client</p>
-            <p className="mt-1 text-sm text-white/60">contact@africocash.cd</p>
-            <p className="text-sm text-white/60">Disponible 7j/7</p>
+            <p className="mt-1 text-sm text-gray-600">contact@africocash.cd</p>
+            <p className="text-sm text-gray-600">Disponible 7j/7</p>
           </Card>
         </div>
       </div>

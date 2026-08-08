@@ -94,10 +94,10 @@ export default function Inscription() {
       <div className="mx-auto max-w-lg px-5 py-24 text-center lg:px-8">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500/15 text-3xl">🎉</div>
         <h1 className="text-3xl font-bold">Bienvenue chez Africo Cash</h1>
-        <p className="mt-4 text-white/65">{result.message}</p>
+        <p className="mt-4 text-gray-600">{result.message}</p>
         <Card className="mt-8">
-          <p className="text-sm text-white/60">Votre numéro de compte Africo Cash</p>
-          <p className="mt-2 text-4xl font-bold tracking-widest text-gold-300">{result.account_number}</p>
+          <p className="text-sm text-gray-600">Votre numéro de compte Africo Cash</p>
+          <p className="mt-2 text-4xl font-bold tracking-widest text-blue-600">{result.account_number}</p>
         </Card>
         <Link href="/portefeuille" className="btn-gold mt-8 inline-block rounded-full px-7 py-3.5 text-sm font-bold">
           Accéder à mon portefeuille
@@ -109,7 +109,7 @@ export default function Inscription() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-16 lg:px-8">
       <h1 className="text-3xl font-bold">Ouvrir un compte Africo Cash</h1>
-      <p className="mt-2 text-white/60">
+      <p className="mt-2 text-gray-600">
         Suivez les 5 étapes ci-dessous. Votre numéro de compte à 8 chiffres sera généré à la toute fin.
       </p>
 
@@ -195,8 +195,8 @@ export default function Inscription() {
               </Field>
             </div>
 
-            <div className="rounded-lg border border-white/15 bg-white/5 p-4">
-              <p className="text-sm font-medium text-white/80">Vérification du numéro par code OTP</p>
+            <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+              <p className="text-sm font-medium text-gray-700">Vérification du numéro par code OTP</p>
               {!otpSent ? (
                 <GhostButton type="button" className="mt-3" onClick={sendOtp} disabled={!form.telephone}>
                   Envoyer le code OTP
@@ -212,12 +212,12 @@ export default function Inscription() {
                   <button
                     type="button"
                     onClick={() => setOtpVerified(otpInput === otpSent)}
-                    className="rounded-full border border-white/25 px-4 py-2 text-xs font-semibold hover:border-green-400 hover:text-green-400"
+                    className="rounded-full border border-gray-300 px-4 py-2 text-xs font-semibold hover:border-blue-500 hover:text-blue-600"
                   >
                     Valider le code
                   </button>
-                  <span className="text-xs text-white/50">Code de démonstration : {otpSent}</span>
-                  {otpVerified && <span className="text-xs font-semibold text-emerald-300">✓ Numéro vérifié</span>}
+                  <span className="text-xs text-gray-500">Code de démonstration : {otpSent}</span>
+                  {otpVerified && <span className="text-xs font-semibold text-emerald-600">✓ Numéro vérifié</span>}
                 </div>
               )}
             </div>
@@ -227,11 +227,11 @@ export default function Inscription() {
         {step === 4 && (
           <div className="space-y-6">
             <div>
-              <p className="mb-2 text-sm font-medium text-white/80">Scan facial (biométrie)</p>
+              <p className="mb-2 text-sm font-medium text-gray-700">Scan facial (biométrie)</p>
               <FacialCapture onChange={setFacialOk} />
             </div>
             <div>
-              <p className="mb-2 text-sm font-medium text-white/80">Signature graphique — validation des Termes &amp; Conditions</p>
+              <p className="mb-2 text-sm font-medium text-gray-700">Signature graphique — validation des Termes &amp; Conditions</p>
               <SignatureBox onChange={setSignature} />
             </div>
           </div>
@@ -239,14 +239,14 @@ export default function Inscription() {
 
         {step === 5 && (
           <div className="space-y-3 text-sm">
-            <p className="text-white/70">Vérifiez vos informations avant la génération finale de votre numéro Africo Cash.</p>
-            <div className="grid grid-cols-2 gap-3 rounded-lg bg-white/5 p-4">
-              <p><span className="text-white/50">Nom complet : </span>{form.nom} {form.postnom} {form.prenom}</p>
-              <p><span className="text-white/50">Téléphone : </span>{form.telephone}</p>
-              <p><span className="text-white/50">Localisation : </span>{form.ville}, {form.province}</p>
-              <p><span className="text-white/50">Profession : </span>{form.profession}</p>
-              <p><span className="text-white/50">Pièce : </span>{form.piece_type} — {form.piece_numero}</p>
-              <p><span className="text-white/50">Biométrie : </span>✓ Photo et signature enregistrées</p>
+            <p className="text-gray-600">Vérifiez vos informations avant la génération finale de votre numéro Africo Cash.</p>
+            <div className="grid grid-cols-2 gap-3 rounded-lg bg-gray-50 p-4">
+              <p><span className="text-gray-500">Nom complet : </span>{form.nom} {form.postnom} {form.prenom}</p>
+              <p><span className="text-gray-500">Téléphone : </span>{form.telephone}</p>
+              <p><span className="text-gray-500">Localisation : </span>{form.ville}, {form.province}</p>
+              <p><span className="text-gray-500">Profession : </span>{form.profession}</p>
+              <p><span className="text-gray-500">Pièce : </span>{form.piece_type} — {form.piece_numero}</p>
+              <p><span className="text-gray-500">Biométrie : </span>✓ Photo et signature enregistrées</p>
             </div>
           </div>
         )}

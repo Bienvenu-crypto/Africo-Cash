@@ -247,8 +247,8 @@ function BankModal({ modal, accountNumber, onClose, onDone }) {
     <Modal open={!!modal} onClose={onClose} title={TITLES[action](bank)}>
       {code ? (
         <div className="text-center">
-          <p className="text-sm text-white/70">Présentez ce code au guichetier {bank} pour recevoir votre cash :</p>
-          <p className="mt-4 text-4xl font-bold tracking-widest text-gold-300">{code}</p>
+          <p className="text-sm text-gray-600">Présentez ce code au guichetier {bank} pour recevoir votre cash :</p>
+          <p className="mt-4 text-4xl font-bold tracking-widest text-blue-600">{code}</p>
           <PrimaryButton className="mt-6 w-full" onClick={() => onDone(`Code de retrait généré : ${code}`)}>
             Fermer
           </PrimaryButton>

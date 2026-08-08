@@ -62,22 +62,22 @@ export default function GuichetPage() {
       <div className="mx-auto max-w-4xl px-5 py-16 lg:px-8">
         <Eyebrow>Guichet {guichet.code}</Eyebrow>
         <h1 className="mt-4 text-3xl font-bold">{guichet.bank_name} - {guichet.agence}</h1>
-        <p className="mt-2 text-white/60">Statut : <span className="font-semibold text-emerald-300">{guichet.status}</span></p>
+        <p className="mt-2 text-gray-600">Statut : <span className="font-semibold text-emerald-600">{guichet.status}</span></p>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2">
           <Card>
-            <p className="text-sm text-white/60">Cantonnement USD</p>
-            <p className="mt-2 text-3xl font-bold text-gold-300">{money(guichet.cantonnement_usd, "USD")}</p>
+            <p className="text-sm text-gray-600">Cantonnement USD</p>
+            <p className="mt-2 text-3xl font-bold text-blue-600">{money(guichet.cantonnement_usd, "USD")}</p>
           </Card>
           <Card>
-            <p className="text-sm text-white/60">Cantonnement CDF</p>
-            <p className="mt-2 text-3xl font-bold text-gold-300">{money(guichet.cantonnement_cdf, "CDF")}</p>
+            <p className="text-sm text-gray-600">Cantonnement CDF</p>
+            <p className="mt-2 text-3xl font-bold text-blue-600">{money(guichet.cantonnement_cdf, "CDF")}</p>
           </Card>
         </div>
 
         <Card className="mt-6">
           <h3 className="font-bold">Rôle du guichet</h3>
-          <p className="mt-2 text-sm leading-relaxed text-white/65">
+          <p className="mt-2 text-sm leading-relaxed text-gray-600">
             Le guichetier connecté avec ce Code Guichet valide les dépôts et retraits des clients Africo Cash
             à 8 chiffres. Les mouvements en miroir sur les comptes de cantonnement CDF et USD sont appliqués
             automatiquement lors des opérations « Retirer le cash », « Banque vers Africo » et « Africo vers banque »
@@ -115,9 +115,9 @@ export default function GuichetPage() {
             <PrimaryButton type="submit" className="w-full" disabled={loading}>
               {loading ? "Connexion…" : "Se connecter"}
             </PrimaryButton>
-            <p className="text-center text-sm text-white/50">
+            <p className="text-center text-sm text-gray-500">
               Nouveau guichet ?{" "}
-              <button type="button" onClick={() => { setMode("register"); setError(""); }} className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
+              <button type="button" onClick={() => { setMode("register"); setError(""); }} className="font-semibold text-blue-600 hover:text-blue-600 hover:underline">
                 Le configurer ici
               </button>
             </p>
@@ -144,9 +144,9 @@ export default function GuichetPage() {
             <PrimaryButton type="submit" className="w-full" disabled={loading}>
               {loading ? "Enregistrement…" : "Enregistrer le guichet"}
             </PrimaryButton>
-            <p className="text-center text-sm text-white/50">
+            <p className="text-center text-sm text-gray-500">
               Guichet déjà configuré ?{" "}
-              <button type="button" onClick={() => { setMode("login"); setError(""); }} className="font-semibold text-gold-400 hover:text-green-400 hover:underline">
+              <button type="button" onClick={() => { setMode("login"); setError(""); }} className="font-semibold text-blue-600 hover:text-blue-600 hover:underline">
                 Se connecter
               </button>
             </p>

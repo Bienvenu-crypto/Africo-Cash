@@ -36,16 +36,16 @@ export default function FAQ() {
         {ITEMS.map((item, idx) => {
           const isOpen = openIdx === idx;
           return (
-            <div key={item.q} className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
+            <div key={item.q} className="overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
               <button
                 onClick={() => setOpenIdx(isOpen ? -1 : idx)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-semibold sm:text-base hover:text-green-400 transition"
+                className="flex w-full items-center justify-between px-5 py-4 text-left text-sm font-semibold sm:text-base hover:text-blue-600 transition"
               >
                 {item.q}
-                <span className={`ml-4 text-gold-400 transition-transform ${isOpen ? "rotate-45" : ""}`}>＋</span>
+                <span className={`ml-4 text-blue-600 transition-transform ${isOpen ? "rotate-45" : ""}`}>＋</span>
               </button>
               {isOpen && (
-                <p className="px-5 pb-5 text-sm leading-relaxed text-white/65">{item.a}</p>
+                <p className="px-5 pb-5 text-sm leading-relaxed text-gray-600">{item.a}</p>
               )}
             </div>
           );

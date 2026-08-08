@@ -47,12 +47,12 @@ export default function PaiementsPage() {
 
       <div className="space-y-3">
         {PARTNERS.map((p) => (
-          <div key={p.key} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-5 py-4">
+          <div key={p.key} className="flex items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4">
             <div className="flex items-center gap-4">
               <span className="text-2xl">{p.icon}</span>
               <div>
                 <p className="font-bold">{p.key}</p>
-                <p className="text-xs text-white/50">{p.desc}</p>
+                <p className="text-xs text-gray-500">{p.desc}</p>
               </div>
             </div>
             <button onClick={() => setModal(p.key)} className="btn-gold rounded-full px-5 py-2 text-xs font-bold">

@@ -85,15 +85,15 @@ function StepList({ steps }) {
     <div className="space-y-5">
       {steps.map((s) => (
         <Card key={s.n} className="flex gap-5">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-lg font-bold text-gold-300">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gold-500/15 text-lg font-bold text-blue-600">
             {s.n}
           </div>
           <div>
             <h3 className="font-bold">{s.title}</h3>
-            <ul className="mt-2 space-y-1 text-sm leading-relaxed text-white/65">
+            <ul className="mt-2 space-y-1 text-sm leading-relaxed text-gray-600">
               {s.items.map((it) => (
                 <li key={it} className="flex gap-2">
-                  <span className="text-gold-400">•</span>
+                  <span className="text-blue-600">•</span>
                   <span>{it}</span>
                 </li>
               ))}
@@ -111,7 +111,7 @@ export default function CommentCaMarche() {
       <div className="text-center">
 
         <h1 className="mt-4 text-4xl font-bold">Comment ça marche</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-white/65">
+        <p className="mx-auto mt-4 max-w-2xl text-gray-600">
           L&apos;inscription sur Africo Cash suit un ordre strict, étape par
           étape. Aucune étape ne peut être sautée, et le numéro de compte
           n&apos;est généré qu&apos;à la toute fin.
@@ -132,7 +132,7 @@ export default function CommentCaMarche() {
         <SectionHeading title="Enregistrement de l'Agent (le distributeur)" center />
         <StepList steps={AGENT_STEPS} />
         <div className="mt-6 text-center">
-          <Link href="/inscription-agent" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-green-400 hover:text-green-400">
+          <Link href="/inscription-agent" className="rounded-full border border-gray-300 px-7 py-3.5 text-sm font-semibold hover:border-blue-500 hover:text-blue-600">
             Devenir Agent Africo
           </Link>
         </div>
@@ -142,7 +142,7 @@ export default function CommentCaMarche() {
         <SectionHeading title="Configuration du guichet (interface banque)" subtitle="Plus besoin de profils nominatifs pour les employés de banque : le système identifie directement le guichet de l'institution partenaire." center />
         <StepList steps={GUICHET_STEPS} />
         <div className="mt-6 text-center">
-          <Link href="/guichet" className="rounded-full border border-white/25 px-7 py-3.5 text-sm font-semibold hover:border-green-400 hover:text-green-400">
+          <Link href="/guichet" className="rounded-full border border-gray-300 px-7 py-3.5 text-sm font-semibold hover:border-blue-500 hover:text-blue-600">
             Accéder à l&apos;espace Guichet
           </Link>
         </div>

@@ -97,14 +97,14 @@ export default function InscriptionAgent() {
       <div className="mx-auto max-w-lg px-5 py-24 text-center lg:px-8">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500/15 text-3xl">🏪</div>
         <h1 className="text-3xl font-bold">Compte Agent créé</h1>
-        <p className="mt-4 text-white/65">{result.message}</p>
+        <p className="mt-4 text-gray-600">{result.message}</p>
         <Card className="mt-8 space-y-3">
           <div>
-            <p className="text-sm text-white/60">Code Agent</p>
-            <p className="mt-1 text-3xl font-bold tracking-widest text-gold-300">{result.agent_code}</p>
+            <p className="text-sm text-gray-600">Code Agent</p>
+            <p className="mt-1 text-3xl font-bold tracking-widest text-blue-600">{result.agent_code}</p>
           </div>
           <div>
-            <p className="text-sm text-white/60">Banque partenaire liée</p>
+            <p className="text-sm text-gray-600">Banque partenaire liée</p>
             <p className="mt-1 text-lg font-semibold">{result.banque_partenaire}</p>
           </div>
         </Card>
@@ -118,7 +118,7 @@ export default function InscriptionAgent() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-16 lg:px-8">
       <h1 className="text-3xl font-bold">Devenir Agent Africo Cash</h1>
-      <p className="mt-2 text-white/60">
+      <p className="mt-2 text-gray-600">
         Enregistrez votre point de service en 4 étapes. Votre code agent sera lié automatiquement à la banque partenaire la plus proche.
       </p>
 
@@ -159,16 +159,16 @@ export default function InscriptionAgent() {
             <Field label="Numéro de la boutique">
               <input className={inputClass} value={form.numero_boutique} onChange={(e) => update("numero_boutique", e.target.value)} />
             </Field>
-            <div className="sm:col-span-2 rounded-lg border border-white/15 bg-white/5 p-4">
-              <p className="text-sm font-medium text-white/80">Coordonnées GPS du point de vente (obligatoire)</p>
+            <div className="sm:col-span-2 rounded-lg border border-gray-200 bg-gray-50 p-4">
+              <p className="text-sm font-medium text-gray-700">Coordonnées GPS du point de vente (obligatoire)</p>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 <GhostButton type="button" onClick={captureGps}>
                   📍 Capturer ma position
                 </GhostButton>
-                {gpsStatus === "loading" && <span className="text-xs text-white/50">Localisation en cours…</span>}
+                {gpsStatus === "loading" && <span className="text-xs text-gray-500">Localisation en cours…</span>}
                 {gpsStatus === "error" && <span className="text-xs text-red-300">Position indisponible — vérifiez les permissions du navigateur.</span>}
                 {form.gps_lat && form.gps_lng && (
-                  <span className="text-xs font-semibold text-emerald-300">
+                  <span className="text-xs font-semibold text-emerald-600">
                     ✓ Lat {form.gps_lat}, Lng {form.gps_lng}
                   </span>
                 )}
@@ -207,11 +207,11 @@ export default function InscriptionAgent() {
         {step === 3 && (
           <div className="space-y-6">
             <div>
-              <p className="mb-2 text-sm font-medium text-white/80">Scan facial du gérant (obligatoire avant la signature)</p>
+              <p className="mb-2 text-sm font-medium text-gray-700">Scan facial du gérant (obligatoire avant la signature)</p>
               <FacialCapture onChange={setFacialOk} />
             </div>
             <div>
-              <p className="mb-2 text-sm font-medium text-white/80">Signature graphique — contrat d&apos;adhésion Agent</p>
+              <p className="mb-2 text-sm font-medium text-gray-700">Signature graphique — contrat d&apos;adhésion Agent</p>
               <SignatureBox onChange={setSignature} />
             </div>
           </div>
@@ -219,14 +219,14 @@ export default function InscriptionAgent() {
 
         {step === 4 && (
           <div className="space-y-3 text-sm">
-            <p className="text-white/70">Vérifiez les informations avant la génération de votre code agent.</p>
-            <div className="grid grid-cols-2 gap-3 rounded-lg bg-white/5 p-4">
-              <p><span className="text-white/50">Gérant : </span>{form.nom} {form.postnom} {form.prenom}</p>
-              <p><span className="text-white/50">Boutique : </span>{form.boutique_nom}</p>
-              <p><span className="text-white/50">Localisation : </span>{form.ville}, {form.province}</p>
-              <p><span className="text-white/50">GPS : </span>{form.gps_lat}, {form.gps_lng}</p>
-              <p><span className="text-white/50">Téléphone : </span>{form.telephone}</p>
-              <p><span className="text-white/50">Biométrie : </span>✓ Photo et signature enregistrées</p>
+            <p className="text-gray-600">Vérifiez les informations avant la génération de votre code agent.</p>
+            <div className="grid grid-cols-2 gap-3 rounded-lg bg-gray-50 p-4">
+              <p><span className="text-gray-500">Gérant : </span>{form.nom} {form.postnom} {form.prenom}</p>
+              <p><span className="text-gray-500">Boutique : </span>{form.boutique_nom}</p>
+              <p><span className="text-gray-500">Localisation : </span>{form.ville}, {form.province}</p>
+              <p><span className="text-gray-500">GPS : </span>{form.gps_lat}, {form.gps_lng}</p>
+              <p><span className="text-gray-500">Téléphone : </span>{form.telephone}</p>
+              <p><span className="text-gray-500">Biométrie : </span>✓ Photo et signature enregistrées</p>
             </div>
           </div>
         )}
