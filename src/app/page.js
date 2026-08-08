@@ -82,15 +82,15 @@ export default function Home() {
               </div>
               <div className="mt-12 flex flex-wrap gap-8">
                 <div>
-                  <p className="text-3xl font-bold text-blue-600">5</p>
+                  <p className="text-3xl font-bold text-blue-400">5</p>
                   <p className="text-sm text-white-600">Banques partenaires</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-blue-600">4</p>
+                  <p className="text-3xl font-bold text-blue-400">4</p>
                   <p className="text-sm text-white-600">Opérateurs Mobile Money</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-blue-600">24/7</p>
+                  <p className="text-3xl font-bold text-blue-400">24/7</p>
                   <p className="text-sm text-white-600">Disponibilité du service</p>
                 </div>
               </div>
