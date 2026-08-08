@@ -11,7 +11,8 @@ import {
 } from "recharts";
 import {
   Search, Bell, Settings, User, Download, Home, Users, Settings as ConfigIcon,
-  PieChart as PieIcon, BarChart2, TrendingUp, Map, HelpCircle, Calendar as CalendarIcon
+  PieChart as PieIcon, BarChart2, TrendingUp, Map, HelpCircle, Calendar as CalendarIcon,
+  UserCheck
 } from "lucide-react";
 
 const CONFIG_LABELS = {
@@ -129,6 +130,7 @@ export default function AdminDashboard() {
         <nav className="flex-1 px-4 pb-4 space-y-2 text-sm font-medium">
           <SidebarItem icon={<Home size={18} />} text="Tableau de Bord" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
           <SidebarItem icon={<Users size={18} />} text="Utilisateurs" active={activeTab === 'users'} onClick={() => setActiveTab('users')} />
+          <SidebarItem icon={<UserCheck size={18} />} text="Agents Africo" active={activeTab === 'agents'} onClick={() => setActiveTab('agents')} />
           <SidebarItem icon={<ConfigIcon size={18} />} text="Configuration" active={activeTab === 'config'} onClick={() => setActiveTab('config')} />
         </nav>
 
@@ -159,6 +161,7 @@ export default function AdminDashboard() {
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
           {activeTab === "dashboard" && <TransactionsDashboardView />}
           {activeTab === "users" && <UsersView />}
+          {activeTab === "agents" && <AgentsView />}
           {activeTab === "config" && <ConfigView />}
         </div>
       </main>
@@ -575,6 +578,153 @@ function UsersView() {
               >
                 Fermer
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AgentsView() {
+  const [agents, setAgents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedAgent, setSelectedAgent] = useState(null);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetch("/api/admin/agents", { headers: { "x-admin-token": "africo-admin-2024" } })
+      .then((r) => r.json())
+      .then((d) => { setAgents(d.agents || []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const filtered = agents.filter((a) => {
+    const q = search.toLowerCase();
+    const fullName = `${a.nom || ""} ${a.postnom || ""} ${a.prenom || ""}`.toLowerCase();
+    return (
+      fullName.includes(q) ||
+      (a.telephone || "").includes(q) ||
+      (a.agent_code || "").toLowerCase().includes(q) ||
+      (a.ville || "").toLowerCase().includes(q) ||
+      (a.boutique_nom || "").toLowerCase().includes(q)
+    );
+  });
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-2xl font-bold text-white">Agents Africo</h2>
+        <span className="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 rounded-full px-4 py-1 text-sm font-semibold">
+          {agents.length} agent{agents.length !== 1 ? "s" : ""}
+        </span>
+      </div>
+
+      <div className="flex items-center bg-[#1f2a40] rounded-lg px-4 py-2 mb-5 w-full max-w-sm">
+        <Search size={16} className="text-gray-400 mr-2" />
+        <input
+          type="text"
+          placeholder="Rechercher un agent…"
+          className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      {loading ? (
+        <div className="flex items-center justify-center h-40"><div className="w-8 h-8 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" /></div>
+      ) : (
+        <div className="overflow-x-auto rounded-xl border border-gray-700/50">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-[#1f2a40] text-gray-400 uppercase text-xs">
+              <tr>
+                <th className="px-4 py-3">Code Agent</th>
+                <th className="px-4 py-3">Nom complet</th>
+                <th className="px-4 py-3">Téléphone</th>
+                <th className="px-4 py-3">Boutique</th>
+                <th className="px-4 py-3">Ville</th>
+                <th className="px-4 py-3">Indice USD</th>
+                <th className="px-4 py-3">Indice CDF</th>
+                <th className="px-4 py-3">Statut</th>
+                <th className="px-4 py-3">Inscription</th>
+                <th className="px-4 py-3">Détails</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-800">
+              {filtered.length === 0 ? (
+                <tr><td colSpan={10} className="text-center py-10 text-gray-500">Aucun agent trouvé.</td></tr>
+              ) : (
+                filtered.map((a) => (
+                  <tr key={a.id} className="bg-[#141b2d] hover:bg-[#1f2a40] transition">
+                    <td className="px-4 py-3 font-mono text-indigo-300 text-xs">{a.agent_code}</td>
+                    <td className="px-4 py-3 font-semibold text-white">{[a.nom, a.postnom, a.prenom].filter(Boolean).join(" ")}</td>
+                    <td className="px-4 py-3 text-gray-300">{a.telephone}</td>
+                    <td className="px-4 py-3 text-gray-300">{a.boutique_nom || "—"}</td>
+                    <td className="px-4 py-3 text-gray-300">{a.ville || "—"}</td>
+                    <td className="px-4 py-3 text-green-400 font-mono">{Number(a.index_cantonnement_usd || 0).toFixed(2)} $</td>
+                    <td className="px-4 py-3 text-yellow-400 font-mono">{Number(a.index_cantonnement_cdf || 0).toLocaleString("fr-CD")} FC</td>
+                    <td className="px-4 py-3">
+                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${a.status === 'Actif' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>{a.status}</span>
+                    </td>
+                    <td className="px-4 py-3 text-gray-400">{a.created_at ? new Date(a.created_at).toLocaleDateString("fr-FR") : "—"}</td>
+                    <td className="px-4 py-3">
+                      <button onClick={() => setSelectedAgent(a)} className="text-indigo-400 hover:text-indigo-200 text-xs font-bold border border-indigo-500/40 rounded-md px-2 py-1 hover:bg-indigo-500/10 transition">
+                        Voir
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* AGENT DETAILS MODAL */}
+      {selectedAgent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setSelectedAgent(null)}>
+          <div className="bg-[#141b2d] border border-gray-700 rounded-2xl p-6 max-w-xl w-full mx-4 shadow-2xl max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-5">
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 rounded-full bg-indigo-600/30 border border-indigo-400/40 flex items-center justify-center">
+                  <UserCheck size={24} className="text-indigo-300" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">{[selectedAgent.nom, selectedAgent.postnom, selectedAgent.prenom].filter(Boolean).join(" ")}</h3>
+                  <span className="text-xs font-mono text-indigo-400">{selectedAgent.agent_code}</span>
+                </div>
+              </div>
+              <button onClick={() => setSelectedAgent(null)} className="text-gray-400 hover:text-white text-2xl leading-none">&times;</button>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 text-sm">
+              {[
+                ["Nom", selectedAgent.nom],
+                ["Post-nom", selectedAgent.postnom],
+                ["Prénom", selectedAgent.prenom],
+                ["Téléphone", selectedAgent.telephone],
+                ["Province", selectedAgent.province],
+                ["Ville", selectedAgent.ville],
+                ["Commune", selectedAgent.commune],
+                ["Quartier", selectedAgent.quartier],
+                ["Avenue", selectedAgent.avenue],
+                ["N° Boutique", selectedAgent.numero_boutique],
+                ["Boutique", selectedAgent.boutique_nom],
+                ["Pièce d'identité", selectedAgent.piece_type],
+                ["N° pièce", selectedAgent.piece_numero],
+                ["Banque partenaire", selectedAgent.banque_partenaire],
+                ["GPS Latitude", selectedAgent.gps_lat],
+                ["GPS Longitude", selectedAgent.gps_lng],
+                ["Indice cantonnement USD", selectedAgent.index_cantonnement_usd != null ? `${Number(selectedAgent.index_cantonnement_usd).toFixed(2)} $` : "—"],
+                ["Indice cantonnement CDF", selectedAgent.index_cantonnement_cdf != null ? `${Number(selectedAgent.index_cantonnement_cdf).toLocaleString("fr-CD")} FC` : "—"],
+                ["Statut", selectedAgent.status],
+                ["Date d'inscription", selectedAgent.created_at ? new Date(selectedAgent.created_at).toLocaleDateString("fr-FR") : "—"],
+              ].map(([label, val]) => (
+                <div key={label} className="bg-[#1f2a40] rounded-lg p-3">
+                  <p className="text-gray-400 text-xs mb-1">{label}</p>
+                  <p className="text-white font-semibold break-words">{val != null && val !== "" ? String(val) : "—"}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
