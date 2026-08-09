@@ -17,6 +17,7 @@ export default function MobileMoneyPage() {
   const [notice, setNotice] = useState("");
   const [showHistory, setShowHistory] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(5);
 
   useEffect(() => {
     async function fetchHistory() {
@@ -144,7 +145,7 @@ export default function MobileMoneyPage() {
                       </td>
                     </tr>
                   ) : (
-                    transactions.map((tx) => (
+                    transactions.slice(0, visibleCount).map((tx) => (
                       <tr key={tx.id} className="border-b border-gray-100 last:border-0 font-medium">
                         <td className="py-3 text-blue-900">{formatDate(tx.created_at)}</td>
                         <td className={`py-3 font-bold ${getOperatorColor(tx.counterparty)}`}>{tx.counterparty}</td>
@@ -165,11 +166,16 @@ export default function MobileMoneyPage() {
                 </tbody>
               </table>
             </div>
-            <div className="mt-4 flex justify-center">
-              <button className="bg-white border border-blue-200 text-blue-900 font-bold rounded-full px-6 py-1 hover:bg-gray-50 shadow-sm">
-                Voir Plus ▾
-              </button>
-            </div>
+            {transactions.length > 0 && (
+              <div className="mt-4 flex justify-center">
+                <button
+                  onClick={() => setVisibleCount(c => c + 5)}
+                  className="bg-white border border-blue-200 text-blue-900 font-bold rounded-full px-6 py-1 hover:bg-gray-50 shadow-sm"
+                >
+                  Voir Plus ▾
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>

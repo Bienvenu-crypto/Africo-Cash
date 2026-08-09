@@ -26,19 +26,6 @@ export default function PaiementsPage() {
         subtitle="Eau, électricité, internet, télévision et achats marchands, réglés en un instant."
       />
 
-      <Card className="mb-8 max-w-md">
-        <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input
-            className={inputClass}
-            inputMode="numeric"
-            maxLength={8}
-            placeholder="48291054"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
-          />
-        </Field>
-      </Card>
-
       {notice && (
         <div className="mb-8 max-w-md">
           <Alert type="success">{notice}</Alert>
@@ -69,6 +56,7 @@ export default function PaiementsPage() {
       <PayModal
         partner={modal}
         accountNumber={accountNumber}
+        setAccountNumber={setAccountNumber}
         onClose={() => setModal(null)}
         onDone={(msg) => {
           setNotice(msg);
@@ -80,7 +68,7 @@ export default function PaiementsPage() {
   );
 }
 
-function PayModal({ partner, accountNumber, onClose, onDone }) {
+function PayModal({ partner, accountNumber, setAccountNumber, onClose, onDone }) {
   const [reference, setReference] = useState("");
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("");
@@ -117,6 +105,17 @@ function PayModal({ partner, accountNumber, onClose, onDone }) {
   return (
     <Modal open={!!partner} onClose={onClose} title={`Payer la facture — ${partner}`}>
       <form onSubmit={submit} className="space-y-4">
+        <Field label="Votre numéro Africo Cash (8 chiffres)">
+          <input
+            className={`${inputClass} !font-bold !text-lg tracking-wider`}
+            style={{ color: "#60a5fa" }}
+            inputMode="numeric"
+            maxLength={8}
+            placeholder="48291054"
+            value={accountNumber}
+            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
+          />
+        </Field>
         <Field label="Référence (n° compteur, n° carte, identifiant client)">
           <input className={inputClass} value={reference} onChange={(e) => setReference(e.target.value)} />
         </Field>

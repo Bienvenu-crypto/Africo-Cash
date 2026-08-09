@@ -25,6 +25,7 @@ export default function BanquesPage() {
   const [transactions, setTransactions] = useState([]);
   const [visibleCount, setVisibleCount] = useState(5);
   const [refreshCounter, setRefreshCounter] = useState(0);
+  const [showHistory, setShowHistory] = useState(false);
 
   useEffect(() => {
     async function fetchHistory() {
@@ -47,8 +48,10 @@ export default function BanquesPage() {
         setTransactions([]);
       }
     }
-    fetchHistory();
-  }, [accountNumber, refreshCounter]);
+    if (showHistory) {
+      fetchHistory();
+    }
+  }, [accountNumber, refreshCounter, showHistory]);
 
   const getBankColor = (bank) => {
     if (bank?.includes("Rawbank")) return "text-blue-900";
@@ -72,19 +75,6 @@ export default function BanquesPage() {
         title="Interopérabilité directe avec vos comptes bancaires"
         subtitle="Rawbank, Equity BCDC, Trust Merchant Bank, Ecobank et FBNBank DRC connectées à votre portefeuille Africo Cash."
       />
-
-      <Card className="mb-8 max-w-md">
-        <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input
-            className={inputClass}
-            inputMode="numeric"
-            maxLength={8}
-            placeholder="48291054"
-            value={accountNumber}
-            onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
-          />
-        </Field>
-      </Card>
 
       {notice && (
         <div className="mb-8 max-w-md">
@@ -115,8 +105,33 @@ export default function BanquesPage() {
       </div>
 
       <div className="mt-12">
-        <h2 className="mb-4 text-xl font-bold text-blue-900 border-b border-gray-200 pb-2">Historique des Transactions</h2>
+        <div className="flex justify-center mb-4">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="text-xl font-bold text-blue-900 hover:text-blue-700 transition-colors bg-white px-6 py-2 rounded-lg shadow-sm"
+          >
+            Historique des Transactions {showHistory ? "▾" : "▸"}
+          </button>
+        </div>
+
+        {showHistory && (
         <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
+          <div className="mb-6 max-w-sm mx-auto">
+            <label className="block">
+              <span className="mb-1.5 block text-sm font-bold text-blue-900">
+                Votre numéro Africo Cash (8 chiffres)
+              </span>
+              <input
+                className="w-full rounded-lg border border-blue-200 bg-gray-50 px-3.5 py-2.5 outline-none ring-blue-500 focus:ring-2 focus:border-blue-500 font-bold text-lg transition"
+                style={{ color: "#2563eb" }}
+                inputMode="numeric"
+                maxLength={8}
+                placeholder="48291054"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
+              />
+            </label>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-center">
               <thead>
@@ -175,11 +190,13 @@ export default function BanquesPage() {
             </div>
           )}
         </div>
+        )}
       </div>
 
       <BankModal
         modal={modal}
         accountNumber={accountNumber}
+        setAccountNumber={setAccountNumber}
         onClose={() => setModal(null)}
         onDone={(msg) => {
           setNotice(msg);
@@ -198,7 +215,7 @@ const TITLES = {
   "africo-vers-banque": (bank) => `Africo vers banque — ${bank}`,
 };
 
-function BankModal({ modal, accountNumber, onClose, onDone }) {
+function BankModal({ modal, accountNumber, setAccountNumber, onClose, onDone }) {
   const [currency, setCurrency] = useState("USD");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
@@ -255,6 +272,17 @@ function BankModal({ modal, accountNumber, onClose, onDone }) {
         </div>
       ) : (
         <form onSubmit={submit} className="space-y-4">
+          <Field label="Votre numéro Africo Cash (8 chiffres)">
+            <input
+              className={`${inputClass} !font-bold !text-lg tracking-wider`}
+              style={{ color: "#60a5fa" }}
+              inputMode="numeric"
+              maxLength={8}
+              placeholder="48291054"
+              value={accountNumber}
+              onChange={(e) => setAccountNumber(e.target.value.replace(/\D/g, ""))}
+            />
+          </Field>
           {needsBankAccount && (
             <Field label="Numéro de compte bancaire">
               <input className={inputClass} value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} />
