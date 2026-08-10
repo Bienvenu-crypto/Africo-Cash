@@ -5,7 +5,9 @@
   --font-poppins: var(--font-poppins);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   font-family: var(--font-poppins), 'Poppins', sans-serif;
 }
 
