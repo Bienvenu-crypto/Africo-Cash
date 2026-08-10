@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { supabase } from "@/lib/supabase";
 import { hashPin } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin } = await req.json();
-  const db = getDb();
 
-  const client = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const { data: client, error } = await supabase
+    .from("clients")
+    .select("*")
+    .eq("account_number", account_number)
+    .single();
 
-  if (!client || client.pin_hash !== hashPin(pin)) {
+  if (error || !client || client.pin_hash !== hashPin(pin)) {
     return NextResponse.json(
       { error: "Numero de compte ou code PIN incorrect." },
       { status: 401 }
