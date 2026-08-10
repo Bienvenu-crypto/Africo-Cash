@@ -1,9 +1,13 @@
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ConditionalLayout from "@/components/ConditionalLayout";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-poppins",
+});
 
 export const metadata = {
   title: "Africo Cash | Portefeuille numérique by Africo Group",
@@ -13,8 +17,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="fr" className={`h-full antialiased ${inter.variable}`}>
-      <body className="min-h-full flex flex-col font-inter bg-slate-50 text-navy-950">
+    <html lang="fr" className={`h-full antialiased ${poppins.variable}`}>
+      <body className="min-h-full flex flex-col font-poppins bg-slate-50 text-navy-950">
         <ThemeProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeProvider>

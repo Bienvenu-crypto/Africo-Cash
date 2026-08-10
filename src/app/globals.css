@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* ── Global Font: Poppins ─────────────────────────────────── */
+@theme inline {
+  --font-poppins: var(--font-poppins);
+}
+
+*, *::before, *::after {
+  font-family: var(--font-poppins), 'Poppins', sans-serif;
+}
+
+
 :root {
   --color-navy-950: #050b1f;
   --color-navy-900: #0a1330;
