@@ -136,7 +136,7 @@ export default function Home() {
 
       {/* ABOUT TEASER */}
       <section className="mx-auto max-w-7xl px-5 py-10 lg:px-8">
-        <div className="grid items-center gap-12 rounded-3xl border border-gray-200 bg-white shadow-sm p-8 lg:grid-cols-2 lg:p-14">
+        <div className="grid items-center gap-12 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-8 lg:grid-cols-2 lg:p-14">
           <div>
             <h2 className="mt-4 text-3xl font-bold leading-tight text-center text-gray-900">
               Le bras financier numérique du Groupe Africo

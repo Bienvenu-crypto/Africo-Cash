@@ -20,7 +20,7 @@ export function SectionHeading({ eyebrow, title, subtitle, center = false }) {
 
 export function Card({ children, className = "" }) {
   return (
-    <div className={`bg-white border border-gray-200 shadow-sm rounded-2xl p-6 ${className}`}>
+    <div className={`overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-6 ${className}`}>
       {children}
     </div>
   );
