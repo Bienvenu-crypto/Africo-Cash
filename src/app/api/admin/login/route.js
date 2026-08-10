@@ -3,8 +3,9 @@ import { NextResponse } from "next/server";
 export async function POST(req) {
   try {
     const { password } = await req.json();
-    // Use a hardcoded password for now as agreed
-    if (password === "admin123") {
+    // Use environment variable for admin password, fallback to default if not set
+    const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+    if (password === adminPassword) {
       return NextResponse.json({ success: true, token: "admin-token-xyz" });
     }
     return NextResponse.json({ error: "Mot de passe incorrect" }, { status: 401 });
