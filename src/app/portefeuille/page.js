@@ -45,7 +45,7 @@ function LoginCard({ onLogin }) {
       <Card>
         <form onSubmit={submit} className="space-y-4">
           <Field label="Numéro Africo Cash (8 chiffres)">
-            <input autoComplete="off"
+            <input autoComplete="new-password"
               className={inputClass}
               inputMode="numeric"
               maxLength={8}
@@ -55,7 +55,7 @@ function LoginCard({ onLogin }) {
             />
           </Field>
           <Field label="Code PIN">
-            <input autoComplete="off"
+            <input autoComplete="new-password"
               className={inputClass}
               type="password"
               inputMode="numeric"
@@ -334,13 +334,13 @@ function RetirerModal({ open, client, onClose, onDone }) {
         </select>
       </Field>
       <Field label="Montant">
-        <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <input autoComplete="new-password" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </Field>
       <Field label="Code Agent">
-        <input autoComplete="off" className={inputClass} placeholder="AFR-AG-2045" value={agentCode} onChange={(e) => setAgentCode(e.target.value)} />
+        <input autoComplete="new-password" className={inputClass} placeholder="AFR-AG-2045" value={agentCode} onChange={(e) => setAgentCode(e.target.value)} />
       </Field>
       <Field label="Code PIN">
-        <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+        <input autoComplete="new-password" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
       </Field>
     </OpShell>
   );
@@ -377,7 +377,7 @@ function EnvoyerModal({ open, client, onClose, onDone }) {
   return (
     <OpShell open={open} title="Envoyer de l'argent" onClose={onClose} error={error} loading={loading} onSubmit={submit} submitLabel="Valider l'envoi">
       <Field label="Numéro Africo Cash du destinataire">
-        <input autoComplete="off" className={inputClass} inputMode="numeric" maxLength={8} value={destination} onChange={(e) => setDestination(e.target.value.replace(/\D/g, ""))} />
+        <input autoComplete="new-password" className={inputClass} inputMode="numeric" maxLength={8} value={destination} onChange={(e) => setDestination(e.target.value.replace(/\D/g, ""))} />
       </Field>
       <Field label="Devise">
         <select className={inputClass} value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -386,10 +386,10 @@ function EnvoyerModal({ open, client, onClose, onDone }) {
         </select>
       </Field>
       <Field label="Montant">
-        <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <input autoComplete="new-password" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </Field>
       <Field label="Code PIN">
-        <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+        <input autoComplete="new-password" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
       </Field>
     </OpShell>
   );
@@ -431,10 +431,10 @@ function ConvertirModal({ open, client, onClose, onDone }) {
         </select>
       </Field>
       <Field label="Montant">
-        <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+        <input autoComplete="new-password" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </Field>
       <Field label="Code PIN">
-        <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+        <input autoComplete="new-password" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
       </Field>
     </OpShell>
   );

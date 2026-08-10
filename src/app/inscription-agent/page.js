@@ -130,34 +130,34 @@ export default function InscriptionAgent() {
         {step === 1 && (
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Nom du gérant">
-              <input autoComplete="off" className={inputClass} value={form.nom} onChange={(e) => update("nom", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.nom} onChange={(e) => update("nom", e.target.value)} />
             </Field>
             <Field label="Post-nom">
-              <input autoComplete="off" className={inputClass} value={form.postnom} onChange={(e) => update("postnom", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.postnom} onChange={(e) => update("postnom", e.target.value)} />
             </Field>
             <Field label="Prénom">
-              <input autoComplete="off" className={inputClass} value={form.prenom} onChange={(e) => update("prenom", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.prenom} onChange={(e) => update("prenom", e.target.value)} />
             </Field>
             <Field label="Nom commercial / boutique">
-              <input autoComplete="off" className={inputClass} placeholder="Établissement Kivu Services" value={form.boutique_nom} onChange={(e) => update("boutique_nom", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} placeholder="Établissement Kivu Services" value={form.boutique_nom} onChange={(e) => update("boutique_nom", e.target.value)} />
             </Field>
             <Field label="Province">
-              <input autoComplete="off" className={inputClass} value={form.province} onChange={(e) => update("province", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.province} onChange={(e) => update("province", e.target.value)} />
             </Field>
             <Field label="Ville / Territoire">
-              <input autoComplete="off" className={inputClass} value={form.ville} onChange={(e) => update("ville", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.ville} onChange={(e) => update("ville", e.target.value)} />
             </Field>
             <Field label="Commune">
-              <input autoComplete="off" className={inputClass} value={form.commune} onChange={(e) => update("commune", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.commune} onChange={(e) => update("commune", e.target.value)} />
             </Field>
             <Field label="Quartier">
-              <input autoComplete="off" className={inputClass} value={form.quartier} onChange={(e) => update("quartier", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.quartier} onChange={(e) => update("quartier", e.target.value)} />
             </Field>
             <Field label="Avenue">
-              <input autoComplete="off" className={inputClass} value={form.avenue} onChange={(e) => update("avenue", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.avenue} onChange={(e) => update("avenue", e.target.value)} />
             </Field>
             <Field label="Numéro de la boutique">
-              <input autoComplete="off" className={inputClass} value={form.numero_boutique} onChange={(e) => update("numero_boutique", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.numero_boutique} onChange={(e) => update("numero_boutique", e.target.value)} />
             </Field>
             <div className="sm:col-span-2 rounded-lg border border-gray-200 bg-gray-50 p-4">
               <p className="text-sm font-medium text-gray-700">Coordonnées GPS du point de vente (obligatoire)</p>
@@ -180,7 +180,7 @@ export default function InscriptionAgent() {
         {step === 2 && (
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Numéro de téléphone agent">
-              <input autoComplete="off" className={inputClass} placeholder="+243 9XX XXX XXX" value={form.telephone} onChange={(e) => update("telephone", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} placeholder="+243 9XX XXX XXX" value={form.telephone} onChange={(e) => update("telephone", e.target.value)} />
             </Field>
             <Field label="Type de pièce d'identité">
               <select className={inputClass} value={form.piece_type} onChange={(e) => update("piece_type", e.target.value)}>
@@ -190,10 +190,10 @@ export default function InscriptionAgent() {
               </select>
             </Field>
             <Field label="Numéro de la pièce">
-              <input autoComplete="off" className={inputClass} value={form.piece_numero} onChange={(e) => update("piece_numero", e.target.value)} />
+              <input autoComplete="new-password" className={inputClass} value={form.piece_numero} onChange={(e) => update("piece_numero", e.target.value)} />
             </Field>
             <Field label="Code PIN agent (4 ou 6 chiffres)">
-              <input autoComplete="off"
+              <input autoComplete="new-password"
                 className={inputClass}
                 type="password"
                 inputMode="numeric"

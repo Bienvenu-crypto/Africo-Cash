@@ -12,7 +12,7 @@ import {
 import {
   Search, Bell, Settings, User, Download, Home, Users, Settings as ConfigIcon,
   PieChart as PieIcon, BarChart2, TrendingUp, Map, HelpCircle, Calendar as CalendarIcon,
-  UserCheck
+  UserCheck, List
 } from "lucide-react";
 
 const CONFIG_LABELS = {
@@ -33,6 +33,94 @@ const CONFIG_LABELS = {
 };
 
 const PIE_COLORS = ['#38bdf8', '#4ade80', '#fbbf24', '#c084fc', '#f87171'];
+
+function TransactionsView() {
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    fetch("/api/admin/transactions")
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions(data.transactions || []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const filtered = transactions.filter((tx) => {
+    const q = search.toLowerCase();
+    return (
+      (tx.client_account || "").toLowerCase().includes(q) ||
+      (tx.type || "").toLowerCase().includes(q) ||
+      (tx.reference || "").toLowerCase().includes(q)
+    );
+  });
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-3xl font-bold text-white">Historique des Transactions</h2>
+        <span className="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 rounded-full px-4 py-1 text-sm font-semibold">
+          {filtered.length} transaction{filtered.length !== 1 ? "s" : ""}
+        </span>
+      </div>
+
+      <div className="flex items-center bg-[#1f2a40] rounded-lg px-4 py-2 mb-5 w-full max-w-sm">
+        <Search size={16} className="text-gray-400 mr-2" />
+        <input autoComplete="new-password"
+          type="text"
+          placeholder="Rechercher (compte, type, référence)..."
+          className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      <div className="rounded-xl bg-[#1f2a40] p-6 shadow-lg border border-gray-800">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left text-sm text-gray-300">
+            <thead className="bg-[#141b2d] text-gray-400">
+              <tr>
+                <th className="p-3 font-medium rounded-tl-lg">Compte</th>
+                <th className="p-3 font-medium">Type</th>
+                <th className="p-3 font-medium">Montant</th>
+                <th className="p-3 font-medium">Frais</th>
+                <th className="p-3 font-medium">Date</th>
+                <th className="p-3 font-medium rounded-tr-lg">Référence</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-800">
+              {loading ? (
+                <tr><td colSpan="6" className="p-6 text-center text-gray-500">Chargement...</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan="6" className="p-6 text-center text-gray-500">Aucune transaction trouvée.</td></tr>
+              ) : (
+                filtered.map((tx) => (
+                  <tr key={tx.id} className="hover:bg-[#2d3748] transition">
+                    <td className="p-3 font-bold text-indigo-400">{tx.client_account}</td>
+                    <td className="p-3 text-white">{tx.type}</td>
+                    <td className="p-3">
+                      <span className={`${tx.amount > 0 ? "text-green-400" : "text-red-400"} font-bold`}>
+                        {tx.currency === 'USD' ? `$${tx.amount.toFixed(2)}` : `${tx.amount.toLocaleString('fr-FR')} FC`}
+                      </span>
+                    </td>
+                    <td className="p-3 text-gray-400 font-medium">
+                      {tx.currency === 'USD' ? `$${tx.fee.toFixed(2)}` : `${tx.fee.toLocaleString('fr-FR')} FC`}
+                    </td>
+                    <td className="p-3 text-gray-500">{format(parseISO(tx.created_at.replace(" ", "T")), "dd/MM/yyyy HH:mm")}</td>
+                    <td className="p-3 text-gray-500 font-mono text-xs">{tx.reference || "N/A"}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminDashboard() {
   const [token, setToken] = useState(null);
@@ -84,7 +172,7 @@ export default function AdminDashboard() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-400">Mot de passe</label>
-              <input autoComplete="off"
+              <input autoComplete="new-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -129,6 +217,7 @@ export default function AdminDashboard() {
 
         <nav className="flex-1 px-4 pb-4 space-y-2 text-sm font-medium">
           <SidebarItem icon={<Home size={18} />} text="Tableau de Bord" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
+          <SidebarItem icon={<List size={18} />} text="Transactions" active={activeTab === 'transactions'} onClick={() => setActiveTab('transactions')} />
           <SidebarItem icon={<Users size={18} />} text="Utilisateurs" active={activeTab === 'users'} onClick={() => setActiveTab('users')} />
           <SidebarItem icon={<UserCheck size={18} />} text="Agents Africo" active={activeTab === 'agents'} onClick={() => setActiveTab('agents')} />
           <SidebarItem icon={<ConfigIcon size={18} />} text="Configuration" active={activeTab === 'config'} onClick={() => setActiveTab('config')} />
@@ -145,18 +234,12 @@ export default function AdminDashboard() {
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
 
         {/* TOPBAR */}
-        <header className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
-          <div className="flex items-center bg-[#1f2a40] rounded-md px-3 py-1.5 w-64">
-            <input autoComplete="off" type="text" placeholder="Search" className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400" />
-            <Search size={16} className="text-gray-400" />
-          </div>
-          <div className="flex items-center space-x-4 text-gray-400">
-          </div>
-        </header>
+
 
         {/* DASHBOARD VIEWS */}
         <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
           {activeTab === "dashboard" && <TransactionsDashboardView />}
+          {activeTab === "transactions" && <TransactionsView />}
           {activeTab === "users" && <UsersView />}
           {activeTab === "agents" && <AgentsView />}
           {activeTab === "config" && <ConfigView />}
@@ -416,6 +499,7 @@ function UsersView() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetch("/api/admin/users")
@@ -426,9 +510,34 @@ function UsersView() {
       });
   }, []);
 
+  const filtered = users.filter((u) => {
+    const q = search.toLowerCase();
+    const fullName = `${u.prenom || ""} ${u.postnom || ""} ${u.nom || ""}`.toLowerCase();
+    return (
+      fullName.includes(q) ||
+      (u.account_number || "").toLowerCase().includes(q) ||
+      (u.telephone || "").includes(q)
+    );
+  });
+
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-white mb-6">Utilisateurs Enregistrés</h2>
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-3xl font-bold text-white">Utilisateurs Enregistrés</h2>
+        <span className="bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 rounded-full px-4 py-1 text-sm font-semibold">
+          {filtered.length} utilisateur{filtered.length !== 1 ? "s" : ""}
+        </span>
+      </div>
+      <div className="flex items-center bg-[#1f2a40] rounded-lg px-4 py-2 mb-5 w-full max-w-sm">
+        <Search size={16} className="text-gray-400 mr-2" />
+        <input autoComplete="new-password"
+          type="text"
+          placeholder="Rechercher un utilisateur..."
+          className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <div className="rounded-xl bg-[#1f2a40] p-6 shadow-lg border border-gray-800">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left text-sm text-gray-300">
@@ -447,8 +556,10 @@ function UsersView() {
             <tbody className="divide-y divide-gray-800">
               {loading ? (
                 <tr><td colSpan="8" className="p-6 text-center text-gray-500">Chargement...</td></tr>
+              ) : filtered.length === 0 ? (
+                <tr><td colSpan="8" className="p-6 text-center text-gray-500">Aucun utilisateur trouvé.</td></tr>
               ) : (
-                users.map(u => (
+                filtered.map(u => (
                   <tr key={u.id} className="hover:bg-[#2d3748] transition">
                     <td className="p-3 font-bold text-indigo-400">{u.account_number}</td>
                     <td className="p-3 text-white">{u.prenom} {u.postnom || ""} {u.nom}</td>
@@ -619,7 +730,7 @@ function AgentsView() {
 
       <div className="flex items-center bg-[#1f2a40] rounded-lg px-4 py-2 mb-5 w-full max-w-sm">
         <Search size={16} className="text-gray-400 mr-2" />
-        <input autoComplete="off"
+        <input autoComplete="new-password"
           type="text"
           placeholder="Rechercher un agent…"
           className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400"
@@ -793,7 +904,7 @@ function ConfigView() {
             {Object.entries(config).map(([key, val]) => (
               <div key={key}>
                 <label className="mb-1 block text-sm font-medium text-gray-400">{CONFIG_LABELS[key] || key}</label>
-                <input autoComplete="off"
+                <input autoComplete="new-password"
                   type="number"
                   step="0.0001"
                   value={val}

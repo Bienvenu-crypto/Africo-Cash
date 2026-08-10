@@ -115,7 +115,7 @@ export default function MobileMoneyPage() {
                 <span className="mb-1.5 block text-sm font-bold text-blue-900">
                   Votre numéro Africo Cash (8 chiffres)
                 </span>
-                <input autoComplete="off"
+                <input autoComplete="new-password"
                   className="w-full rounded-lg border border-blue-200 bg-gray-50 px-3.5 py-2.5 outline-none ring-blue-500 focus:ring-2 focus:border-blue-500 font-bold text-lg transition"
                   style={{ color: "#2563eb" }}
                   inputMode="numeric"
@@ -248,7 +248,7 @@ function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDon
     <Modal open={!!modal} onClose={onClose} title={isDeposit ? `${modal.operator} vers Africo Cash` : `Africo Cash vers ${modal.operator}`}>
       <form onSubmit={submit} className="space-y-4">
         <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input autoComplete="off"
+          <input autoComplete="new-password"
             className={`${inputClass} !font-bold !text-lg tracking-wider`}
             style={{ color: "#60a5fa" }}
             inputMode="numeric"
@@ -259,7 +259,7 @@ function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDon
           />
         </Field>
         <Field label={isDeposit ? "Numéro Mobile Money à débiter" : "Numéro bénéficiaire"}>
-          <input autoComplete="off" className={inputClass} value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} placeholder="+243 8XX XXX XXX" />
+          <input autoComplete="new-password" className={inputClass} value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} placeholder="+243 8XX XXX XXX" />
         </Field>
         <Field label="Devise">
           <select className={inputClass} value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -268,11 +268,11 @@ function OperationModal({ modal, accountNumber, setAccountNumber, onClose, onDon
           </select>
         </Field>
         <Field label="Montant">
-          <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+          <input autoComplete="new-password" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
         </Field>
         {!isDeposit && (
           <Field label="Code PIN Africo Cash">
-            <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+            <input autoComplete="new-password" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
           </Field>
         )}
         <Alert type="error">{error}</Alert>

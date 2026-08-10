@@ -31,10 +31,10 @@ export default function ContactPage() {
           ) : (
             <form onSubmit={submit} className="space-y-4">
               <Field label="Nom complet">
-                <input autoComplete="off" className={inputClass} required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
+                <input autoComplete="new-password" className={inputClass} required value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
               </Field>
               <Field label="Adresse e-mail">
-                <input autoComplete="off" className={inputClass} type="email" required value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
+                <input autoComplete="new-password" className={inputClass} type="email" required value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
               </Field>
               <Field label="Message">
                 <textarea
