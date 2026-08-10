@@ -304,7 +304,9 @@ function TransactionsDashboardView() {
   // Aggregate Data for Charts — split by currency
   const totalVolumeUSD = transactions.filter(tx => tx.currency === 'USD').reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
   const totalVolumeCDF = transactions.filter(tx => tx.currency === 'CDF').reduce((acc, tx) => acc + Math.abs(tx.amount), 0);
-  const totalFees = transactions.reduce((acc, tx) => acc + tx.fee, 0);
+  const totalFeesUSD = transactions.filter(tx => tx.currency === 'USD').reduce((acc, tx) => acc + tx.fee, 0);
+  const totalFeesCDF = transactions.filter(tx => tx.currency === 'CDF').reduce((acc, tx) => acc + tx.fee, 0);
+  const totalFees = { usd: totalFeesUSD, cdf: totalFeesCDF };
 
   // Line Chart Data: Group by date — USD and CDF volumes separately
   const lineDataObj = {};
@@ -360,7 +362,7 @@ function TransactionsDashboardView() {
         <StatCard title="Transactions" value={transactions.length} progress={100} color="#38bdf8" />
         <StatCard title="Volume USD ($)" value={`$${totalVolumeUSD.toFixed(2)}`} progress={75} color="#4ade80" />
         <StatCard title="Volume CDF (FC)" value={`${totalVolumeCDF.toLocaleString('fr-FR')} FC`} progress={65} color="#f59e0b" />
-        <StatCard title="Frais Générés" value={`$${totalFees.toFixed(2)}`} progress={60} color="#fbbf24" />
+        <StatCard title="Frais Générés" value={<span className="text-sm"><span className="text-yellow-300">${totalFees.usd.toFixed(2)}</span> <span className="text-gray-400">|</span> <span className="text-amber-400">{totalFees.cdf.toLocaleString('fr-FR')} FC</span></span>} progress={60} color="#fbbf24" />
         <StatCard title="Comptes Utilisés" value={new Set(transactions.map(t => t.client_account)).size} progress={80} color="#c084fc" />
       </div>
 
