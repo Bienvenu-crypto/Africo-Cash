@@ -1,8 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/context/ThemeContext";
+import ConditionalLayout from "@/components/ConditionalLayout";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -17,12 +16,11 @@ export default function RootLayout({ children }) {
     <html lang="fr" className={`h-full antialiased ${inter.variable}`}>
       <body className="min-h-full flex flex-col font-inter bg-slate-50 text-navy-950">
         <ThemeProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+
 

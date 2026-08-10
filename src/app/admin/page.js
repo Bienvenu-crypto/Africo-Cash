@@ -54,7 +54,7 @@ function TransactionsView() {
     return (
       (tx.client_account || "").toLowerCase().includes(q) ||
       (tx.type || "").toLowerCase().includes(q) ||
-      (tx.reference || "").toLowerCase().includes(q)
+      (tx.client_name || "").toLowerCase().includes(q)
     );
   });
 
@@ -84,11 +84,11 @@ function TransactionsView() {
             <thead className="bg-[#141b2d] text-gray-400">
               <tr>
                 <th className="p-3 font-medium rounded-tl-lg">Compte</th>
+                <th className="p-3 font-medium">Nom du Client</th>
                 <th className="p-3 font-medium">Type</th>
                 <th className="p-3 font-medium">Montant</th>
                 <th className="p-3 font-medium">Frais</th>
-                <th className="p-3 font-medium">Date</th>
-                <th className="p-3 font-medium rounded-tr-lg">Référence</th>
+                <th className="p-3 font-medium rounded-tr-lg">Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-800">
@@ -100,6 +100,7 @@ function TransactionsView() {
                 filtered.map((tx) => (
                   <tr key={tx.id} className="hover:bg-[#2d3748] transition">
                     <td className="p-3 font-bold text-indigo-400">{tx.client_account}</td>
+                    <td className="p-3 text-white">{tx.client_name ? tx.client_name.trim() : <span className="text-gray-500 italic">Inconnu</span>}</td>
                     <td className="p-3 text-white">{tx.type}</td>
                     <td className="p-3">
                       <span className={`${tx.amount > 0 ? "text-green-400" : "text-red-400"} font-bold`}>
@@ -110,7 +111,6 @@ function TransactionsView() {
                       {tx.currency === 'USD' ? `$${tx.fee.toFixed(2)}` : `${tx.fee.toLocaleString('fr-FR')} FC`}
                     </td>
                     <td className="p-3 text-gray-500">{format(parseISO(tx.created_at.replace(" ", "T")), "dd/MM/yyyy HH:mm")}</td>
-                    <td className="p-3 text-gray-500 font-mono text-xs">{tx.reference || "N/A"}</td>
                   </tr>
                 ))
               )}
@@ -351,10 +351,7 @@ function TransactionsDashboardView() {
             </div>
           )}
 
-          <button onClick={() => alert("Le module de rapports est en cours de finalisation.")} className="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded transition">
-            <Download size={16} className="mr-2" />
-            RAPPORTS
-          </button>
+
         </div>
       </div>
 
