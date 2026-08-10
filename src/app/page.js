@@ -165,7 +165,7 @@ export default function Home() {
 
       {/* PARTNER BANKS STRIP */}
       <section className="mx-auto max-w-7xl px-5 py-16 lg:px-8">
-        <p className="mb-6 text-center text-l uppercase tracking-widest text-black-500">
+        <p className="mb-6 text-center text-lg  uppercase tracking-widest text-black-500 font-bold">
           Interopérable avec les principales institutions de la RDC
         </p>
         <div className="relative w-full overflow-hidden flex">
@@ -213,7 +213,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-6 rounded-3xl bg-gradient-to-r from-gold-500 via-gold-400 to-gold-300 p-10 text-center lg:flex-row lg:justify-between lg:text-left">
           <div>
             <h3 className="text-2xl font-bold text-white">Prêt à ouvrir votre compte Africo Cash ?</h3>
-            <p className="mt-2 text-gray-700">Cinq étapes, un numéro unique à 8 chiffres, et votre argent est à portée de main.</p>
+            <p className="mt-2 text-white">Cinq étapes, un numéro unique à 8 chiffres, et votre argent est à portée de main.</p>
           </div>
           <Link href="/inscription" className="whitespace-nowrap rounded-full bg-navy-950 px-7 py-3.5 text-sm font-bold text-white hover:bg-blue-400">
             Commencer maintenant

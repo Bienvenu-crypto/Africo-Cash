@@ -21,7 +21,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-blue-200">
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-yellow-200">
             Liens utiles
           </h4>
           <ul className="space-y-2 text-sm text-blue-100">
@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-blue-200">
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-yellow-200">
             Services
           </h4>
           <ul className="space-y-2 text-sm text-blue-100">
@@ -46,7 +46,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-blue-200">
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-yellow-200">
             Contact
           </h4>
           <ul className="space-y-2 text-sm text-blue-100">
@@ -59,7 +59,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-blue-800 px-5 py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-blue-200 lg:px-8">
-        <p>© {new Date().getFullYear()} Africo Cash — Une marque d&apos;Africo Group. Tous droits réservés.</p>
+        <p>© {new Date().getFullYear()} Africo Cash | Une marque d&apos;Africo Group. Tous droits réservés.</p>
       </div>
     </footer>
   );
