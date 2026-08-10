@@ -7,6 +7,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-poppins",
+  display: "swap",
 });
 
 export const metadata = {
@@ -18,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr" className={`h-full antialiased ${poppins.variable}`}>
-      <body className="min-h-full flex flex-col font-poppins bg-slate-50 text-navy-950">
+      <body className={`${poppins.className} min-h-full flex flex-col font-sans bg-slate-50 text-navy-950`}>
         <ThemeProvider>
           <ConditionalLayout>{children}</ConditionalLayout>
         </ThemeProvider>
@@ -26,5 +27,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-
-
