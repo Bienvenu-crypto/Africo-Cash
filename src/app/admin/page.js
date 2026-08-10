@@ -161,6 +161,8 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     setToken(null);
+    setPassword("");
+    setLoginError("");
     sessionStorage.removeItem("adminToken");
   };
 
