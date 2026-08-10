@@ -121,31 +121,31 @@ export default function Inscription() {
         {step === 1 && (
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Nom">
-              <input className={inputClass} value={form.nom} onChange={(e) => update("nom", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.nom} onChange={(e) => update("nom", e.target.value)} />
             </Field>
             <Field label="Post-nom">
-              <input className={inputClass} value={form.postnom} onChange={(e) => update("postnom", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.postnom} onChange={(e) => update("postnom", e.target.value)} />
             </Field>
             <Field label="Prénom">
-              <input className={inputClass} value={form.prenom} onChange={(e) => update("prenom", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.prenom} onChange={(e) => update("prenom", e.target.value)} />
             </Field>
             <Field label="Province">
-              <input className={inputClass} value={form.province} onChange={(e) => update("province", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.province} onChange={(e) => update("province", e.target.value)} />
             </Field>
             <Field label="Ville / Territoire">
-              <input className={inputClass} value={form.ville} onChange={(e) => update("ville", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.ville} onChange={(e) => update("ville", e.target.value)} />
             </Field>
             <Field label="Commune">
-              <input className={inputClass} value={form.commune} onChange={(e) => update("commune", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.commune} onChange={(e) => update("commune", e.target.value)} />
             </Field>
             <Field label="Quartier">
-              <input className={inputClass} value={form.quartier} onChange={(e) => update("quartier", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.quartier} onChange={(e) => update("quartier", e.target.value)} />
             </Field>
             <Field label="Avenue">
-              <input className={inputClass} value={form.avenue} onChange={(e) => update("avenue", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.avenue} onChange={(e) => update("avenue", e.target.value)} />
             </Field>
             <Field label="Numéro de résidence">
-              <input className={inputClass} value={form.numero_residence} onChange={(e) => update("numero_residence", e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={form.numero_residence} onChange={(e) => update("numero_residence", e.target.value)} />
             </Field>
           </div>
         )}
@@ -153,7 +153,7 @@ export default function Inscription() {
         {step === 2 && (
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Profession">
-              <input
+              <input autoComplete="off"
                 className={inputClass}
                 placeholder="Motard, Commerçant, Enseignant…"
                 value={form.profession}
@@ -161,7 +161,7 @@ export default function Inscription() {
               />
             </Field>
             <Field label="Numéro de téléphone physique">
-              <input
+              <input autoComplete="off"
                 className={inputClass}
                 placeholder="+243 9XX XXX XXX"
                 value={form.telephone}
@@ -182,10 +182,10 @@ export default function Inscription() {
                 </select>
               </Field>
               <Field label="Numéro de la pièce">
-                <input className={inputClass} value={form.piece_numero} onChange={(e) => update("piece_numero", e.target.value)} />
+                <input autoComplete="off" className={inputClass} value={form.piece_numero} onChange={(e) => update("piece_numero", e.target.value)} />
               </Field>
               <Field label="Code PIN secret (4 ou 6 chiffres)">
-                <input
+                <input autoComplete="off"
                   className={inputClass}
                   type="password"
                   inputMode="numeric"
@@ -203,7 +203,7 @@ export default function Inscription() {
                 </GhostButton>
               ) : (
                 <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <input
+                  <input autoComplete="off"
                     className={`${inputClass} w-32`}
                     placeholder="Code OTP"
                     value={otpInput}

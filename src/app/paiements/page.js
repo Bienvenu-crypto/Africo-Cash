@@ -106,7 +106,7 @@ function PayModal({ partner, accountNumber, setAccountNumber, onClose, onDone })
     <Modal open={!!partner} onClose={onClose} title={`Payer la facture — ${partner}`}>
       <form onSubmit={submit} className="space-y-4">
         <Field label="Votre numéro Africo Cash (8 chiffres)">
-          <input
+          <input autoComplete="off"
             className={`${inputClass} !font-bold !text-lg tracking-wider`}
             style={{ color: "#60a5fa" }}
             inputMode="numeric"
@@ -117,7 +117,7 @@ function PayModal({ partner, accountNumber, setAccountNumber, onClose, onDone })
           />
         </Field>
         <Field label="Référence (n° compteur, n° carte, identifiant client)">
-          <input className={inputClass} value={reference} onChange={(e) => setReference(e.target.value)} />
+          <input autoComplete="off" className={inputClass} value={reference} onChange={(e) => setReference(e.target.value)} />
         </Field>
         <Field label="Devise">
           <select className={inputClass} value={currency} onChange={(e) => setCurrency(e.target.value)}>
@@ -126,10 +126,10 @@ function PayModal({ partner, accountNumber, setAccountNumber, onClose, onDone })
           </select>
         </Field>
         <Field label="Montant">
-          <input className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+          <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
         </Field>
         <Field label="Code PIN Africo Cash">
-          <input className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+          <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
         </Field>
         <Alert type="error">{error}</Alert>
         <PrimaryButton type="submit" className="w-full" disabled={loading}>

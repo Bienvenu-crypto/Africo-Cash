@@ -106,10 +106,10 @@ export default function GuichetPage() {
         {mode === "login" ? (
           <form onSubmit={handleLogin} className="space-y-4">
             <Field label="Code du Guichet">
-              <input className={inputClass} placeholder="EQ-GOM1-GUI3" value={loginForm.code} onChange={(e) => setLoginForm((f) => ({ ...f, code: e.target.value }))} />
+              <input autoComplete="off" className={inputClass} placeholder="EQ-GOM1-GUI3" value={loginForm.code} onChange={(e) => setLoginForm((f) => ({ ...f, code: e.target.value }))} />
             </Field>
             <Field label="Mot de passe">
-              <input className={inputClass} type="password" value={loginForm.password} onChange={(e) => setLoginForm((f) => ({ ...f, password: e.target.value }))} />
+              <input autoComplete="off" className={inputClass} type="password" value={loginForm.password} onChange={(e) => setLoginForm((f) => ({ ...f, password: e.target.value }))} />
             </Field>
             <Alert type="error">{error}</Alert>
             <PrimaryButton type="submit" className="w-full" disabled={loading}>
@@ -132,13 +132,13 @@ export default function GuichetPage() {
               </select>
             </Field>
             <Field label="Succursale / Agence d'affectation">
-              <input className={inputClass} placeholder="Agence Goma Volcan" value={regForm.agence} onChange={(e) => setRegForm((f) => ({ ...f, agence: e.target.value }))} />
+              <input autoComplete="off" className={inputClass} placeholder="Agence Goma Volcan" value={regForm.agence} onChange={(e) => setRegForm((f) => ({ ...f, agence: e.target.value }))} />
             </Field>
             <Field label="Code du Guichet">
-              <input className={inputClass} placeholder="EQ-GOM1-GUI3" value={regForm.code} onChange={(e) => setRegForm((f) => ({ ...f, code: e.target.value }))} />
+              <input autoComplete="off" className={inputClass} placeholder="EQ-GOM1-GUI3" value={regForm.code} onChange={(e) => setRegForm((f) => ({ ...f, code: e.target.value }))} />
             </Field>
             <Field label="Mot de passe de session">
-              <input className={inputClass} type="password" value={regForm.password} onChange={(e) => setRegForm((f) => ({ ...f, password: e.target.value }))} />
+              <input autoComplete="off" className={inputClass} type="password" value={regForm.password} onChange={(e) => setRegForm((f) => ({ ...f, password: e.target.value }))} />
             </Field>
             <Alert type="error">{error}</Alert>
             <PrimaryButton type="submit" className="w-full" disabled={loading}>

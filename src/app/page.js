@@ -175,31 +175,31 @@ export default function Home() {
           <div className="flex w-max animate-marquee gap-4 sm:gap-6 pr-4 sm:pr-6 hover:[animation-play-state:paused]">
             {[1, 2].map((group) => (
               <div key={group} className="flex gap-4 sm:gap-6">
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/banks/rawbank.jpg" alt="Rawbank" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/banks/equity.jpg" alt="Equity BCDC" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/banks/tmb.jpg" alt="Trust Merchant Bank" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/banks/ecobank.jpg" alt="Ecobank" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/banks/fbn.jpg" alt="FBNBank DRC" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/operators/airtel.jpg" alt="Airtel Money" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/operators/vodacom.jpg" alt="Vodacom M-Pesa" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/operators/orange.jpg" alt="Orange Money" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
-                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full bg-white p-2 shadow-lg overflow-hidden transition-transform hover:scale-110">
+                <div className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center overflow-hidden transition-transform hover:scale-110">
                   <Image src="/images/operators/africell.jpg" alt="Africell Money" width={80} height={80} className="max-h-full w-auto object-contain" />
                 </div>
               </div>

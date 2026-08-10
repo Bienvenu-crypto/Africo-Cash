@@ -121,7 +121,7 @@ export default function BanquesPage() {
               <span className="mb-1.5 block text-sm font-bold text-blue-900">
                 Votre numéro Africo Cash (8 chiffres)
               </span>
-              <input
+              <input autoComplete="off"
                 className="w-full rounded-lg border border-blue-200 bg-gray-50 px-3.5 py-2.5 outline-none ring-blue-500 focus:ring-2 focus:border-blue-500 font-bold text-lg transition"
                 style={{ color: "#2563eb" }}
                 inputMode="numeric"
@@ -273,7 +273,7 @@ function BankModal({ modal, accountNumber, setAccountNumber, onClose, onDone }) 
       ) : (
         <form onSubmit={submit} className="space-y-4">
           <Field label="Votre numéro Africo Cash (8 chiffres)">
-            <input
+            <input autoComplete="off"
               className={`${inputClass} !font-bold !text-lg tracking-wider`}
               style={{ color: "#60a5fa" }}
               inputMode="numeric"
@@ -285,7 +285,7 @@ function BankModal({ modal, accountNumber, setAccountNumber, onClose, onDone }) 
           </Field>
           {needsBankAccount && (
             <Field label="Numéro de compte bancaire">
-              <input className={inputClass} value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} />
+              <input autoComplete="off" className={inputClass} value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} />
             </Field>
           )}
           <Field label="Devise">
@@ -295,11 +295,11 @@ function BankModal({ modal, accountNumber, setAccountNumber, onClose, onDone }) 
             </select>
           </Field>
           <Field label="Montant">
-            <input className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
+            <input autoComplete="off" className={inputClass} inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
           </Field>
           {needsPin && (
             <Field label="Code PIN Africo Cash">
-              <input className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
+              <input autoComplete="off" className={inputClass} type="password" inputMode="numeric" value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} />
             </Field>
           )}
           <Alert type="error">{error}</Alert>

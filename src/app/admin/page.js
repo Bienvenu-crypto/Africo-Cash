@@ -84,7 +84,7 @@ export default function AdminDashboard() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-400">Mot de passe</label>
-              <input
+              <input autoComplete="off"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -147,13 +147,10 @@ export default function AdminDashboard() {
         {/* TOPBAR */}
         <header className="flex items-center justify-between px-6 py-4 border-b border-gray-800">
           <div className="flex items-center bg-[#1f2a40] rounded-md px-3 py-1.5 w-64">
-            <input type="text" placeholder="Search" className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400" />
+            <input autoComplete="off" type="text" placeholder="Search" className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400" />
             <Search size={16} className="text-gray-400" />
           </div>
           <div className="flex items-center space-x-4 text-gray-400">
-            <button className="hover:text-white transition"><User size={20} /></button>
-            <button className="hover:text-white transition"><Bell size={20} /></button>
-            <button className="hover:text-white transition"><Settings size={20} /></button>
           </div>
         </header>
 
@@ -271,7 +268,7 @@ function TransactionsDashboardView() {
             </div>
           )}
 
-          <button className="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded transition">
+          <button onClick={() => alert("Le module de rapports est en cours de finalisation.")} className="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold py-2 px-4 rounded transition">
             <Download size={16} className="mr-2" />
             RAPPORTS
           </button>
@@ -622,7 +619,7 @@ function AgentsView() {
 
       <div className="flex items-center bg-[#1f2a40] rounded-lg px-4 py-2 mb-5 w-full max-w-sm">
         <Search size={16} className="text-gray-400 mr-2" />
-        <input
+        <input autoComplete="off"
           type="text"
           placeholder="Rechercher un agent…"
           className="bg-transparent text-sm w-full outline-none text-white placeholder-gray-400"
@@ -796,7 +793,7 @@ function ConfigView() {
             {Object.entries(config).map(([key, val]) => (
               <div key={key}>
                 <label className="mb-1 block text-sm font-medium text-gray-400">{CONFIG_LABELS[key] || key}</label>
-                <input
+                <input autoComplete="off"
                   type="number"
                   step="0.0001"
                   value={val}
