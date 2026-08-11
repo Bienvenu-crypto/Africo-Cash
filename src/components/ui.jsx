@@ -40,7 +40,7 @@ export function Alert({ type = "info", children }) {
 export function PrimaryButton({ children, className = "", ...props }) {
   return (
     <button
-      className={`btn-gold rounded-full px-6 py-3 text-sm font-bold shadow-md transition disabled:opacity-50 ${className}`}
+      className={`btn-gold cursor-pointer rounded-full px-6 py-3 text-sm font-bold shadow-md transition disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
       {...props}
     >
       {children}
@@ -51,7 +51,7 @@ export function PrimaryButton({ children, className = "", ...props }) {
 export function GhostButton({ children, className = "", ...props }) {
   return (
     <button
-      className={`rounded-full border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:border-blue-500 hover:text-blue-600 disabled:opacity-50 ${className}`}
+      className={`cursor-pointer rounded-full border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:border-blue-500 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
       {...props}
     >
       {children}
@@ -80,7 +80,7 @@ export function Modal({ open, onClose, title, children }) {
           <h3 className="text-lg font-bold text-gray-900">{title}</h3>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-red-300 hover:text-red-500"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-200 text-gray-500 transition hover:border-red-300 hover:text-red-500"
           >
             ✕
           </button>

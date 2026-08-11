@@ -786,8 +786,8 @@ function AgentsView() {
 
       {/* AGENT DETAILS MODAL */}
       {selectedAgent && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setSelectedAgent(null)}>
-          <div className="bg-[#141b2d] border border-gray-700 rounded-2xl p-6 max-w-xl w-full mx-4 shadow-2xl max-h-[85vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex cursor-pointer items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setSelectedAgent(null)}>
+          <div className="bg-[#141b2d] border border-gray-700 rounded-2xl p-6 max-w-xl w-full mx-4 shadow-2xl max-h-[85vh] overflow-y-auto cursor-default" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-5">
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-full bg-indigo-600/30 border border-indigo-400/40 flex items-center justify-center">

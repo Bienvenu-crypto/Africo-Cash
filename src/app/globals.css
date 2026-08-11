@@ -89,6 +89,7 @@ body {
   background: linear-gradient(90deg, #1668f5 0%, #1558d6 60%, #1047b9 100%);
   color: #ffffff;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .btn-gold:hover {
@@ -122,6 +123,7 @@ textarea::placeholder {
 .nav-link {
   color: #0a1330;
   transition: color 0.15s ease;
+  cursor: pointer;
 }
 
 .nav-link:hover {
@@ -183,4 +185,31 @@ textarea::placeholder {
 
 .fade-edge-r {
   background: linear-gradient(to left, #f8fafc, transparent);
+}
+
+/* =====================================================================
+   INTERACTIVE CURSORS
+   ===================================================================== */
+a,
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label,
+select:not(:disabled),
+summary,
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="file"],
+.rdp-day_button,
+.rdp-button_reset {
+  cursor: pointer;
+}
+
+button:disabled,
+select:disabled,
+input:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
 }
