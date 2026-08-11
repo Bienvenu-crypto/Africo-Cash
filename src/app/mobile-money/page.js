@@ -180,22 +180,25 @@ export default function MobileMoneyPage() {
         )}
       </div>
 
-      <OperationModal
-        modal={modal}
-        accountNumber={accountNumber}
-        setAccountNumber={setAccountNumber}
-        onClose={() => setModal(null)}
-        onDone={(msg) => {
-          setNotice(msg);
-          setModal(null);
-          // Rafraichir l'historique apres transaction
-          if (showHistory) {
-            setShowHistory(false);
-            setTimeout(() => setShowHistory(true), 100);
-          }
-          setTimeout(() => setNotice(""), 6000);
-        }}
-      />
+      {modal && (
+        <OperationModal
+          key={`${modal.operator}-${modal.direction}`}
+          modal={modal}
+          accountNumber={accountNumber}
+          setAccountNumber={setAccountNumber}
+          onClose={() => setModal(null)}
+          onDone={(msg) => {
+            setNotice(msg);
+            setModal(null);
+            setAccountNumber("");
+            if (showHistory) {
+              setShowHistory(false);
+              setTimeout(() => setShowHistory(true), 100);
+            }
+            setTimeout(() => setNotice(""), 6000);
+          }}
+        />
+      )}
     </div>
   );
 }

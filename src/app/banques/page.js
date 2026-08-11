@@ -193,18 +193,22 @@ export default function BanquesPage() {
         )}
       </div>
 
-      <BankModal
-        modal={modal}
-        accountNumber={accountNumber}
-        setAccountNumber={setAccountNumber}
-        onClose={() => setModal(null)}
-        onDone={(msg) => {
-          setNotice(msg);
-          setModal(null);
-          setRefreshCounter(c => c + 1);
-          setTimeout(() => setNotice(""), 6000);
-        }}
-      />
+      {modal && (
+        <BankModal
+          key={`${modal.bank}-${modal.action}`}
+          modal={modal}
+          accountNumber={accountNumber}
+          setAccountNumber={setAccountNumber}
+          onClose={() => setModal(null)}
+          onDone={(msg) => {
+            setNotice(msg);
+            setModal(null);
+            setAccountNumber("");
+            setRefreshCounter(c => c + 1);
+            setTimeout(() => setNotice(""), 6000);
+          }}
+        />
+      )}
     </div>
   );
 }
