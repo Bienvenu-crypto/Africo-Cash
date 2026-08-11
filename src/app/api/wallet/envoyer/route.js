@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
-import { hashPin, round2 } from "@/lib/utils";
+import getDb from "@/lib/db";
+import { hashPin, getConfig, round2 } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin, currency, amount, destination_account } =
@@ -13,26 +13,23 @@ export async function POST(req) {
     );
   }
 
-  // 1. Fetch config (transfer_fee_rate)
-  const { data: configRows } = await supabase.from("config").select("key, value").eq("key", "transfer_fee_rate");
-  const transferFeeRate = configRows?.[0]?.value || 0.02;
+  const db = getDb();
+  const cfg = getConfig(db);
 
-  // 2. Fetch sender
-  const { data: sender } = await supabase
-    .from("clients")
-    .select("*")
-    .eq("account_number", account_number)
-    .single();
+  const sender = db
+    .prepare("SELECT * FROM clients WHERE account_number = ?")
+    .get(account_number);
 
-  if (!sender) return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
-  if (sender.pin_hash !== hashPin(pin)) return NextResponse.json({ error: "Code PIN incorrect." }, { status: 401 });
+  if (!sender) {
+    return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
+  }
+  if (sender.pin_hash !== hashPin(pin)) {
+    return NextResponse.json({ error: "Code PIN incorrect." }, { status: 401 });
+  }
 
-  // 3. Fetch recipient
-  const { data: recipient } = await supabase
-    .from("clients")
-    .select("*")
-    .eq("account_number", destination_account)
-    .single();
+  const recipient = db
+    .prepare("SELECT * FROM clients WHERE account_number = ?")
+    .get(destination_account);
 
   if (!recipient) {
     return NextResponse.json(
@@ -41,28 +38,57 @@ export async function POST(req) {
     );
   }
 
-  if (!["USD", "CDF"].includes(currency)) return NextResponse.json({ error: "Devise invalide." }, { status: 400 });
+  if (!["USD", "CDF"].includes(currency)) {
+    return NextResponse.json({ error: "Devise invalide." }, { status: 400 });
+  }
   const montant = Number(amount);
-  if (!montant || montant <= 0) return NextResponse.json({ error: "Montant invalide." }, { status: 400 });
-
-  const fee = round2(montant * transferFeeRate);
-  
-  // 4. Execute RPC Transaction
-  const { error: rpcError } = await supabase.rpc('transfer_funds', {
-    sender_account: account_number,
-    recipient_account: destination_account,
-    tx_currency: currency,
-    tx_amount: montant,
-    tx_fee: fee
-  });
-
-  if (rpcError) {
-    return NextResponse.json({ error: rpcError.message || "Erreur lors de la transaction." }, { status: 400 });
+  if (!montant || montant <= 0) {
+    return NextResponse.json({ error: "Montant invalide." }, { status: 400 });
   }
 
+  const fee = round2(montant * cfg.transfer_fee_rate);
   const totalDebit = round2(montant + fee);
   const balCol = currency === "USD" ? "balance_usd" : "balance_cdf";
+
+  if (sender[balCol] < totalDebit) {
+    return NextResponse.json({ error: "Solde insuffisant." }, { status: 400 });
+  }
+
   const senderNewBalance = round2(sender[balCol] - totalDebit);
+  const recipientNewBalance = round2(recipient[balCol] + montant);
+
+  const tx = db.transaction(() => {
+    db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
+      senderNewBalance,
+      account_number
+    );
+    db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
+      recipientNewBalance,
+      destination_account
+    );
+    db.prepare(
+      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
+       VALUES ('Envoi', ?, ?, ?, ?, ?, 'Reussi', ?)`
+    ).run(
+      account_number,
+      destination_account,
+      currency,
+      -montant,
+      fee,
+      `Envoi vers ${destination_account}`
+    );
+    db.prepare(
+      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
+       VALUES ('Reception', ?, ?, ?, ?, 0, 'Reussi', ?)`
+    ).run(
+      destination_account,
+      account_number,
+      currency,
+      montant,
+      `Reception de ${account_number}`
+    );
+  });
+  tx();
 
   return NextResponse.json({
     success: true,
