@@ -330,6 +330,29 @@ function TransactionsDashboardView() {
   });
   const barData = Object.values(barDataObj).reverse();
 
+  const recentTransactions = useMemo(() => {
+    return [...transactions]
+      .sort((a, b) => new Date(b.created_at.replace(" ", "T")) - new Date(a.created_at.replace(" ", "T")))
+      .slice(0, 10);
+  }, [transactions]);
+
+  const operationTypes = useMemo(() => {
+    const counts = {};
+    transactions.forEach((tx) => {
+      counts[tx.type] = (counts[tx.type] || 0) + 1;
+    });
+    return Object.entries(counts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6)
+      .map(([type, count]) => ({
+        type,
+        count,
+        pct: transactions.length ? Math.round((count / transactions.length) * 100) : 0,
+      }));
+  }, [transactions]);
+
+  const maxTypeCount = operationTypes[0]?.count || 1;
+
   return (
     <>
       <div className="flex items-center justify-between mb-6">
@@ -400,14 +423,15 @@ function TransactionsDashboardView() {
         <div className="bg-[#1f2a40] rounded-lg shadow-lg overflow-hidden flex flex-col h-[340px]">
           <div className="p-4 border-b border-gray-700">
             <h3 className="text-sm font-semibold text-white">Transactions Récentes</h3>
+            <p className="text-xs text-gray-500 mt-1">10 dernières opérations</p>
           </div>
           <div className="flex-1 overflow-y-auto custom-scrollbar">
             {loading ? (
               <p className="text-gray-400 p-4">Chargement...</p>
-            ) : transactions.length === 0 ? (
+            ) : recentTransactions.length === 0 ? (
               <p className="text-gray-400 p-4">Aucune transaction trouvée.</p>
             ) : (
-              transactions.map((tx) => (
+              recentTransactions.map((tx) => (
                 <div key={tx.id} className="flex items-center justify-between p-4 border-b border-gray-700 hover:bg-[#2d3748] transition">
                   <div>
                     <p className="text-sm font-bold text-indigo-400">{tx.client_account}</p>
@@ -472,17 +496,32 @@ function TransactionsDashboardView() {
           </div>
         </div>
 
-        {/* GEOGRAPHY PLACEHOLDER */}
+        {/* OPERATION TYPES */}
         <div className="bg-[#1f2a40] p-6 rounded-lg shadow-lg flex flex-col">
-          <h3 className="text-sm font-semibold text-white mb-4">Trafic Géographique RDC</h3>
-          <div className="flex-1 flex items-center justify-center opacity-70 relative">
-            <svg viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-gray-600">
-              <path d="M150 100 Q 200 50 300 80 T 450 150 T 600 120 T 750 180" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
-              <circle cx="300" cy="180" r="10" fill="#4ade80" />
-              <circle cx="550" cy="100" r="8" fill="#38bdf8" />
-              <text x="300" y="210" fill="#4ade80" textAnchor="middle" fontSize="16" className="font-bold">Kinshasa</text>
-              <text x="550" y="130" fill="#38bdf8" textAnchor="middle" fontSize="16" className="font-bold">Goma</text>
-            </svg>
+          <h3 className="text-sm font-semibold text-white mb-1">Types d&apos;opérations</h3>
+          <p className="text-xs text-gray-500 mb-4">Volume par catégorie sur la période</p>
+          <div className="flex-1 space-y-3">
+            {operationTypes.length === 0 ? (
+              <div className="h-full flex items-center justify-center text-gray-500 text-sm">Aucune donnée</div>
+            ) : (
+              operationTypes.map((item, index) => (
+                <div key={item.type}>
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-xs font-medium text-gray-300 truncate">{item.type}</span>
+                    <span className="text-xs font-bold text-indigo-300 shrink-0">{item.count} ({item.pct}%)</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-[#141b2d] overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${(item.count / maxTypeCount) * 100}%`,
+                        backgroundColor: PIE_COLORS[index % PIE_COLORS.length],
+                      }}
+                    />
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
