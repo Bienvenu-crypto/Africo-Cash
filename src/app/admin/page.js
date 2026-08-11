@@ -163,7 +163,7 @@ export default function AdminDashboard() {
 
   if (!token) {
     return (
-      <div className="flex min-h-[70vh] items-center justify-center bg-[#141b2d] px-4 font-sans">
+      <div className="flex min-h-full h-full w-full items-center justify-center bg-[#141b2d] px-4 font-sans">
         <div className="w-full max-w-md rounded-xl bg-[#1f2a40] p-8 shadow-xl">
           <h2 className="mb-6 text-center text-2xl font-bold text-white">Connexion Administrateur</h2>
           <form onSubmit={handleLogin} className="space-y-4">

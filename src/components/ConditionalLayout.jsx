@@ -11,7 +11,7 @@ export default function ConditionalLayout({ children }) {
   return (
     <>
       {!isAdmin && <Navbar />}
-      <main className={isAdmin ? "h-screen" : "flex-1"}>{children}</main>
+      <main className={isAdmin ? "h-screen bg-[#141b2d]" : "flex-1"}>{children}</main>
       {!isAdmin && <Footer />}
     </>
   );
