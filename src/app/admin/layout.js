@@ -1,4 +1,5 @@
-// This dedicated layout for /admin removes the shared Navbar and Footer.
+import { AdminAuthProvider } from "@/context/AdminAuthContext";
+
 export default function AdminLayout({ children }) {
-  return <>{children}</>;
+  return <AdminAuthProvider>{children}</AdminAuthProvider>;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { useAdminAuth } from "@/context/AdminAuthContext";
 import { format, parseISO } from "date-fns";
 import { fr } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
@@ -123,17 +124,12 @@ function TransactionsView() {
 }
 
 export default function AdminDashboard() {
-  const [token, setToken] = useState(null);
+  const { token, login, logout } = useAdminAuth();
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loadingLogin, setLoadingLogin] = useState(false);
 
   const [activeTab, setActiveTab] = useState("dashboard");
-
-  useEffect(() => {
-    const savedToken = sessionStorage.getItem("adminToken");
-    if (savedToken) setToken(savedToken);
-  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -147,8 +143,8 @@ export default function AdminDashboard() {
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        setToken(data.token);
-        sessionStorage.setItem("adminToken", data.token);
+        login(data.token);
+        setPassword("");
       } else {
         setLoginError(data.error || "Mot de passe incorrect");
       }
@@ -160,10 +156,9 @@ export default function AdminDashboard() {
   };
 
   const handleLogout = () => {
-    setToken(null);
+    logout();
     setPassword("");
     setLoginError("");
-    sessionStorage.removeItem("adminToken");
   };
 
   if (!token) {
