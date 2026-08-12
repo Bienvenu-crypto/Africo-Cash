@@ -52,7 +52,7 @@ export function getAllBanksSync() {
   return db().prepare("SELECT * FROM banks ORDER BY name").all();
 }
 
-export function getTransactionsForAccountSync(account, limit = 20) {
+export function getTransactionsForAccountSync(account, limit = 100) {
   return db()
     .prepare(
       `SELECT * FROM transactions

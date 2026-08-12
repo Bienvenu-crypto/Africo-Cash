@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "restore:supabase": "node --env-file=.env.local scripts/restore-to-supabase.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.2",

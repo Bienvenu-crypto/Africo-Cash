@@ -114,7 +114,7 @@ export async function getAllBanksAsync() {
   return data || [];
 }
 
-export async function getTransactionsForAccountAsync(account, limit = 20) {
+export async function getTransactionsForAccountAsync(account, limit = 100) {
   const { data, error } = await supabase
     .from("transactions")
     .select("*")
@@ -133,21 +133,30 @@ export async function getTransactionsForAccountAsync(account, limit = 20) {
 export async function getAdminTransactionsAsync(dateFrom, dateTo) {
   let query = supabase
     .from("transactions")
-    .select("*, clients(prenom, postnom, nom)")
+    .select("*")
     .order("created_at", { ascending: false });
 
   if (dateFrom) query = query.gte("created_at", dateFrom);
   if (dateTo) query = query.lte("created_at", `${dateTo}T23:59:59`);
 
-  const { data, error } = await query;
-  check(error);
+  const [{ data: transactions, error: txError }, { data: clients, error: clientError }] =
+    await Promise.all([
+      query,
+      supabase.from("clients").select("account_number, prenom, postnom, nom"),
+    ]);
 
-  return (data || []).map((row) => {
-    const client = row.clients;
+  check(txError);
+  check(clientError);
+
+  const clientByAccount = Object.fromEntries(
+    (clients || []).map((c) => [c.account_number, c])
+  );
+
+  return (transactions || []).map((tx) => {
+    const client = clientByAccount[tx.client_account];
     const clientName = client
       ? `${client.prenom || ""} ${client.postnom || ""} ${client.nom || ""}`.replace(/\s+/g, " ").trim()
       : null;
-    const { clients, ...tx } = row;
     return {
       ...tx,
       amount: num(tx.amount),
