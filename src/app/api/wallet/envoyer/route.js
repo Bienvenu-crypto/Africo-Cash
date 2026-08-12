@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
-import { hashPin, getConfig, round2 } from "@/lib/utils";
+import {
+  getClientByAccount,
+  getConfig,
+  runMoneyTransfer,
+} from "@/lib/data";
+import { hashPin, round2 } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin, currency, amount, destination_account } =
@@ -13,12 +17,9 @@ export async function POST(req) {
     );
   }
 
-  const db = getDb();
-  const cfg = getConfig(db);
+  const cfg = await getConfig();
 
-  const sender = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const sender = await getClientByAccount(account_number);
 
   if (!sender) {
     return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
@@ -27,9 +28,7 @@ export async function POST(req) {
     return NextResponse.json({ error: "Code PIN incorrect." }, { status: 401 });
   }
 
-  const recipient = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(destination_account);
+  const recipient = await getClientByAccount(destination_account);
 
   if (!recipient) {
     return NextResponse.json(
@@ -55,40 +54,14 @@ export async function POST(req) {
   }
 
   const senderNewBalance = round2(sender[balCol] - totalDebit);
-  const recipientNewBalance = round2(recipient[balCol] + montant);
 
-  const tx = db.transaction(() => {
-    db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
-      senderNewBalance,
-      account_number
-    );
-    db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
-      recipientNewBalance,
-      destination_account
-    );
-    db.prepare(
-      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
-       VALUES ('Envoi', ?, ?, ?, ?, ?, 'Reussi', ?)`
-    ).run(
-      account_number,
-      destination_account,
-      currency,
-      -montant,
-      fee,
-      `Envoi vers ${destination_account}`
-    );
-    db.prepare(
-      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
-       VALUES ('Reception', ?, ?, ?, ?, 0, 'Reussi', ?)`
-    ).run(
-      destination_account,
-      account_number,
-      currency,
-      montant,
-      `Reception de ${account_number}`
-    );
-  });
-  tx();
+  await runMoneyTransfer(
+    account_number,
+    destination_account,
+    currency,
+    montant,
+    fee
+  );
 
   return NextResponse.json({
     success: true,

@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
-import { hashPin, getConfig, round2 } from "@/lib/utils";
+import {
+  getClientByAccount,
+  getConfig,
+  insertTransaction,
+  runInTransaction,
+  updateClientDualBalance,
+} from "@/lib/data";
+import { hashPin, round2 } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin, sens, amount } = await req.json();
-  const db = getDb();
-  const cfg = getConfig(db);
+  const cfg = await getConfig();
 
-  const client = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const client = await getClientByAccount(account_number);
 
   if (!client) {
     return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
@@ -49,21 +52,25 @@ export async function POST(req) {
   const newDebitBalance = round2(client[debitCol] - debitAmount);
   const newCreditBalance = round2(client[creditCol] + creditAmount);
 
-  const tx = db.transaction(() => {
-    db.prepare(
-      `UPDATE clients SET ${debitCol} = ?, ${creditCol} = ? WHERE account_number = ?`
-    ).run(newDebitBalance, newCreditBalance, account_number);
-    db.prepare(
-      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
-       VALUES ('Conversion', ?, 'Africo Cash', ?, ?, 0, 'Reussi', ?)`
-    ).run(
+  await runInTransaction(async () => {
+    await updateClientDualBalance(
       account_number,
-      sens === "USD_TO_CDF" ? "USD->CDF" : "CDF->USD",
-      debitAmount,
-      `Conversion ${sens === "USD_TO_CDF" ? "USD vers CDF" : "CDF vers USD"} au taux ${tauxApplique}. Credite: ${creditAmount}`
+      debitCol,
+      creditCol,
+      newDebitBalance,
+      newCreditBalance
     );
+    await insertTransaction({
+      type: "Conversion",
+      client_account: account_number,
+      counterparty: "Africo Cash",
+      currency: sens === "USD_TO_CDF" ? "USD->CDF" : "CDF->USD",
+      amount: debitAmount,
+      fee: 0,
+      status: "Reussi",
+      details: `Conversion ${sens === "USD_TO_CDF" ? "USD vers CDF" : "CDF vers USD"} au taux ${tauxApplique}. Credite: ${creditAmount}`,
+    });
   });
-  tx();
 
   return NextResponse.json({
     success: true,

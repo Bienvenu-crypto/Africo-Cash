@@ -1,18 +1,10 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { getAllClients } from "@/lib/data";
 
-export async function GET(req) {
-  const db = getDb();
-
+export async function GET() {
   try {
-    const users = db.prepare("SELECT * FROM clients ORDER BY created_at DESC").all();
-    
-    // Remove sensitive data before sending to client
-    const safeUsers = users.map(user => {
-      const { pin_hash, ...safeUser } = user;
-      return safeUser;
-    });
-
+    const users = await getAllClients();
+    const safeUsers = users.map(({ pin_hash, ...safeUser }) => safeUser);
     return NextResponse.json({ users: safeUsers });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

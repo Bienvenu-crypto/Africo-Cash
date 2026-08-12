@@ -2,17 +2,36 @@ import Database from "better-sqlite3";
 import path from "path";
 import fs from "fs";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+const IS_SERVERLESS = Boolean(process.env.VERCEL);
+const LOCAL_DATA_DIR = path.join(process.cwd(), "data");
+const BUNDLED_DB_PATH = path.join(LOCAL_DATA_DIR, "africocash.db");
 
-const DB_PATH = path.join(DATA_DIR, "africocash.db");
+function resolveDbPath() {
+  if (IS_SERVERLESS) {
+    return path.join("/tmp", "africocash.db");
+  }
+  if (!fs.existsSync(LOCAL_DATA_DIR)) {
+    fs.mkdirSync(LOCAL_DATA_DIR, { recursive: true });
+  }
+  return BUNDLED_DB_PATH;
+}
+
+function ensureWritableDb(dbPath) {
+  if (!IS_SERVERLESS || fs.existsSync(dbPath)) return;
+  if (fs.existsSync(BUNDLED_DB_PATH)) {
+    fs.copyFileSync(BUNDLED_DB_PATH, dbPath);
+  }
+}
 
 let db;
 
 function getDb() {
   if (db) return db;
-  db = new Database(DB_PATH);
-  db.pragma("journal_mode = WAL");
+  const dbPath = resolveDbPath();
+  ensureWritableDb(dbPath);
+  db = new Database(dbPath);
+  // Vercel's filesystem is read-only except /tmp; WAL needs extra writable files.
+  db.pragma(`journal_mode = ${IS_SERVERLESS ? "DELETE" : "WAL"}`);
   db.pragma("foreign_keys = ON");
   init(db);
   return db;

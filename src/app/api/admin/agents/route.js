@@ -1,20 +1,10 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { getAllAgents } from "@/lib/data";
 
-export async function GET(req) {
-  const db = getDb();
-
+export async function GET() {
   try {
-    const agents = db
-      .prepare("SELECT * FROM agents ORDER BY created_at DESC")
-      .all();
-
-    // Remove sensitive data before sending
-    const safeAgents = agents.map((agent) => {
-      const { pin_hash, ...safeAgent } = agent;
-      return safeAgent;
-    });
-
+    const agents = await getAllAgents();
+    const safeAgents = agents.map(({ pin_hash, ...safeAgent }) => safeAgent);
     return NextResponse.json({ agents: safeAgents });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

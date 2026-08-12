@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
-import { hashPin, getConfig, round2 } from "@/lib/utils";
+import {
+  getClientByAccount,
+  getConfig,
+  insertTransaction,
+  updateClientBalance,
+} from "@/lib/data";
+import { hashPin, round2 } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin, operator, mobile_number, currency, amount } =
     await req.json();
-  const db = getDb();
-  const cfg = getConfig(db);
+  const cfg = await getConfig();
 
-  const client = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const client = await getClientByAccount(account_number);
   if (!client) {
     return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
   }
@@ -31,22 +33,17 @@ export async function POST(req) {
   }
 
   const newBalance = round2(client[balCol] - totalDebit);
-  db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
-    newBalance,
-    account_number
-  );
-
-  db.prepare(
-    `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
-     VALUES ('Retrait Mobile Money', ?, ?, ?, ?, ?, 'Reussi', ?)`
-  ).run(
-    account_number,
-    operator,
+  await updateClientBalance(account_number, balCol, newBalance);
+  await insertTransaction({
+    type: "Retrait Mobile Money",
+    client_account: account_number,
+    counterparty: operator,
     currency,
-    -montant,
+    amount: -montant,
     fee,
-    `Transfert vers ${operator} - ${mobile_number}`
-  );
+    status: "Reussi",
+    details: `Transfert vers ${operator} - ${mobile_number}`,
+  });
 
   return NextResponse.json({
     success: true,

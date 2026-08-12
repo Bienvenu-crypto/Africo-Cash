@@ -78,7 +78,15 @@ export default function Inscription() {
           signature_confirmed: true,
         }),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      let data = {};
+      if (raw) {
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          throw new Error("Réponse serveur invalide. Veuillez réessayer.");
+        }
+      }
       if (!res.ok) throw new Error(data.error || "Une erreur est survenue.");
       setResult(data);
       setStep(6);

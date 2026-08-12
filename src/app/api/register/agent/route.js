@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
-import { hashPin, generateAgentCode } from "@/lib/utils";
+import {
+  generateAgentCode,
+  getAllGuichets,
+  insertAgent,
+} from "@/lib/data";
+import { hashPin } from "@/lib/utils";
 
 export async function POST(req) {
   const body = await req.json();
-  const db = getDb();
 
   const required = [
     "nom",
@@ -30,36 +33,15 @@ export async function POST(req) {
     }
   }
 
-  const agentCode = generateAgentCode(db);
+  const agentCode = await generateAgentCode();
 
-  // Algorithme de proximite simplifie : choisit la banque partenaire la plus proche
-  // parmi celles enregistrees, en se basant sur la distance GPS aux guichets existants.
-  const guichets = db.prepare("SELECT * FROM guichets").all();
+  const guichets = await getAllGuichets();
   let nearestBank = "Rawbank";
   if (guichets.length > 0) {
-    let best = null;
-    let bestDist = Infinity;
-    for (const g of guichets) {
-      // pas de coordonnees stockees pour les guichets dans ce MVP -> choix du premier
-      if (bestDist === Infinity) {
-        best = g;
-        bestDist = 0;
-      }
-    }
-    if (best) nearestBank = best.bank_name;
+    nearestBank = guichets[0].bank_name;
   }
 
-  const stmt = db.prepare(`
-    INSERT INTO agents
-      (agent_code, nom, postnom, prenom, boutique_nom, province, ville, commune, quartier,
-       avenue, numero_boutique, gps_lat, gps_lng, telephone, piece_type, piece_numero,
-       pin_hash, banque_partenaire, status)
-    VALUES (@agent_code, @nom, @postnom, @prenom, @boutique_nom, @province, @ville, @commune, @quartier,
-       @avenue, @numero_boutique, @gps_lat, @gps_lng, @telephone, @piece_type, @piece_numero,
-       @pin_hash, @banque_partenaire, 'Actif')
-  `);
-
-  stmt.run({
+  await insertAgent({
     agent_code: agentCode,
     nom: body.nom,
     postnom: body.postnom || "",

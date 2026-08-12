@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
-import { hashPin, getConfig, round2 } from "@/lib/utils";
+import {
+  getAgentByCode,
+  getClientByAccount,
+  getConfig,
+  insertTransaction,
+  runInTransaction,
+  updateClientBalance,
+} from "@/lib/data";
+import { hashPin, round2 } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin, currency, amount, agent_code } =
     await req.json();
-  const db = getDb();
-  const cfg = getConfig(db);
+  const cfg = await getConfig();
 
-  const client = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const client = await getClientByAccount(account_number);
 
   if (!client) {
     return NextResponse.json({ error: "Compte introuvable." }, { status: 404 });
@@ -27,9 +31,7 @@ export async function POST(req) {
     return NextResponse.json({ error: "Montant invalide." }, { status: 400 });
   }
 
-  const agent = db
-    .prepare("SELECT * FROM agents WHERE agent_code = ?")
-    .get(agent_code);
+  const agent = await getAgentByCode(agent_code);
 
   if (!agent) {
     return NextResponse.json({ error: "Code agent introuvable." }, { status: 404 });
@@ -45,24 +47,19 @@ export async function POST(req) {
 
   const newBalance = round2(client[balCol] - totalDebit);
 
-  const tx = db.transaction(() => {
-    db.prepare(`UPDATE clients SET ${balCol} = ? WHERE account_number = ?`).run(
-      newBalance,
-      account_number
-    );
-    db.prepare(
-      `INSERT INTO transactions (type, client_account, counterparty, currency, amount, fee, status, details)
-       VALUES ('Retrait', ?, ?, ?, ?, ?, 'Reussi', ?)`
-    ).run(
-      account_number,
-      agent_code,
+  await runInTransaction(async () => {
+    await updateClientBalance(account_number, balCol, newBalance);
+    await insertTransaction({
+      type: "Retrait",
+      client_account: account_number,
+      counterparty: agent_code,
       currency,
-      -montant,
+      amount: -montant,
       fee,
-      `Retrait via agent ${agent_code} (${agent.boutique_nom})`
-    );
+      status: "Reussi",
+      details: `Retrait via agent ${agent_code} (${agent.boutique_nom})`,
+    });
   });
-  tx();
 
   return NextResponse.json({
     success: true,

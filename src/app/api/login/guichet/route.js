@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { getGuichetByCode } from "@/lib/data";
 import { hashPin } from "@/lib/utils";
 
 export async function POST(req) {
   const { code, password } = await req.json();
-  const db = getDb();
 
-  const guichet = db.prepare("SELECT * FROM guichets WHERE code = ?").get(code);
+  const guichet = await getGuichetByCode(code);
 
   if (!guichet || guichet.password_hash !== hashPin(password)) {
     return NextResponse.json(

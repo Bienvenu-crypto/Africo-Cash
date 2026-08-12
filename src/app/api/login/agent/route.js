@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { getAgentByCode } from "@/lib/data";
 import { hashPin } from "@/lib/utils";
 
 export async function POST(req) {
   const { agent_code, pin } = await req.json();
-  const db = getDb();
 
-  const agent = db
-    .prepare("SELECT * FROM agents WHERE agent_code = ?")
-    .get(agent_code);
+  const agent = await getAgentByCode(agent_code);
 
   if (!agent || agent.pin_hash !== hashPin(pin)) {
     return NextResponse.json(

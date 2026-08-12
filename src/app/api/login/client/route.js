@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
-import getDb from "@/lib/db";
+import { getClientByAccount } from "@/lib/data";
 import { hashPin } from "@/lib/utils";
 
 export async function POST(req) {
   const { account_number, pin } = await req.json();
-  const db = getDb();
 
-  const client = db
-    .prepare("SELECT * FROM clients WHERE account_number = ?")
-    .get(account_number);
+  const client = await getClientByAccount(account_number);
 
   if (!client || client.pin_hash !== hashPin(pin)) {
     return NextResponse.json(
