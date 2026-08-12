@@ -13,7 +13,7 @@ const poppins = Poppins({
 export const metadata = {
   title: "Africo Cash | Portefeuille numérique by Africo Group",
   description:
-    "Africo Cash — envoyez, retirez, convertissez et payez vos factures en toute confiance. Le portefeuille numérique du Groupe Africo en République Démocratique du Congo.",
+    "Africo Cash: envoyez, retirez, convertissez et payez vos factures en toute confiance. Le portefeuille numérique du Groupe Africo en République Démocratique du Congo.",
 };
 
 export default function RootLayout({ children }) {
