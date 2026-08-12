@@ -100,7 +100,7 @@ export default function Inscription() {
   if (result) {
     return (
       <div className="mx-auto max-w-lg px-5 py-24 text-center lg:px-8">
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500/15 text-3xl">🎉</div>
+        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gold-500/15 text-3xl"></div>
         <h1 className="text-3xl font-bold">Bienvenue chez Africo Cash</h1>
         <p className="mt-4 text-gray-600">{result.message}</p>
         <Card className="mt-8">
