@@ -14,6 +14,16 @@ export default function GuichetPage() {
 
   const [loginForm, setLoginForm] = useState({ code: "", password: "" });
   const [regForm, setRegForm] = useState({ bank_name: BANKS[0], agence: "", code: "", password: "" });
+  const [formKey, setFormKey] = useState(0);
+
+  function handleLogout() {
+    setGuichet(null);
+    setLoginForm({ code: "", password: "" });
+    setRegForm({ bank_name: BANKS[0], agence: "", code: "", password: "" });
+    setError("");
+    setMode("login");
+    setFormKey((k) => k + 1);
+  }
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -85,7 +95,7 @@ export default function GuichetPage() {
           </p>
         </Card>
 
-        <GhostButton className="mt-8" onClick={() => setGuichet(null)}>Se déconnecter</GhostButton>
+        <GhostButton className="mt-8" onClick={handleLogout}>Se déconnecter</GhostButton>
       </div>
     );
   }
@@ -104,7 +114,7 @@ export default function GuichetPage() {
 
       <Card>
         {mode === "login" ? (
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form key={`login-${formKey}`} onSubmit={handleLogin} className="space-y-4">
             <Field label="Code du Guichet">
               <input autoComplete="new-password" className={inputClass} placeholder="EQ-GOM1-GUI3" value={loginForm.code} onChange={(e) => setLoginForm((f) => ({ ...f, code: e.target.value }))} />
             </Field>
@@ -123,7 +133,7 @@ export default function GuichetPage() {
             </p>
           </form>
         ) : (
-          <form onSubmit={handleRegister} className="space-y-4">
+          <form key={`register-${formKey}`} onSubmit={handleRegister} className="space-y-4">
             <Field label="Banque partenaire">
               <select className={inputClass} value={regForm.bank_name} onChange={(e) => setRegForm((f) => ({ ...f, bank_name: e.target.value }))}>
                 {BANKS.map((b) => (
